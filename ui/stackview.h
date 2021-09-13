@@ -174,7 +174,9 @@ class BINARYNINJAUIAPI StackView : public QAbstractScrollArea, public View
 	void rebuildLines();
 
 	//! Refresh the internal highlight token state.
-	void refreshHighlight();
+	//!
+	//! \param shouldUpdateStatus Should UIContext::updateStatus() be called?
+	void refreshHighlight(bool shouldUpdateStatus = true);
 
 	//! Find the end of a stack void given a start offset.
 	int64_t findVoidEnd(int64_t start) const;

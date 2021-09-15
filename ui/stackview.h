@@ -205,7 +205,7 @@ class BINARYNINJAUIAPI StackView : public QAbstractScrollArea, public View
 	void sanitizeCursor(Direction preference);
 
 	//! Get the selected StackViewLine.
-	StackViewLine selectedLine() const;
+	const StackViewLine* selectedLine() const;
 
 	//! Rename the variable belonging to the selected line.
 	void renameVariable();

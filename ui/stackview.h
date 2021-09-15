@@ -233,6 +233,8 @@ class BINARYNINJAUIAPI StackView : public QAbstractScrollArea, public View
 
 	BinaryViewRef getData() override;
 	uint64_t getCurrentOffset() override;
+	bool canCopyAddress() override { return false; };
+	bool canPaste() override { return false; };
 	void setSelectionOffsets(BNAddressRange range) override;
 	bool navigate(uint64_t offset) override;
 	QFont getFont() override;

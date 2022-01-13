@@ -81,12 +81,12 @@ class UpdateProgressCallback:
 			log_error(traceback.format_exc())
 
 	@property
-	def active(cls):
+	def active(self):
 		return core.BNGetActiveUpdateChannel()
 
 	@active.setter
-	def active(cls, value:str) -> None:
-		return core.BNSetActiveUpdateChannel(value)
+	def active(self, value:str):
+		core.BNSetActiveUpdateChannel(value)
 
 class UpdateChannel(metaclass=_UpdateChannelMetaClass):
 	def __init__(self, name, desc, ver):

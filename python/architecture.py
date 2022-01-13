@@ -1487,7 +1487,7 @@ class Architecture(metaclass=_ArchitectureMetaClass):
 		"""
 		``get_semantic_flag_class_name`` gets the name of a semantic flag class from the index.
 
-		:param int _index: class_index
+		:param int class_index: Index of the semantic flag class
 		:return: the name of the semantic flag class
 		:rtype: str
 		"""
@@ -1609,6 +1609,7 @@ class Architecture(metaclass=_ArchitectureMetaClass):
 		:param LowLevelILOperation op:
 		:param int size:
 		:param str write_type:
+		:param flag:
 		:param operands: a list of either items that are either string register names or constant integer values
 		:type operands: list(str) or list(int)
 		:param LowLevelILFunction il:
@@ -1906,6 +1907,7 @@ class Architecture(metaclass=_ArchitectureMetaClass):
 
 		:param str data: bytes for the instruction to be converted
 		:param int addr: the virtual address of the instruction to be patched
+		:param int value: the value to return
 		:return: string containing len(data) which always branches to the same location as the provided instruction
 		:rtype: str
 		:Example:
@@ -1940,7 +1942,7 @@ class Architecture(metaclass=_ArchitectureMetaClass):
 
 		:param str type_name: the BinaryView type name of the constant to be retrieved
 		:param str const_name: the constant name to retrieved
-		:param int value: optional default value if the type_name is not present. default value is zero.
+		:param int default_value: optional default value if the type_name is not present. default value is zero.
 		:return: The BinaryView type constant or the default_value if not found
 		:rtype: int
 		:Example:
@@ -2322,6 +2324,7 @@ class CoreArchitecture(Architecture):
 		:param LowLevelILOperation op:
 		:param int size:
 		:param str write_type:
+		:param flag:
 		:param operands: a list of either items that are either string register names or constant integer values
 		:type operands: list(str) or list(int)
 		:param LowLevelILFunction il:
@@ -2576,6 +2579,7 @@ class CoreArchitecture(Architecture):
 
 		:param str data: bytes for the instruction to be converted
 		:param int addr: the virtual address of the instruction to be patched
+		:param int value: value to return
 		:return: string containing len(data) which always branches to the same location as the provided instruction
 		:rtype: str
 		:Example:

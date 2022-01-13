@@ -3210,14 +3210,15 @@ class LowLevelILFunction:
 		"""
 		return self.expr(LowLevelILOperation.LLIL_LOAD, addr, size=size)
 
-	def store(self, size:int, addr:ExpressionIndex, value:ExpressionIndex, flags=None) -> ExpressionIndex:
+	def store(self, size:int, addr:ExpressionIndex, value:ExpressionIndex,
+		flags:Union['architecture.FlagWriteTypeName', 'architecture.FlagType', 'architecture.FlagIndex'] = None) -> ExpressionIndex:
 		"""
 		``store`` Writes ``size`` bytes to expression ``addr`` read from expression ``value``
 
 		:param int size: number of bytes to write
 		:param ExpressionIndex addr: the expression to write to
 		:param ExpressionIndex value: the expression to be written
-		:param str flags: which flags are set by this operation
+		:param flags: which flags are set by this operation
 		:return: The expression ``[addr].size = value``
 		:rtype: ExpressionIndex
 		"""
@@ -3884,11 +3885,11 @@ class LowLevelILFunction:
 		class_index = self.arch.get_semantic_flag_class_index(sem_class)
 		return self.expr(LowLevelILOperation.LLIL_FLAG_COND, cond, architecture.SemanticClassIndex(class_index))
 
-	def flag_group(self, sem_group) -> ExpressionIndex:
+	def flag_group(self, sem_group: 'architecture.SemanticGroupType') -> ExpressionIndex:
 		"""
 		``flag_group`` returns a flag_group expression for the given semantic flag group
 
-		:param str sem_group: Semantic flag group to access
+		:param sem_group: Semantic flag group to access
 		:return: A flag_group expression
 		:rtype: ExpressionIndex
 		"""

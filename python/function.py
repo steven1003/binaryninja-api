@@ -2204,7 +2204,7 @@ class Function:
 		return result
 
 	def get_flags_read_by_lifted_il_instruction(self, i:'lowlevelil.InstructionIndex') -> \
-		List['architecture.RegisterName']:
+		List['architecture.FlagName']:
 		if self.arch is None:
 			raise Exception(f"Can't call {_function_name_()} for function with no architecture specified")
 
@@ -2760,7 +2760,7 @@ class Function:
 		return types.SizeWithConfidence(result.value, confidence = result.confidence)
 
 	def get_call_reg_stack_adjustment(self, addr:int, arch:Optional['architecture.Architecture']=None) -> \
-		Mapping['architecture.RegisterName', 'types.RegisterStackAdjustmentWithConfidence']:
+		Mapping['architecture.RegisterStackName', 'types.RegisterStackAdjustmentWithConfidence']:
 		if arch is None:
 			if self.arch is None:
 				raise Exception(f"Can't call {_function_name_()} for function with no architecture specified")
@@ -2968,13 +2968,13 @@ class Function:
 		return result
 
 	@property
-	def callers(self) -> List[int]:
+	def callers(self) -> List['Function']:
 		"""
 		``callers`` returns a list of functions that call this function
-		Does not point to the actual address where the call occurs, just the start of the function that contains the call.
+		Does not point to the actual address where the call occurs, just the function that contains the call.
 
-		:return: List of start addresess for Functions that call this function
-		:rtype: list(int)
+		:return: List of Functions that call this function
+		:rtype: list(Function)
 		"""
 		functions = []
 		for ref in self.view.get_code_refs(self.start):
@@ -3443,7 +3443,7 @@ class DisassemblyTextRenderer:
 
 	@staticmethod
 	def is_integer_token(token:'InstructionTextToken') -> bool:
-		return core.BNIsIntegerToken(token)
+		return core.BNIsIntegerToken(token.type)
 
 	def add_integer_token(self, tokens:List['InstructionTextToken'], int_token:'InstructionTextToken', addr:int,
 		arch:Optional['architecture.Architecture']=None) -> None:

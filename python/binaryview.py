@@ -6803,7 +6803,7 @@ class BinaryView:
 		"""
 		core.BNShowHTMLReport(self.handle, title, contents, plaintext)
 
-	def show_graph_report(self, title:int, graph:flowgraph.FlowGraph) -> None:
+	def show_graph_report(self, title:str, graph:flowgraph.FlowGraph) -> None:
 		"""
 		``show_graph_report`` displays a :py:Class:`FlowGraph` object `graph` in a new tab with ``title``.
 
@@ -7119,7 +7119,7 @@ class BinaryView:
 				result.append(names[i])
 			return result
 		finally:
-			core.BNFreeStringList(names, count)
+			core.BNFreeStringList(names, count.value)
 
 	def get_load_settings(self, type_name:str) -> Optional[settings.Settings]:
 		"""
@@ -7667,11 +7667,11 @@ class BinaryWriter:
 	def offset(self, value:int) -> None:
 		core.BNSeekBinaryWriter(self._handle, value)
 
-	def write(self, value, address:Optional[int]=None, except_on_relocation=True) -> bool:
+	def write(self, value: bytes, address:Optional[int]=None, except_on_relocation=True) -> bool:
 		"""
 		``write`` writes ``len(value)`` bytes to the internal offset, without regard to endianness.
 
-		:param str value: bytes to be written at current offset
+		:param bytes value: bytes to be written at current offset
 		:param int address: offset to set the internal offset before writing
 		:param bool except_on_relocation: (default True) raise exception when write overlaps a relocation
 		:return: boolean True on success, False on failure.

@@ -668,14 +668,14 @@ class PluginCommand(metaclass=_PluginCommandMetaClass):
 				context.instruction.function.handle, context.instruction.instr_index)
 		return False
 
-	def execute(self, context):
+	def execute(self, context: PluginCommandContext):
 		r"""
 		``execute`` Execute a Plugin
 
-		:param str context: PluginCommandContext to pass the PluginCommand
+		:param PluginCommandContext context: PluginCommandContext to pass the PluginCommand
 		:rtype: None
 
-			>>> ctx = PluginCommandContext(bv);
+			>>> ctx = PluginCommandContext(bv)
 			>>> PluginCommand.get_valid_list(ctx)[r'PDB\Load'].execute(ctx)
 
 		"""

@@ -2333,7 +2333,7 @@ class MediumLevelILTailcallUntypedSsa(MediumLevelILCallBase, Tailcall, SSA):
 		return self._get_expr(1)
 
 	@property
-	def params(self) -> MediumLevelILInstruction:
+	def params(self) -> List[SSAVariable]:
 		inst = self._get_expr(2)
 		assert isinstance(inst, MediumLevelILCallParamSsa), "MediumLevelILTailcallUntypedSsa return bad type for 'params'"
 		return inst.src

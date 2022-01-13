@@ -21,7 +21,7 @@
 import ctypes
 import threading
 import traceback
-from typing import Optional
+from typing import Optional, List, Union
 
 # Binary Ninja components
 import binaryninja
@@ -223,7 +223,7 @@ class FlowGraphNode:
 		return result
 
 	@lines.setter
-	def lines(self, lines):
+	def lines(self, lines: List[Union['function.DisassemblyTextLine', List['function.InstructionTextToken'], str]]):
 		if isinstance(lines, str):
 			lines = lines.split('\n')
 		line_buf = (core.BNDisassemblyTextLine * len(lines))()

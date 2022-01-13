@@ -543,7 +543,7 @@ class HighLevelILInstruction(BaseILInstruction):
 		return self.low_level_il
 
 	@property
-	def llils(self) -> List['lowlevelil.ExpressionIndex']:
+	def llils(self) -> List['lowlevelil.LowLevelILInstruction']:
 		result = set()
 		mlils = self.mlils
 		if mlils is None:

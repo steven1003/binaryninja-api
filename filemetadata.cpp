@@ -271,7 +271,7 @@ bool FileMetadata::CreateSnapshotedView(BinaryView *data, const std::string &vie
 
 
 bool FileMetadata::CreateSnapshotedView(BinaryView* data, const std::string& viewName,
-										const function<void(size_t progress, size_t total)>& progressCallback)
+										const function<bool(size_t progress, size_t total)>& progressCallback)
 {
 	DatabaseProgressCallbackContext cb;
 	cb.func = progressCallback;
@@ -279,7 +279,6 @@ bool FileMetadata::CreateSnapshotedView(BinaryView* data, const std::string& vie
 }
 
 
-MergeResult FileMetadata::MergeUserAnalysis(const std::string& name, const std::function<void(size_t, size_t)>& progress, std::vector<string> excludedHashes)
 MergeResult FileMetadata::MergeUserAnalysis(const std::string& name, const std::function<bool(size_t, size_t)>& progress, std::vector<string> excludedHashes)
 {
 	size_t numHashes = excludedHashes.size();

@@ -1033,7 +1033,7 @@ __attribute__ ((format (printf, 1, 2)))
 		bool Rebase(BinaryView* data, uint64_t address, const std::function<bool(size_t progress, size_t total)>& progressCallback);
 		bool CreateSnapshotedView(BinaryView* data, const std::string& viewName);
 		bool CreateSnapshotedView(BinaryView* data, const std::string& viewName,
-								  const std::function<void(size_t progress, size_t total)>& progressCallback);
+								  const std::function<bool(size_t progress, size_t total)>& progressCallback);
 
 		MergeResult MergeUserAnalysis(const std::string& name, const std::function<bool(size_t, size_t)>& progress,
 				const std::vector<std::string> excludedHashes = {} );

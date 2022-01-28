@@ -17,7 +17,7 @@ using namespace BinaryNinja;
 using namespace std;
 
 #if defined(_MSC_VER)
-#define snprintf _snprintf
+	#define snprintf _snprintf
 #endif
 
 
@@ -52,7 +52,7 @@ extern "C"
 			RegisterValue target = destExpr.GetValue();
 			if (target.IsConstant())
 				platformAddr = target.value;
-			else if (target.state == ImportedAddressValue) // Call to imported function, look up type from import symbol
+			else if (target.state == ImportedAddressValue)  // Call to imported function, look up type from import symbol
 				platformAddr = target.value;
 			else if (target.state == ExternalPointerValue && target.offset == 0)
 				platformAddr = target.value;
@@ -119,7 +119,7 @@ extern "C"
 		customTailCallWorkflow->Replace("core.function.translateTailCalls", "extension.translateTailCalls");
 		customTailCallWorkflow->Remove("core.function.translateTailCalls");
 		Workflow::RegisterWorkflow(customTailCallWorkflow,
-			R"#({
+		    R"#({
 			"title" : "Tail Call Translation (Example)",
 			"description" : "This analysis stands in as an example to demonstrate Binary Ninja's extensible analysis APIs. ***Note** this feature is under active development and subject to change without notice.",
 			"capabilities" : []

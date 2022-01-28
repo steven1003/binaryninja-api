@@ -21,7 +21,7 @@ public:
 	FileContextBase() {}
 };
 
-class BINARYNINJAUIAPI FileContext: public FileContextBase, public BinaryNinja::NavigationHandler
+class BINARYNINJAUIAPI FileContext : public FileContextBase, public BinaryNinja::NavigationHandler
 {
 	QString m_filename;
 	bool m_isValidSaveFilename;
@@ -54,7 +54,7 @@ public:
 	BinaryViewRef getRawData() const { return m_rawData; }
 	FileMetadataRef getMetadata() const { return m_file; }
 	QString getFilename() const { return m_filename; }
-	void setFilename(QString newName) {m_filename = newName;}
+	void setFilename(QString newName) { m_filename = newName; }
 	ViewFrame* getCurrentViewFrame() const { return m_currentViewFrame; }
 	QString getTabName(QWidget* widget);
 	QString getShortFileName(QWidget* widget);

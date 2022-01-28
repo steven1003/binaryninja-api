@@ -28,7 +28,6 @@ from .enums import UpdateResult
 from .log import log_error
 
 
-
 class _UpdateChannelMetaClass(type):
 	def __iter__(self):
 		binaryninja._init_plugins()
@@ -85,8 +84,9 @@ class UpdateProgressCallback:
 		return core.BNGetActiveUpdateChannel()
 
 	@active.setter
-	def active(cls, value:str) -> None:
+	def active(cls, value: str) -> None:
 		return core.BNSetActiveUpdateChannel(value)
+
 
 class UpdateChannel(metaclass=_UpdateChannelMetaClass):
 	def __init__(self, name, desc, ver):
@@ -153,7 +153,7 @@ class UpdateChannel(metaclass=_UpdateChannelMetaClass):
 	def __str__(self):
 		return self._name
 
-	def update_to_latest(self, progress = None):
+	def update_to_latest(self, progress=None):
 		cb = UpdateProgressCallback(progress)
 		errors = ctypes.c_char_p()
 		result = core.BNUpdateToLatestVersion(self._name, errors, cb.cb, None)
@@ -201,7 +201,7 @@ class UpdateVersion:
 	def __str__(self):
 		return self._version
 
-	def update(self, progress = None):
+	def update(self, progress=None):
 		cb = UpdateProgressCallback(progress)
 		errors = ctypes.c_char_p()
 		result = core.BNUpdateToVersion(self._channel.name, self._version, errors, cb.cb, None)

@@ -117,26 +117,26 @@ void LowLevelILFunction::SetIndirectBranches(const vector<ArchAndAddr>& branches
 
 
 ExprId LowLevelILFunction::AddExpr(BNLowLevelILOperation operation, size_t size, uint32_t flags,
-	ExprId a, ExprId b, ExprId c, ExprId d)
+    ExprId a, ExprId b, ExprId c, ExprId d)
 {
 	return BNLowLevelILAddExpr(m_object, operation, size, flags, a, b, c, d);
 }
 
 
 ExprId LowLevelILFunction::AddExprWithLocation(BNLowLevelILOperation operation, uint64_t addr,
-	uint32_t sourceOperand, size_t size, uint32_t flags, ExprId a, ExprId b, ExprId c, ExprId d)
+    uint32_t sourceOperand, size_t size, uint32_t flags, ExprId a, ExprId b, ExprId c, ExprId d)
 {
 	return BNLowLevelILAddExprWithLocation(m_object, addr, sourceOperand, operation, size, flags, a, b, c, d);
 }
 
 
 ExprId LowLevelILFunction::AddExprWithLocation(BNLowLevelILOperation operation, const ILSourceLocation& loc,
-	size_t size, uint32_t flags, ExprId a, ExprId b, ExprId c, ExprId d)
+    size_t size, uint32_t flags, ExprId a, ExprId b, ExprId c, ExprId d)
 {
 	if (loc.valid)
 	{
 		return BNLowLevelILAddExprWithLocation(m_object, loc.address, loc.sourceOperand, operation,
-			size, flags, a, b, c, d);
+		    size, flags, a, b, c, d);
 	}
 	return BNLowLevelILAddExpr(m_object, operation, size, flags, a, b, c, d);
 }
@@ -157,7 +157,7 @@ ExprId LowLevelILFunction::Goto(BNLowLevelILLabel& label, const ILSourceLocation
 
 
 ExprId LowLevelILFunction::If(ExprId operand, BNLowLevelILLabel& t, BNLowLevelILLabel& f,
-	const ILSourceLocation& loc)
+    const ILSourceLocation& loc)
 {
 	if (loc.valid)
 		return BNLowLevelILIfWithLocation(m_object, operand, &t, &f, loc.address, loc.sourceOperand);
@@ -315,7 +315,7 @@ ExprId LowLevelILFunction::GetExprForFlagOrConstant(const BNRegisterOrConstant& 
 
 
 ExprId LowLevelILFunction::GetExprForRegisterOrConstantOperation(BNLowLevelILOperation op, size_t size,
-	BNRegisterOrConstant* operands, size_t operandCount)
+    BNRegisterOrConstant* operands, size_t operandCount)
 {
 	if (operandCount == 0)
 		return AddExpr(op, size, 0);
@@ -328,21 +328,21 @@ ExprId LowLevelILFunction::GetExprForRegisterOrConstantOperation(BNLowLevelILOpe
 	if (operandCount == 2)
 	{
 		return AddExpr(op, size, 0, GetExprForRegisterOrConstant(operands[0], size),
-			GetExprForRegisterOrConstant(operands[1], size));
+		    GetExprForRegisterOrConstant(operands[1], size));
 	}
 	if (operandCount == 3)
 	{
 		if ((op == LLIL_ADC) || (op == LLIL_SBB) || (op == LLIL_RLC) || (op == LLIL_RRC))
 		{
 			return AddExpr(op, size, 0, GetExprForRegisterOrConstant(operands[0], size),
-				GetExprForRegisterOrConstant(operands[1], size), GetExprForFlagOrConstant(operands[2]));
+			    GetExprForRegisterOrConstant(operands[1], size), GetExprForFlagOrConstant(operands[2]));
 		}
 		return AddExpr(op, size, 0, GetExprForRegisterOrConstant(operands[0], size),
-			GetExprForRegisterOrConstant(operands[1], size), GetExprForRegisterOrConstant(operands[2], size));
+		    GetExprForRegisterOrConstant(operands[1], size), GetExprForRegisterOrConstant(operands[2], size));
 	}
 	return AddExpr(op, size, 0, GetExprForRegisterOrConstant(operands[0], size),
-		GetExprForRegisterOrConstant(operands[1], size), GetExprForRegisterOrConstant(operands[2], size),
-		GetExprForRegisterOrConstant(operands[3], size));
+	    GetExprForRegisterOrConstant(operands[1], size), GetExprForRegisterOrConstant(operands[2], size),
+	    GetExprForRegisterOrConstant(operands[3], size));
 }
 
 
@@ -451,12 +451,12 @@ bool LowLevelILFunction::GetExprText(Architecture* arch, ExprId expr, vector<Ins
 
 
 bool LowLevelILFunction::GetInstructionText(Function* func, Architecture* arch, size_t instr,
-	vector<InstructionTextToken>& tokens)
+    vector<InstructionTextToken>& tokens)
 {
 	size_t count;
 	BNInstructionTextToken* list;
 	if (!BNGetLowLevelILInstructionText(m_object, func ? func->GetObject() : nullptr, arch->GetObject(),
-		instr, &list, &count))
+	        instr, &list, &count))
 		return false;
 
 	tokens = InstructionTextToken::ConvertAndFreeInstructionTextTokenList(list, count);
@@ -642,7 +642,7 @@ PossibleValueSet LowLevelILFunction::GetPossibleExprValues(size_t expr, const se
 
 
 PossibleValueSet LowLevelILFunction::GetPossibleExprValues(const LowLevelILInstruction& expr,
-	const set<BNDataFlowQueryOption>& options)
+    const set<BNDataFlowQueryOption>& options)
 {
 	return GetPossibleExprValues(expr.exprIndex, options);
 }
@@ -663,28 +663,28 @@ RegisterValue LowLevelILFunction::GetRegisterValueAfterInstruction(uint32_t reg,
 
 
 PossibleValueSet LowLevelILFunction::GetPossibleRegisterValuesAtInstruction(uint32_t reg, size_t instr,
-	const set<BNDataFlowQueryOption>& options)
+    const set<BNDataFlowQueryOption>& options)
 {
 	BNDataFlowQueryOption* optionArray = new BNDataFlowQueryOption[options.size()];
 	size_t idx = 0;
 	for (auto i : options)
 		optionArray[idx++] = i;
 	BNPossibleValueSet value = BNGetLowLevelILPossibleRegisterValuesAtInstruction(m_object, reg, instr,
-		optionArray, options.size());
+	    optionArray, options.size());
 	delete[] optionArray;
 	return PossibleValueSet::FromAPIObject(value);
 }
 
 
 PossibleValueSet LowLevelILFunction::GetPossibleRegisterValuesAfterInstruction(uint32_t reg, size_t instr,
-	const set<BNDataFlowQueryOption>& options)
+    const set<BNDataFlowQueryOption>& options)
 {
 	BNDataFlowQueryOption* optionArray = new BNDataFlowQueryOption[options.size()];
 	size_t idx = 0;
 	for (auto i : options)
 		optionArray[idx++] = i;
 	BNPossibleValueSet value = BNGetLowLevelILPossibleRegisterValuesAfterInstruction(m_object, reg, instr,
-		optionArray, options.size());
+	    optionArray, options.size());
 	delete[] optionArray;
 	return PossibleValueSet::FromAPIObject(value);
 }
@@ -705,28 +705,28 @@ RegisterValue LowLevelILFunction::GetFlagValueAfterInstruction(uint32_t flag, si
 
 
 PossibleValueSet LowLevelILFunction::GetPossibleFlagValuesAtInstruction(uint32_t flag, size_t instr,
-	const set<BNDataFlowQueryOption>& options)
+    const set<BNDataFlowQueryOption>& options)
 {
 	BNDataFlowQueryOption* optionArray = new BNDataFlowQueryOption[options.size()];
 	size_t idx = 0;
 	for (auto i : options)
 		optionArray[idx++] = i;
 	BNPossibleValueSet value = BNGetLowLevelILPossibleFlagValuesAtInstruction(m_object, flag, instr,
-		optionArray, options.size());
+	    optionArray, options.size());
 	delete[] optionArray;
 	return PossibleValueSet::FromAPIObject(value);
 }
 
 
 PossibleValueSet LowLevelILFunction::GetPossibleFlagValuesAfterInstruction(uint32_t flag, size_t instr,
-	const set<BNDataFlowQueryOption>& options)
+    const set<BNDataFlowQueryOption>& options)
 {
 	BNDataFlowQueryOption* optionArray = new BNDataFlowQueryOption[options.size()];
 	size_t idx = 0;
 	for (auto i : options)
 		optionArray[idx++] = i;
 	BNPossibleValueSet value = BNGetLowLevelILPossibleFlagValuesAfterInstruction(m_object, flag, instr,
-		optionArray, options.size());
+	    optionArray, options.size());
 	delete[] optionArray;
 	return PossibleValueSet::FromAPIObject(value);
 }
@@ -747,28 +747,28 @@ RegisterValue LowLevelILFunction::GetStackContentsAfterInstruction(int32_t offse
 
 
 PossibleValueSet LowLevelILFunction::GetPossibleStackContentsAtInstruction(int32_t offset, size_t len, size_t instr,
-	const set<BNDataFlowQueryOption>& options)
+    const set<BNDataFlowQueryOption>& options)
 {
 	BNDataFlowQueryOption* optionArray = new BNDataFlowQueryOption[options.size()];
 	size_t idx = 0;
 	for (auto i : options)
 		optionArray[idx++] = i;
 	BNPossibleValueSet value = BNGetLowLevelILPossibleStackContentsAtInstruction(m_object, offset, len, instr,
-		optionArray, options.size());
+	    optionArray, options.size());
 	delete[] optionArray;
 	return PossibleValueSet::FromAPIObject(value);
 }
 
 
 PossibleValueSet LowLevelILFunction::GetPossibleStackContentsAfterInstruction(int32_t offset, size_t len, size_t instr,
-	const set<BNDataFlowQueryOption>& options)
+    const set<BNDataFlowQueryOption>& options)
 {
 	BNDataFlowQueryOption* optionArray = new BNDataFlowQueryOption[options.size()];
 	size_t idx = 0;
 	for (auto i : options)
 		optionArray[idx++] = i;
 	BNPossibleValueSet value = BNGetLowLevelILPossibleStackContentsAfterInstruction(m_object, offset, len, instr,
-		optionArray, options.size());
+	    optionArray, options.size());
 	delete[] optionArray;
 	return PossibleValueSet::FromAPIObject(value);
 }

@@ -20,7 +20,7 @@
 class SymbolsView;
 static std::string emptyArch;
 
-class BINARYNINJAUIAPI SymbolListDelegate: public QStyledItemDelegate
+class BINARYNINJAUIAPI SymbolListDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 	QFont m_font;
@@ -29,12 +29,13 @@ class BINARYNINJAUIAPI SymbolListDelegate: public QStyledItemDelegate
 public:
 	SymbolListDelegate(QWidget* parent);
 	void updateFonts();
-	virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
-class BINARYNINJAUIAPI SymbolListModel: public QAbstractItemModel, public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI SymbolListModel : public QAbstractItemModel, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
+
 public:
 	enum SortType
 	{
@@ -49,8 +50,10 @@ public:
 		SymbolRef sym;
 		std::string name;
 		std::string rawName;
-		NamedObject() : sym(nullptr) {}
-		NamedObject(SymbolRef s) : sym(s)
+		NamedObject() :
+		    sym(nullptr) {}
+		NamedObject(SymbolRef s) :
+		    sym(s)
 		{
 			name = sym->GetFullName();
 			rawName = sym->GetRawName();
@@ -162,7 +165,8 @@ private:
 	{
 		NamedObject rec;
 		SymbolListUpdateType type;
-		SymbolListUpdateEvent(const NamedObject& r, SymbolListUpdateType t) : rec(r), type(t) {}
+		SymbolListUpdateEvent(const NamedObject& r, SymbolListUpdateType t) :
+		    rec(r), type(t) {}
 		SymbolListUpdateEvent(const SymbolListUpdateEvent& s)
 		{
 			rec = s.rec;
@@ -170,7 +174,7 @@ private:
 		}
 	};
 
-	class SymbolListUpdate: public BinaryNinja::RefCountObject
+	class SymbolListUpdate : public BinaryNinja::RefCountObject
 	{
 		std::mutex m_mutex;
 		bool m_valid;
@@ -259,11 +263,11 @@ public:
 	void toggleLocalDataVars() { m_showLocalDataVars = !m_showLocalDataVars; }
 	void toggleImports() { m_showImports = !m_showImports; }
 
-	bool getShowExportedFunctions() const  { return m_showExportedFunctions; }
-	bool getShowExportedDataVars() const  { return m_showExportedDataVars; }
-	bool getShowLocalFunctions() const  { return m_showLocalFunctions; }
-	bool getShowLocalDataVars() const  { return m_showLocalDataVars; }
-	bool getShowImports() const  { return m_showImports; }
+	bool getShowExportedFunctions() const { return m_showExportedFunctions; }
+	bool getShowExportedDataVars() const { return m_showExportedDataVars; }
+	bool getShowLocalFunctions() const { return m_showLocalFunctions; }
+	bool getShowLocalDataVars() const { return m_showLocalDataVars; }
+	bool getShowImports() const { return m_showImports; }
 
 	bool getShowMangled() const { return m_displayMangled; }
 	void setShowMangled(bool show) { m_displayMangled = show; }
@@ -281,7 +285,7 @@ Q_SIGNALS:
 };
 
 
-class BINARYNINJAUIAPI SymbolList: public QListView, public FilterTarget
+class BINARYNINJAUIAPI SymbolList : public QListView, public FilterTarget
 {
 	Q_OBJECT
 

@@ -6,7 +6,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtCore/QTimer>
 #ifndef BINARYNINJAUI_BINDINGS
-#include <QtCore/QThread>
+	#include <QtCore/QThread>
 #endif
 #include "binaryninjaapi.h"
 #include "uitypes.h"
@@ -17,7 +17,7 @@
 class GetTypesListThread;
 class ParseTypeThread;
 #else
-class BINARYNINJAUIAPI GetTypesListThread: public QThread
+class BINARYNINJAUIAPI GetTypesListThread : public QThread
 {
 	Q_OBJECT
 
@@ -40,7 +40,8 @@ public:
 Q_DECLARE_METATYPE(BinaryNinja::QualifiedNameAndType);
 
 //! QThread subclass for handling type string parsing to avoid UI interruptions.
-class ParseTypeThread: public QThread {
+class ParseTypeThread : public QThread
+{
 	Q_OBJECT
 
 	BinaryViewRef m_view;
@@ -57,7 +58,7 @@ public:
 };
 #endif
 
-class BINARYNINJAUIAPI TypeDialog: public QDialog
+class BINARYNINJAUIAPI TypeDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -92,7 +93,7 @@ private Q_SLOTS:
 
 public:
 	TypeDialog(QWidget* parent, BinaryViewRef view, const QString& title = "Specify Type",
-		const QString& prompt = "Enter Type Name", const QString& existing="");
+	    const QString& prompt = "Enter Type Name", const QString& existing = "");
 	~TypeDialog() { delete m_updateThread; }
 	BinaryNinja::QualifiedNameAndType getType() const { return m_type; }
 };

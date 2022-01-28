@@ -52,7 +52,7 @@ void RelocationHandler::FreeCallback(void* ctxt)
 
 
 bool RelocationHandler::GetRelocationInfoCallback(void* ctxt, BNBinaryView* view, BNArchitecture* arch,
-	BNRelocationInfo* result, size_t resultCount)
+    BNRelocationInfo* result, size_t resultCount)
 {
 	RelocationHandler* handler = (RelocationHandler*)ctxt;
 	Ref<BinaryView> viewObj = new BinaryView(BNNewViewReference(view));
@@ -68,7 +68,7 @@ bool RelocationHandler::GetRelocationInfoCallback(void* ctxt, BNBinaryView* view
 
 
 bool RelocationHandler::ApplyRelocationCallback(void* ctxt, BNBinaryView* view, BNArchitecture* arch, BNRelocation* reloc,
-	uint8_t* dest, size_t len)
+    uint8_t* dest, size_t len)
 {
 	RelocationHandler* handler = (RelocationHandler*)ctxt;
 	Ref<Architecture> archObj = new CoreArchitecture(arch);
@@ -79,7 +79,7 @@ bool RelocationHandler::ApplyRelocationCallback(void* ctxt, BNBinaryView* view, 
 
 
 size_t RelocationHandler::GetOperandForExternalRelocationCallback(void* ctxt, const uint8_t* data, uint64_t addr,
-	size_t length, BNLowLevelILFunction* il, BNRelocation* reloc)
+    size_t length, BNLowLevelILFunction* il, BNRelocation* reloc)
 {
 	RelocationHandler* handler = (RelocationHandler*)ctxt;
 	Ref<LowLevelILFunction> func(new LowLevelILFunction(BNNewLowLevelILFunctionReference(il)));
@@ -98,15 +98,15 @@ bool RelocationHandler::GetRelocationInfo(Ref<BinaryView> view, Ref<Architecture
 
 
 bool RelocationHandler::ApplyRelocation(Ref<BinaryView> view, Ref<Architecture> arch, Ref<Relocation> reloc, uint8_t* dest,
-	size_t len)
+    size_t len)
 {
 	return BNRelocationHandlerDefaultApplyRelocation(m_object, view->GetObject(), arch->GetObject(),
-		BNNewRelocationReference(reloc->GetObject()), dest, len);
+	    BNNewRelocationReference(reloc->GetObject()), dest, len);
 }
 
 
 size_t RelocationHandler::GetOperandForExternalRelocation(const uint8_t* data, uint64_t addr, size_t length,
-	Ref<LowLevelILFunction> il, Ref<Relocation> relocation)
+    Ref<LowLevelILFunction> il, Ref<Relocation> relocation)
 {
 	(void)data;
 	(void)addr;
@@ -117,13 +117,14 @@ size_t RelocationHandler::GetOperandForExternalRelocation(const uint8_t* data, u
 }
 
 
-CoreRelocationHandler::CoreRelocationHandler(BNRelocationHandler* handler) : RelocationHandler(handler)
+CoreRelocationHandler::CoreRelocationHandler(BNRelocationHandler* handler) :
+    RelocationHandler(handler)
 {
 }
 
 
 bool CoreRelocationHandler::ApplyRelocation(Ref<BinaryView> view, Ref<Architecture> arch, Ref<Relocation> reloc, uint8_t* dest,
-	size_t len)
+    size_t len)
 {
 	return BNRelocationHandlerApplyRelocation(m_object, view->GetObject(), arch->GetObject(), BNNewRelocationReference(reloc->GetObject()), dest, len);
 }
@@ -135,7 +136,7 @@ bool CoreRelocationHandler::GetRelocationInfo(Ref<BinaryView> view, Ref<Architec
 	for (size_t i = 0; i < result.size(); i++)
 		results[i] = result[i];
 	bool status = BNRelocationHandlerGetRelocationInfo(m_object, view->GetObject(), arch->GetObject(), results,
-		result.size());
+	    result.size());
 	for (size_t i = 0; i < result.size(); i++)
 		result[i] = results[i];
 	return status;
@@ -143,8 +144,8 @@ bool CoreRelocationHandler::GetRelocationInfo(Ref<BinaryView> view, Ref<Architec
 
 
 size_t CoreRelocationHandler::GetOperandForExternalRelocation(const uint8_t* data, uint64_t addr, size_t length,
-	Ref<LowLevelILFunction> il, Ref<Relocation> relocation)
+    Ref<LowLevelILFunction> il, Ref<Relocation> relocation)
 {
 	return BNRelocationHandlerGetOperandForExternalRelocation(m_object, data, addr, length, il->GetObject(),
-		BNNewRelocationReference(relocation->GetObject()));
+	    BNNewRelocationReference(relocation->GetObject()));
 }

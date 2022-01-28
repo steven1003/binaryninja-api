@@ -3,7 +3,7 @@
 #include <QtWidgets/QTextEdit>
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI DialogTextEdit: public QTextEdit
+class BINARYNINJAUIAPI DialogTextEdit : public QTextEdit
 {
 	Q_OBJECT
 

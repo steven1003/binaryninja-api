@@ -47,9 +47,9 @@ vector<NameAndType> DebugInfo::GetTypes(const string& parserName)
 	for (size_t i = 0; i < count; ++i)
 	{
 		result.emplace_back(nameAndTypes[i].name,
-		                    Confidence<Ref<Type>>(
-		                        new Type(BNNewTypeReference(nameAndTypes[i].type)),
-		                        nameAndTypes[i].typeConfidence));
+		    Confidence<Ref<Type>>(
+		        new Type(BNNewTypeReference(nameAndTypes[i].type)),
+		        nameAndTypes[i].typeConfidence));
 	}
 
 	BNFreeDebugTypes(nameAndTypes, count);
@@ -70,14 +70,14 @@ vector<DebugFunctionInfo> DebugInfo::GetFunctions(const string& parserName)
 			parameters.emplace_back(functions[i].parameterNames[j], new Type(BNNewTypeReference(functions[i].parameterTypes[j])));
 
 		result.emplace_back(functions[i].shortName ? functions[i].shortName : "",
-		                    functions[i].fullName ? functions[i].fullName : "",
-		                    functions[i].rawName ? functions[i].rawName : "",
-		                    functions[i].address,
-		                    functions[i].returnType ? new Type(BNNewTypeReference(functions[i].returnType)) : nullptr,
-		                    parameters,
-		                    functions[i].variableParameters,
-		                    functions[i].callingConvention ? new CoreCallingConvention(BNNewCallingConventionReference(functions[i].callingConvention)) : nullptr,
-		                    functions[i].platform ? new Platform(BNNewPlatformReference(functions[i].platform)) : nullptr);
+		    functions[i].fullName ? functions[i].fullName : "",
+		    functions[i].rawName ? functions[i].rawName : "",
+		    functions[i].address,
+		    functions[i].returnType ? new Type(BNNewTypeReference(functions[i].returnType)) : nullptr,
+		    parameters,
+		    functions[i].variableParameters,
+		    functions[i].callingConvention ? new CoreCallingConvention(BNNewCallingConventionReference(functions[i].callingConvention)) : nullptr,
+		    functions[i].platform ? new Platform(BNNewPlatformReference(functions[i].platform)) : nullptr);
 	}
 
 	BNFreeDebugFunctions(functions, count);
@@ -94,9 +94,9 @@ vector<DataVariableAndName> DebugInfo::GetDataVariables(const string& parserName
 	for (size_t i = 0; i < count; ++i)
 	{
 		result.emplace_back(variableAndNames[i].address,
-		                    Confidence(new Type(BNNewTypeReference(variableAndNames[i].type)), variableAndNames[i].typeConfidence),
-		                    variableAndNames[i].autoDiscovered,
-		                    variableAndNames[i].name);
+		    Confidence(new Type(BNNewTypeReference(variableAndNames[i].type)), variableAndNames[i].typeConfidence),
+		    variableAndNames[i].autoDiscovered,
+		    variableAndNames[i].name);
 	}
 
 	BNFreeDataVariablesAndName(variableAndNames, count);
@@ -114,14 +114,14 @@ bool DebugInfo::AddFunction(const DebugFunctionInfo& function)
 {
 	BNDebugFunctionInfo* input = new BNDebugFunctionInfo();
 
-	input->shortName          = function.shortName.size() ? BNAllocString(function.shortName.c_str()) : nullptr;
-	input->fullName           = function.fullName.size() ? BNAllocString(function.fullName.c_str()) : nullptr;
-	input->rawName            = function.rawName.size() ? BNAllocString(function.rawName.c_str()) : nullptr;
-	input->address            = function.address;
-	input->returnType         = function.returnType ? function.returnType->GetObject() : nullptr;
+	input->shortName = function.shortName.size() ? BNAllocString(function.shortName.c_str()) : nullptr;
+	input->fullName = function.fullName.size() ? BNAllocString(function.fullName.c_str()) : nullptr;
+	input->rawName = function.rawName.size() ? BNAllocString(function.rawName.c_str()) : nullptr;
+	input->address = function.address;
+	input->returnType = function.returnType ? function.returnType->GetObject() : nullptr;
 	input->variableParameters = function.variableParameters;
-	input->callingConvention  = function.callingConvention ? function.callingConvention->GetObject() : nullptr;
-	input->platform           = function.platform ? function.platform->GetObject() : nullptr;
+	input->callingConvention = function.callingConvention ? function.callingConvention->GetObject() : nullptr;
+	input->platform = function.platform ? function.platform->GetObject() : nullptr;
 
 	size_t parameterCount = function.parameters.size();
 	input->parameterCount = parameterCount;
@@ -176,7 +176,7 @@ Ref<DebugInfoParser> DebugInfoParser::GetByName(const string& name)
 
 vector<Ref<DebugInfoParser>> DebugInfoParser::GetList()
 {
-	size_t count                = 0;
+	size_t count = 0;
 	BNDebugInfoParser** parsers = BNGetDebugInfoParsers(&count);
 
 	vector<Ref<DebugInfoParser>> result;
@@ -192,7 +192,7 @@ vector<Ref<DebugInfoParser>> DebugInfoParser::GetList()
 
 vector<Ref<DebugInfoParser>> DebugInfoParser::GetListForView(const Ref<BinaryView> data)
 {
-	size_t count                = 0;
+	size_t count = 0;
 	BNDebugInfoParser** parsers = BNGetDebugInfoParsersForView(data->GetObject(), &count);
 
 	vector<Ref<DebugInfoParser>> result;

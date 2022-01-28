@@ -53,7 +53,8 @@ void EntropyThread::Run()
 }
 
 
-EntropyWidget::EntropyWidget(QWidget* parent, TriageView* view, BinaryViewRef data): QWidget(parent)
+EntropyWidget::EntropyWidget(QWidget* parent, TriageView* view, BinaryViewRef data) :
+    QWidget(parent)
 {
 	m_view = view;
 	m_data = data;

@@ -5,7 +5,7 @@
 #include "viewframe.h"
 #include "menus.h"
 
-class BINARYNINJAUIAPI DataTypeList: public MenuHelper
+class BINARYNINJAUIAPI DataTypeList : public MenuHelper
 {
 	Q_OBJECT
 

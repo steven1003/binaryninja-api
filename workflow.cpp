@@ -7,7 +7,8 @@ using namespace BinaryNinja;
 using namespace std;
 
 
-AnalysisContext::AnalysisContext(BNAnalysisContext* analysisContext): m_reader(Json::CharReaderBuilder().newCharReader())
+AnalysisContext::AnalysisContext(BNAnalysisContext* analysisContext) :
+    m_reader(Json::CharReaderBuilder().newCharReader())
 {
 	//LogError("API-Side AnalysisContext Constructed!");
 	m_object = analysisContext;
@@ -152,7 +153,7 @@ bool Workflow::RegisterActivity(Ref<Activity> activity, const string& descriptio
 
 bool Workflow::RegisterActivity(Ref<Activity> activity, const vector<string>& subactivities, const string& description)
 {
-	activity->AddRefForRegistration(); // TODO
+	activity->AddRefForRegistration();  // TODO
 
 	char** buffer = new char*[subactivities.size()];
 	if (!buffer)

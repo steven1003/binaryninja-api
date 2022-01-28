@@ -4,7 +4,7 @@
 #include "uitypes.h"
 
 
-class SegmentsWidget: public QWidget
+class SegmentsWidget : public QWidget
 {
 	std::vector<SegmentRef> m_segments;
 
@@ -14,7 +14,7 @@ public:
 };
 
 
-class SectionsWidget: public QWidget
+class SectionsWidget : public QWidget
 {
 	std::vector<SectionRef> m_sections;
 

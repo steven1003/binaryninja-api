@@ -71,8 +71,8 @@ BinaryViewType::BinaryViewType(BNBinaryViewType* type)
 }
 
 
-BinaryViewType::BinaryViewType(const string& name, const string& longName):
-	m_nameForRegister(name), m_longNameForRegister(longName)
+BinaryViewType::BinaryViewType(const string& name, const string& longName) :
+    m_nameForRegister(name), m_longNameForRegister(longName)
 {
 	m_object = nullptr;
 }
@@ -89,7 +89,7 @@ void BinaryViewType::Register(BinaryViewType* type)
 
 	type->AddRefForRegistration();
 	type->m_object = BNRegisterBinaryViewType(type->m_nameForRegister.c_str(),
-	                                          type->m_longNameForRegister.c_str(), &callbacks);
+	    type->m_longNameForRegister.c_str(), &callbacks);
 }
 
 
@@ -263,7 +263,7 @@ void BinaryViewType::BinaryViewEventCallback(void* ctxt, BNBinaryView* view)
 
 BNPlatform* BinaryViewType::PlatformRecognizerCallback(void* ctxt, BNBinaryView* view, BNMetadata* metadata)
 {
-	PlatformRecognizerFunction* callback = (PlatformRecognizerFunction*) ctxt;
+	PlatformRecognizerFunction* callback = (PlatformRecognizerFunction*)ctxt;
 	Ref<BinaryView> viewObject = new BinaryView(BNNewViewReference(view));
 	Ref<Metadata> metadataObject = new Metadata(BNNewMetadataReference(metadata));
 	Ref<Platform> result = callback->action(viewObject, metadataObject);
@@ -273,7 +273,8 @@ BNPlatform* BinaryViewType::PlatformRecognizerCallback(void* ctxt, BNBinaryView*
 }
 
 
-CoreBinaryViewType::CoreBinaryViewType(BNBinaryViewType* type): BinaryViewType(type)
+CoreBinaryViewType::CoreBinaryViewType(BNBinaryViewType* type) :
+    BinaryViewType(type)
 {
 }
 

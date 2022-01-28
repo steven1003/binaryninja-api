@@ -13,7 +13,7 @@ class FlowGraphWidget;
 class Menu;
 class ViewFrame;
 
-class BINARYNINJAUIAPI MiniGraph: public SidebarWidget, public UIContextNotification
+class BINARYNINJAUIAPI MiniGraph : public SidebarWidget, public UIContextNotification
 {
 	Q_OBJECT
 
@@ -52,7 +52,7 @@ public Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI MiniGraphSidebarWidgetType: public SidebarWidgetType
+class BINARYNINJAUIAPI MiniGraphSidebarWidgetType : public SidebarWidgetType
 {
 public:
 	MiniGraphSidebarWidgetType();

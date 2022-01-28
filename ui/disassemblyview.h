@@ -18,7 +18,7 @@
 
 #define FUNCTION_UPDATE_CHECK_INTERVAL 100
 
-class BINARYNINJAUIAPI DisassemblyHistoryEntry: public FlowGraphHistoryEntry
+class BINARYNINJAUIAPI DisassemblyHistoryEntry : public FlowGraphHistoryEntry
 {
 	BNFunctionGraphType m_graphType;
 
@@ -32,15 +32,15 @@ public:
 
 class DisassemblyContainer;
 
-class BINARYNINJAUIAPI DisassemblyView: public FlowGraphWidget
+class BINARYNINJAUIAPI DisassemblyView : public FlowGraphWidget
 {
 	Q_OBJECT
 
-friend class DisassemblyFunctionHeader;
+	friend class DisassemblyFunctionHeader;
 
 public:
 	explicit DisassemblyView(DisassemblyContainer* parent, BinaryViewRef data, FunctionRef func = nullptr,
-		bool navToAddr = false, uint64_t addr = 0);
+	    bool navToAddr = false, uint64_t addr = 0);
 
 	virtual void updateFonts() override;
 
@@ -71,7 +71,7 @@ public:
 	static void registerActions();
 
 private:
-	class DisassemblyViewOptionsWidget: public MenuHelper
+	class DisassemblyViewOptionsWidget : public MenuHelper
 	{
 	public:
 		DisassemblyViewOptionsWidget(DisassemblyView* parent);
@@ -84,7 +84,7 @@ private:
 		DisassemblyView* m_view;
 	};
 
-	class DisassemblyViewOptionsIconWidget: public QWidget
+	class DisassemblyViewOptionsIconWidget : public QWidget
 	{
 	public:
 		DisassemblyViewOptionsIconWidget(DisassemblyView* parent);
@@ -97,7 +97,7 @@ private:
 		void showMenu();
 	};
 
-	class DisassemblyViewStatusBarWidget: public StatusBarWidget
+	class DisassemblyViewStatusBarWidget : public StatusBarWidget
 	{
 	public:
 		DisassemblyViewStatusBarWidget(DisassemblyView* parent);
@@ -125,7 +125,7 @@ private Q_SLOTS:
 };
 
 
-class GraphTypeLabel: public MenuHelper
+class GraphTypeLabel : public MenuHelper
 {
 	Q_OBJECT
 
@@ -138,12 +138,12 @@ public:
 	GraphTypeLabel(QWidget* parent, DisassemblyContainer* container);
 
 protected:
- 	void paintEvent(QPaintEvent* event) override;
+	void paintEvent(QPaintEvent* event) override;
 	void showMenu() override;
 };
 
 
-class BINARYNINJAUIAPI DisassemblyFunctionHeader: public QWidget
+class BINARYNINJAUIAPI DisassemblyFunctionHeader : public QWidget
 {
 	Q_OBJECT
 
@@ -184,7 +184,7 @@ public:
 	virtual QSize sizeHint() const override;
 };
 
-class BINARYNINJAUIAPI DisassemblyContainer: public QWidget, public ViewContainer
+class BINARYNINJAUIAPI DisassemblyContainer : public QWidget, public ViewContainer
 {
 	Q_OBJECT
 
@@ -196,7 +196,7 @@ class BINARYNINJAUIAPI DisassemblyContainer: public QWidget, public ViewContaine
 
 public:
 	explicit DisassemblyContainer(QWidget* parent, BinaryViewRef data, ViewFrame* view, FunctionRef func = nullptr,
-		bool navToAddr = false, uint64_t addr = 0);
+	    bool navToAddr = false, uint64_t addr = 0);
 	virtual View* getView() override { return m_view; }
 	ViewFrame* getViewFrame() { return m_viewFrame; }
 
@@ -216,7 +216,7 @@ private Q_SLOTS:
 	void linkActivatedEvent(const QString& link);
 };
 
-class DisassemblyViewType: public ViewType
+class DisassemblyViewType : public ViewType
 {
 	static DisassemblyViewType* m_instance;
 

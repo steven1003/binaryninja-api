@@ -5,7 +5,7 @@
 #include "filter.h"
 
 
-class GenericExportsModel: public QAbstractItemModel
+class GenericExportsModel : public QAbstractItemModel
 {
 	std::vector<SymbolRef> m_allEntries, m_entries;
 	int m_addrCol, m_nameCol, m_ordinalCol;
@@ -36,7 +36,7 @@ public:
 class TriageView;
 class ExportsWidget;
 
-class ExportsTreeView: public QTreeView, public FilterTarget
+class ExportsTreeView : public QTreeView, public FilterTarget
 {
 	BinaryViewRef m_data;
 	ExportsWidget* m_parent;
@@ -63,7 +63,7 @@ private Q_SLOTS:
 };
 
 
-class ExportsWidget: public QWidget
+class ExportsWidget : public QWidget
 {
 	FilteredView* m_filter;
 

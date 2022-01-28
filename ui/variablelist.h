@@ -32,7 +32,7 @@ class VariableListItem
 	BinaryNinja::PossibleValueSet m_pvs;
 	bool m_hasUidf;
 
- public:
+public:
 	//! Create a new VariableListItem of the LocalVariable type.
 	VariableListItem(FunctionRef func, BinaryNinja::Variable var, BinaryNinja::PossibleValueSet pvs,
 	    bool hasUidf, std::string name);
@@ -91,7 +91,7 @@ class BINARYNINJAUIAPI VariableListModel : public QAbstractListModel
 	size_t m_prevVariableCount;
 	uint64_t m_prevSelectionId;
 
- public:
+public:
 	VariableListModel(QWidget* parent, ViewFrame* view, BinaryViewRef data);
 
 	//! Clear the list's content.
@@ -118,7 +118,8 @@ class BINARYNINJAUIAPI VariableListModel : public QAbstractListModel
 class VariableListItemDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
- public:
+
+public:
 	VariableListItemDelegate();
 
 	void paint(QPainter* painter, const QStyleOptionViewItem& opt, const QModelIndex& index) const;
@@ -143,7 +144,7 @@ class BINARYNINJAUIAPI VariableList : public SidebarWidget
 
 	void processRefresh();
 
- public:
+public:
 	VariableList(ViewFrame* view, BinaryViewRef data);
 
 	QWidget* headerWidget() override { return m_header; }
@@ -181,7 +182,7 @@ class BINARYNINJAUIAPI VariableList : public SidebarWidget
 
 class BINARYNINJAUIAPI VariableListSidebarWidgetType : public SidebarWidgetType
 {
- public:
+public:
 	VariableListSidebarWidgetType();
 	virtual SidebarWidget* createWidget(ViewFrame* frame, BinaryViewRef data) override;
 };

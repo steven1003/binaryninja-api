@@ -24,7 +24,7 @@
 
 class ScriptingConsole;
 
-class BINARYNINJAUIAPI ScriptingCompletionModel: public QAbstractListModel
+class BINARYNINJAUIAPI ScriptingCompletionModel : public QAbstractListModel
 {
 	Q_OBJECT
 	std::vector<std::string> m_completions;
@@ -42,7 +42,7 @@ public:
 	void setModelData(const std::vector<std::string>& completions, bool searching);
 };
 
-class BINARYNINJAUIAPI ScriptingCompletionPopup: public QDialog
+class BINARYNINJAUIAPI ScriptingCompletionPopup : public QDialog
 {
 	Q_OBJECT
 
@@ -65,9 +65,10 @@ Q_SIGNALS:
 	void complete(QString text);
 };
 
-class BINARYNINJAUIAPI ScriptingConsoleEdit: public QTextEdit
+class BINARYNINJAUIAPI ScriptingConsoleEdit : public QTextEdit
 {
 	Q_OBJECT
+
 public:
 	typedef std::function<std::vector<std::string>(const std::string&)> CompletionCallback;
 
@@ -89,7 +90,7 @@ public:
 	void setCharHeight(int height);
 	void setContinuation(bool cont);
 	void setCompletionCallback(CompletionCallback callback) { m_completionCallback = callback; }
-	void insertFromMimeData(const QMimeData * source) override;
+	void insertFromMimeData(const QMimeData* source) override;
 
 
 private Q_SLOTS:
@@ -99,7 +100,7 @@ protected:
 	virtual void keyPressEvent(QKeyEvent* event) override;
 };
 
-class BINARYNINJAUIAPI ScriptingConsoleOutput: public QTextEdit
+class BINARYNINJAUIAPI ScriptingConsoleOutput : public QTextEdit
 {
 	Q_OBJECT
 
@@ -113,6 +114,7 @@ class BINARYNINJAUIAPI ScriptingConsoleOutput: public QTextEdit
 public:
 	ScriptingConsoleOutput(ScriptingConsole* parent, Menu* menu);
 	bool IsNavigable(const QString& str, const std::pair<int, int>& offsetLen, uint64_t& value, bool highlight) const;
+
 protected:
 	void contextMenuEvent(QContextMenuEvent* event) override;
 
@@ -123,7 +125,7 @@ public Q_SLOTS:
 
 class ScriptingConsoleWidget;
 
-class BINARYNINJAUIAPI ScriptingConsole: public GlobalAreaWidget, BinaryNinja::ScriptingOutputListener
+class BINARYNINJAUIAPI ScriptingConsole : public GlobalAreaWidget, BinaryNinja::ScriptingOutputListener
 {
 	Q_OBJECT
 

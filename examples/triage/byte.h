@@ -14,7 +14,7 @@ struct ByteViewLine
 };
 
 
-class ByteView: public QAbstractScrollArea, public View
+class ByteView : public QAbstractScrollArea, public View
 {
 	BinaryViewRef m_data;
 	RenderContext m_render;
@@ -109,7 +109,7 @@ private Q_SLOTS:
 };
 
 
-class ByteViewType: public ViewType
+class ByteViewType : public ViewType
 {
 public:
 	ByteViewType();

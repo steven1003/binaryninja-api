@@ -27,10 +27,10 @@ class BINARYNINJAUIAPI CreateStackVariableDialog : public QDialog
 	//! Automatically update/sanitize the offset and name fields after input.
 	void autoFillFields();
 
- protected:
+protected:
 	void accept() override;
 
- public:
+public:
 	CreateStackVariableDialog(
 	    QWidget* parent, BinaryViewRef data, FunctionRef func, int64_t initialOffset = 0);
 };
@@ -38,7 +38,7 @@ class BINARYNINJAUIAPI CreateStackVariableDialog : public QDialog
 //! A single line in the stack view.
 class StackViewLine
 {
- public:
+public:
 	enum class Type
 	{
 		Variable,
@@ -128,7 +128,7 @@ class StackViewLine
 	//! Indent this line's content.
 	void indent(size_t levels = 1);
 
- private:
+private:
 	StackViewLine(StackViewLine::Type type, int64_t offset);
 
 	StackViewLine::Type m_type;
@@ -184,12 +184,12 @@ class BINARYNINJAUIAPI StackView : public QAbstractScrollArea, public View
 	//! Find the end of a stack void given a start offset.
 	int64_t findVoidEnd(int64_t start) const;
 
- protected:
+protected:
 	void paintEvent(QPaintEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseDoubleClickEvent(QMouseEvent* event) override;
 
- public:
+public:
 	StackView(ViewFrame* view, BinaryViewRef data);
 
 	//! Refresh the stack view's content.
@@ -252,7 +252,7 @@ class BINARYNINJAUIAPI StackViewSidebarWidget : public SidebarWidget
 	StackView* m_stackView;
 	QWidget* m_header;
 
- public:
+public:
 	StackViewSidebarWidget(ViewFrame* view, BinaryViewRef data);
 
 	void refresh();
@@ -263,7 +263,7 @@ class BINARYNINJAUIAPI StackViewSidebarWidget : public SidebarWidget
 
 class BINARYNINJAUIAPI StackViewSidebarWidgetType : public SidebarWidgetType
 {
- public:
+public:
 	StackViewSidebarWidgetType();
 	SidebarWidget* createWidget(ViewFrame* frame, BinaryViewRef data) override;
 };

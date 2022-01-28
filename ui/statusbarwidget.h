@@ -4,7 +4,7 @@
 #include <QtWidgets/QLabel>
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI StatusBarWidget: public QWidget
+class BINARYNINJAUIAPI StatusBarWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -13,7 +13,7 @@ public:
 	virtual void updateStatus();
 };
 
-class BINARYNINJAUIAPI DisabledOptionsStatusBarWidget: public StatusBarWidget
+class BINARYNINJAUIAPI DisabledOptionsStatusBarWidget : public StatusBarWidget
 {
 public:
 	DisabledOptionsStatusBarWidget(QFrame* parent);

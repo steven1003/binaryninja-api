@@ -15,7 +15,7 @@ class CloseButton;
 class TabDragIndicator;
 class SyncGroup;
 
-class BINARYNINJAUIAPI Pane: public QWidget
+class BINARYNINJAUIAPI Pane : public QWidget
 {
 	Q_OBJECT
 
@@ -63,7 +63,7 @@ public Q_SLOTS:
 	void newWindowForPaneRequested(QScreen* screen, QPoint pos);
 };
 
-class BINARYNINJAUIAPI SplitButton: public ClickableIcon
+class BINARYNINJAUIAPI SplitButton : public ClickableIcon
 {
 	Q_OBJECT
 
@@ -92,7 +92,7 @@ Q_SIGNALS:
 	void splitWithDirection(Qt::Orientation orientation);
 };
 
-class BINARYNINJAUIAPI PaneHeader: public QWidget
+class BINARYNINJAUIAPI PaneHeader : public QWidget
 {
 	Q_OBJECT
 
@@ -125,7 +125,7 @@ Q_SIGNALS:
 class ViewFrame;
 class ViewPaneHeader;
 
-class BINARYNINJAUIAPI ViewPane: public Pane
+class BINARYNINJAUIAPI ViewPane : public Pane
 {
 	Q_OBJECT
 
@@ -157,7 +157,7 @@ class DataTypeList;
 class ViewList;
 class SyncGroupWidget;
 
-class BINARYNINJAUIAPI ViewPaneHeaderSubtypeWidget: public QWidget
+class BINARYNINJAUIAPI ViewPaneHeaderSubtypeWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -166,7 +166,7 @@ public:
 	virtual void updateStatus() = 0;
 };
 
-class BINARYNINJAUIAPI ViewPaneHeader: public PaneHeader
+class BINARYNINJAUIAPI ViewPaneHeader : public PaneHeader
 {
 	Q_OBJECT
 
@@ -201,7 +201,7 @@ private Q_SLOTS:
 	void updateViewType(ViewFrame* frame);
 };
 
-class BINARYNINJAUIAPI WidgetPane: public Pane
+class BINARYNINJAUIAPI WidgetPane : public Pane
 {
 	Q_OBJECT
 
@@ -216,7 +216,7 @@ Q_SIGNALS:
 	void updateWidgetStatus();
 };
 
-class BINARYNINJAUIAPI WidgetPaneHeader: public PaneHeader
+class BINARYNINJAUIAPI WidgetPaneHeader : public PaneHeader
 {
 	Q_OBJECT
 
@@ -231,7 +231,7 @@ protected:
 
 class SplitPaneWidget;
 
-class BINARYNINJAUIAPI SplitPaneContainer: public QWidget
+class BINARYNINJAUIAPI SplitPaneContainer : public QWidget
 {
 	Q_OBJECT
 
@@ -303,7 +303,7 @@ private Q_SLOTS:
 	void childViewChanged(ViewFrame* frame);
 };
 
-class BINARYNINJAUIAPI SplitPaneWidget: public QWidget
+class BINARYNINJAUIAPI SplitPaneWidget : public QWidget
 {
 	Q_OBJECT
 

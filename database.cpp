@@ -91,8 +91,8 @@ Json::Value KeyValueStore::GetValue(const std::string& name) const
 	std::unique_ptr<Json::CharReader> reader(Json::CharReaderBuilder().newCharReader());
 	std::string errors;
 	if (!reader->parse(static_cast<const char*>(value.GetData()),
-	                   static_cast<const char*>(value.GetDataAt(value.GetLength())),
-	                   &json, &errors))
+	        static_cast<const char*>(value.GetDataAt(value.GetLength())),
+	        &json, &errors))
 	{
 		throw DatabaseException(errors);
 	}
@@ -201,7 +201,7 @@ int64_t Snapshot::GetId()
 std::string Snapshot::GetName()
 {
 	char* cstr = BNGetSnapshotName(m_object);
-	std::string str{cstr};
+	std::string str {cstr};
 	BNFreeString(cstr);
 	return str;
 }
@@ -286,7 +286,7 @@ DataBuffer Snapshot::GetFileContentsHash()
 
 vector<UndoEntry> Snapshot::GetUndoEntries()
 {
-	return GetUndoEntries([](size_t, size_t){ return true; });
+	return GetUndoEntries([](size_t, size_t) { return true; });
 }
 
 
@@ -325,7 +325,7 @@ vector<UndoEntry> Snapshot::GetUndoEntries(const std::function<bool(size_t, size
 
 Ref<KeyValueStore> Snapshot::ReadData()
 {
-	return ReadData([](size_t, size_t){ return true; });
+	return ReadData([](size_t, size_t) { return true; });
 }
 
 
@@ -421,7 +421,7 @@ std::vector<std::string> Database::GetGlobalKeys() const
 	}
 
 	std::vector<std::string> result;
-	for (size_t i = 0; i < count; i ++)
+	for (size_t i = 0; i < count; i++)
 	{
 		result.push_back(value[i]);
 	}

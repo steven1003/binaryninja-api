@@ -34,7 +34,7 @@ public:
 	bool isInProgress(const QUrl& url);
 };
 
-class TextBrowserDownloadQueue: public QObject
+class TextBrowserDownloadQueue : public QObject
 {
 	Q_OBJECT
 
@@ -60,7 +60,7 @@ Q_SIGNALS:
 	void dataDownloaded(QUrl name, QByteArray contents);
 };
 
-class TextBrowserDownloadThread: public QThread
+class TextBrowserDownloadThread : public QThread
 {
 	Q_OBJECT
 
@@ -77,7 +77,7 @@ public:
 	TextBrowserDownloadThread(TextBrowserDownloadQueue* queue);
 };
 
-class BINARYNINJAUIAPI TextBrowser: public QTextBrowser
+class BINARYNINJAUIAPI TextBrowser : public QTextBrowser
 {
 	Q_OBJECT
 
@@ -92,7 +92,7 @@ class BINARYNINJAUIAPI TextBrowser: public QTextBrowser
 	QString m_markdownPrefix;
 
 	void resizeImageFragment(QTextBlock& block, QTextFragment fragment,
-		QTextImageFormat imgFormat, const QImage& contents);
+	    QTextImageFormat imgFormat, const QImage& contents);
 
 protected:
 	virtual void resizeEvent(QResizeEvent* e) override;
@@ -102,7 +102,7 @@ public:
 	virtual ~TextBrowser();
 
 	void reset();
-	virtual QVariant loadResource(int type, const QUrl &name) override;
+	virtual QVariant loadResource(int type, const QUrl& name) override;
 
 	void resizeImagesToWidth();
 	QSharedPointer<TextBrowserDownloadCache> cache() { return m_cache; }

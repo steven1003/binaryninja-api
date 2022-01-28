@@ -2,9 +2,9 @@
 
 #include <QtWidgets/QGestureEvent>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QtWidgets/QAction>
+	#include <QtWidgets/QAction>
 #else
-#include <QtGui/QAction>
+	#include <QtGui/QAction>
 #endif
 #include <QtWidgets/QLabel>
 #include <QtCore/QPointer>
@@ -43,11 +43,10 @@ struct SelectionInfoForXref
 	FunctionRef func;
 	ArchitectureRef arch;
 
-	bool operator== (const SelectionInfoForXref& other) const
+	bool operator==(const SelectionInfoForXref& other) const
 	{
 		if (addrValid && other.addrValid)
-			return (start == other.start) && (end == other.end) &&
-				(func == other.func) && (arch == other.arch);
+			return (start == other.start) && (end == other.end) && (func == other.func) && (arch == other.arch);
 		else if (typeValid && other.typeValid)
 			return type == other.type;
 		else if (typeFieldValid && other.typeFieldValid)
@@ -57,11 +56,11 @@ struct SelectionInfoForXref
 		return false;
 	}
 
-	bool operator!= (const SelectionInfoForXref& other) const { return !(*this == other); }
+	bool operator!=(const SelectionInfoForXref& other) const { return !(*this == other); }
 	bool isValid() const { return addrValid || typeValid || typeFieldValid || localVarValid; }
 };
 
-class BINARYNINJAUIAPI HistoryEntry: public BinaryNinja::RefCountObject
+class BINARYNINJAUIAPI HistoryEntry : public BinaryNinja::RefCountObject
 {
 	QString m_viewType;
 
@@ -128,29 +127,29 @@ public:
 	virtual bool canCompile() { return false; }
 
 	virtual bool findNextData(uint64_t start, uint64_t end, const BinaryNinja::DataBuffer& data,
-		uint64_t& addr, BNFindFlag flags,
-		const std::function<bool (size_t current, size_t total)>& cb);
+	    uint64_t& addr, BNFindFlag flags,
+	    const std::function<bool(size_t current, size_t total)>& cb);
 	virtual bool findNextText(uint64_t start, uint64_t end, const std::string& text,
-		uint64_t& addr,	DisassemblySettingsRef settings, BNFindFlag flags,
-		BNFunctionGraphType graph,
-		const std::function<bool (size_t current, size_t total)>& cb);
+	    uint64_t& addr, DisassemblySettingsRef settings, BNFindFlag flags,
+	    BNFunctionGraphType graph,
+	    const std::function<bool(size_t current, size_t total)>& cb);
 	virtual bool findNextConstant(uint64_t start, uint64_t end, uint64_t constant,
-		uint64_t& addr, DisassemblySettingsRef settings, BNFunctionGraphType graph,
-		const std::function<bool (size_t current, size_t total)>& cb);
+	    uint64_t& addr, DisassemblySettingsRef settings, BNFunctionGraphType graph,
+	    const std::function<bool(size_t current, size_t total)>& cb);
 
 	virtual bool findAllData(uint64_t start, uint64_t end, const BinaryNinja::DataBuffer& data, BNFindFlag flags,
-		const std::function<bool (size_t current, size_t total)>& cb,
-		const std::function<bool (uint64_t addr, const BinaryNinja::DataBuffer& match)>& matchCallback);
+	    const std::function<bool(size_t current, size_t total)>& cb,
+	    const std::function<bool(uint64_t addr, const BinaryNinja::DataBuffer& match)>& matchCallback);
 	virtual bool findAllText(uint64_t start, uint64_t end, const std::string& data,
-		DisassemblySettingsRef settings, BNFindFlag flags, BNFunctionGraphType graph,
-		const std::function<bool (size_t current, size_t total)>& cb,
-		const std::function<bool (uint64_t addr, const std::string& match,
-			const BinaryNinja::LinearDisassemblyLine& line)>& matchCallback);
+	    DisassemblySettingsRef settings, BNFindFlag flags, BNFunctionGraphType graph,
+	    const std::function<bool(size_t current, size_t total)>& cb,
+	    const std::function<bool(uint64_t addr, const std::string& match,
+	        const BinaryNinja::LinearDisassemblyLine& line)>& matchCallback);
 	virtual bool findAllConstant(uint64_t start, uint64_t end, uint64_t constant,
-		DisassemblySettingsRef settings, BNFunctionGraphType graph,
-		const std::function<bool (size_t current, size_t total)>& cb,
-		const std::function<bool (uint64_t addr,
-			const BinaryNinja::LinearDisassemblyLine& line)>& matchCallback);
+	    DisassemblySettingsRef settings, BNFunctionGraphType graph,
+	    const std::function<bool(size_t current, size_t total)>& cb,
+	    const std::function<bool(uint64_t addr,
+	        const BinaryNinja::LinearDisassemblyLine& line)>& matchCallback);
 
 	virtual BinaryViewRef getData() = 0;
 	virtual uint64_t getCurrentOffset() = 0;
@@ -169,9 +168,9 @@ public:
 	void setBinaryDataNavigable(bool navigable) { m_binaryDataNavigable = navigable; }
 
 	virtual bool closeRequest() { return true; }
-	virtual void closing() { }
-	virtual void updateFonts() { }
-	virtual void updateTheme() { }
+	virtual void closing() {}
+	virtual void updateFonts() {}
+	virtual void updateTheme() {}
 
 	virtual void undo();
 	virtual void redo();
@@ -214,7 +213,7 @@ public:
 	virtual MediumLevelILFunctionRef getCurrentMediumLevelILFunction() { return nullptr; }
 	virtual HighLevelILFunctionRef getCurrentHighLevelILFunction() { return nullptr; }
 	virtual BNFunctionGraphType getILViewType() { return InvalidILViewType; }
-	virtual void setILViewType(BNFunctionGraphType ilViewType) { }
+	virtual void setILViewType(BNFunctionGraphType ilViewType) {}
 	virtual size_t getCurrentILInstructionIndex() { return BN_INVALID_EXPR; }
 
 	virtual QFont getFont() = 0;
@@ -234,8 +233,16 @@ public:
 	void forceSyncFromView(ViewFrame* frame = nullptr);
 
 	virtual void clearRelatedHighlights() {}
-	virtual void setRelatedIndexHighlights(FunctionRef func, const std::set<size_t>& related) { (void)func; (void)related; }
-	virtual void setRelatedInstructionHighlights(FunctionRef func, const std::set<uint64_t>& related) { (void)func; (void)related; }
+	virtual void setRelatedIndexHighlights(FunctionRef func, const std::set<size_t>& related)
+	{
+		(void)func;
+		(void)related;
+	}
+	virtual void setRelatedInstructionHighlights(FunctionRef func, const std::set<uint64_t>& related)
+	{
+		(void)func;
+		(void)related;
+	}
 
 	static void registerActions();
 };
@@ -249,7 +256,12 @@ class BINARYNINJAUIAPI ViewNavigationMode
 	ViewNavigationMode();
 
 public:
-	ViewNavigationMode(View* view, std::string mode) : m_view(view) { m_mode = m_view->getNavigationMode(); m_view->setNavigationMode(mode); }
+	ViewNavigationMode(View* view, std::string mode) :
+	    m_view(view)
+	{
+		m_mode = m_view->getNavigationMode();
+		m_view->setNavigationMode(mode);
+	}
 	~ViewNavigationMode() { m_view->setNavigationMode(m_mode); }
 };
 
@@ -264,16 +276,20 @@ class BINARYNINJAUIAPI ViewLocation
 	size_t m_instrIndex = BN_INVALID_EXPR;
 
 public:
-	ViewLocation() { }
-	ViewLocation(const QString& viewType, uint64_t offset) : m_valid(true), m_viewType(viewType), m_offset(offset) { }
-	ViewLocation(const QString& viewType, uint64_t offset, BNFunctionGraphType ilViewType) : m_valid(true),
-		m_viewType(viewType), m_offset(offset), m_ilViewType(ilViewType) { }
-	ViewLocation(const QString& viewType, uint64_t offset, BNFunctionGraphType ilViewType, size_t instrIndex) : m_valid(true),
-		m_viewType(viewType), m_offset(offset), m_ilViewType(ilViewType), m_instrIndex(instrIndex) { }
+	ViewLocation() {}
+	ViewLocation(const QString& viewType, uint64_t offset) :
+	    m_valid(true), m_viewType(viewType), m_offset(offset) {}
+	ViewLocation(const QString& viewType, uint64_t offset, BNFunctionGraphType ilViewType) :
+	    m_valid(true),
+	    m_viewType(viewType), m_offset(offset), m_ilViewType(ilViewType) {}
+	ViewLocation(const QString& viewType, uint64_t offset, BNFunctionGraphType ilViewType, size_t instrIndex) :
+	    m_valid(true),
+	    m_viewType(viewType), m_offset(offset), m_ilViewType(ilViewType), m_instrIndex(instrIndex) {}
 	ViewLocation(const QString& viewType, FunctionRef function, uint64_t offset, BNFunctionGraphType ilViewType, size_t instrIndex) :
-		m_valid(true), m_viewType(viewType), m_function(function), m_offset(offset), m_ilViewType(ilViewType), m_instrIndex(instrIndex) { }
-	ViewLocation(FunctionRef function, uint64_t offset, BNFunctionGraphType ilViewType, size_t instrIndex = BN_INVALID_EXPR) : m_valid(true),
-		m_function(function), m_offset(offset), m_ilViewType(ilViewType), m_instrIndex(instrIndex) { }
+	    m_valid(true), m_viewType(viewType), m_function(function), m_offset(offset), m_ilViewType(ilViewType), m_instrIndex(instrIndex) {}
+	ViewLocation(FunctionRef function, uint64_t offset, BNFunctionGraphType ilViewType, size_t instrIndex = BN_INVALID_EXPR) :
+	    m_valid(true),
+	    m_function(function), m_offset(offset), m_ilViewType(ilViewType), m_instrIndex(instrIndex) {}
 
 	bool isValid() const { return m_valid; }
 	QString getViewType() const { return m_viewType; }
@@ -290,12 +306,7 @@ public:
 
 	bool operator==(const ViewLocation& other) const
 	{
-		return (m_valid == other.m_valid) &&
-				(m_viewType == other.m_viewType) &&
-				(m_offset == other.m_offset) &&
-				(m_ilViewType == other.m_ilViewType) &&
-				(m_instrIndex == other.m_instrIndex) &&
-				(m_function == other.m_function);
+		return (m_valid == other.m_valid) && (m_viewType == other.m_viewType) && (m_offset == other.m_offset) && (m_ilViewType == other.m_ilViewType) && (m_instrIndex == other.m_instrIndex) && (m_function == other.m_function);
 	}
 	bool operator!=(const ViewLocation& other) const { return !((*this) == other); }
 };
@@ -321,7 +332,7 @@ private:
 	ViewFrame* searchForOtherPane(const std::function<void(const std::function<void(ViewPane*)>&)>& enumerator);
 
 	FileContext* m_context;
-	bool m_fileContentsLock = true; // file contents protection from accidental modification in the UI
+	bool m_fileContentsLock = true;  // file contents protection from accidental modification in the UI
 	BinaryViewRef m_data;
 	QWidget* m_view = nullptr;
 	QWidget* m_viewContainer;
@@ -385,7 +396,7 @@ public:
 
 	Sidebar* getSidebar();
 
-	template<class T>
+	template <class T>
 	T* getSidebarWidget(const QString& name)
 	{
 		Sidebar* sidebar = getSidebar();
@@ -403,7 +414,7 @@ public:
 	bool navigateToFunction(FunctionRef func, uint64_t offset, bool updateInfo = true, bool addHistoryEntry = true);
 	bool goToReference(BinaryViewRef data, FunctionRef func, uint64_t source, uint64_t target, bool addHistoryEntry = true);
 	bool navigateToViewLocation(BinaryViewRef data, const ViewLocation& viewLocation,
-		bool addHistoryEntry = true, bool center = false);
+	    bool addHistoryEntry = true, bool center = false);
 	bool navigateToHistoryEntry(BinaryNinja::Ref<HistoryEntry> entry);
 	QString getTypeForView(QWidget* view) const;
 	QString getDataTypeForView(const QString& type) const;
@@ -433,11 +444,11 @@ public:
 	void forward();
 
 	static bool getAddressFromString(QWidget* parent, BinaryViewRef data, uint64_t& offset,
-		uint64_t currentAddress, const QString& addrStr, std::string& errorString);
+	    uint64_t currentAddress, const QString& addrStr, std::string& errorString);
 	static bool getAddressFromInput(QWidget* parent, BinaryViewRef data, uint64_t& offset,
-		uint64_t currentAddress, const QString& title = "Go to Address", const QString& msg = "Address:", bool defaultToCurrent = false);
+	    uint64_t currentAddress, const QString& title = "Go to Address", const QString& msg = "Address:", bool defaultToCurrent = false);
 	static bool getFileOffsetFromInput(QWidget* parent, BinaryViewRef data, uint64_t& offset,
-		uint64_t currentAddress, const QString& title = "Go to File Offset", const QString& msg = "File Offset:", bool defaultToCurrent = false);
+	    uint64_t currentAddress, const QString& title = "Go to File Offset", const QString& msg = "File Offset:", bool defaultToCurrent = false);
 
 	void setCurrentFunction(FunctionRef func);
 	void updateCrossReferences();

@@ -12,7 +12,7 @@
 
 #define TAGS_UPDATE_CHECK_INTERVAL 200
 
-class BINARYNINJAUIAPI TagTypeListModel: public QAbstractItemModel, public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI TagTypeListModel : public QAbstractItemModel, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
 
@@ -48,7 +48,7 @@ Q_SIGNALS:
 };
 
 
-class BINARYNINJAUIAPI TagTypeItemDelegate: public QItemDelegate
+class BINARYNINJAUIAPI TagTypeItemDelegate : public QItemDelegate
 {
 	Q_OBJECT
 
@@ -67,11 +67,11 @@ public:
 	virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& idx) const override;
 	virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& idx) const override;
 	virtual void setEditorData(QWidget* editor, const QModelIndex& index) const override;
-	virtual bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
+	virtual bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
 };
 
 
-class BINARYNINJAUIAPI TagTypeList: public QTableView, public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI TagTypeList : public QTableView, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
 
@@ -91,8 +91,8 @@ class BINARYNINJAUIAPI TagTypeList: public QTableView, public BinaryNinja::Binar
 protected:
 	virtual void contextMenuEvent(QContextMenuEvent* event) override;
 
-	virtual void showEvent(QShowEvent *event) override;
-	virtual void hideEvent(QHideEvent *event) override;
+	virtual void showEvent(QShowEvent* event) override;
+	virtual void hideEvent(QHideEvent* event) override;
 
 	virtual void OnTagTypeUpdated(BinaryNinja::BinaryView*, const TagTypeRef) override;
 
@@ -118,7 +118,7 @@ public:
 	bool hasSelection();
 };
 
-class BINARYNINJAUIAPI TagTypeDialogModel: public QAbstractItemModel
+class BINARYNINJAUIAPI TagTypeDialogModel : public QAbstractItemModel
 {
 	Q_OBJECT
 
@@ -140,7 +140,7 @@ public:
 	virtual QVariant data(const QModelIndex& i, int role) const override;
 };
 
-class BINARYNINJAUIAPI TagTypeSelectDialog: public QDialog
+class BINARYNINJAUIAPI TagTypeSelectDialog : public QDialog
 {
 	Q_OBJECT
 

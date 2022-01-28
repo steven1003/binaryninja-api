@@ -8,7 +8,7 @@
 #include "viewframe.h"
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI ReportCollectionWidget: public QWidget, public ViewContainer
+class BINARYNINJAUIAPI ReportCollectionWidget : public QWidget, public ViewContainer
 {
 	Q_OBJECT
 

@@ -6,7 +6,7 @@
 #include "uitypes.h"
 
 
-class NavigationLabel: public QLabel
+class NavigationLabel : public QLabel
 {
 	std::function<void()> m_func;
 
@@ -18,7 +18,7 @@ protected:
 };
 
 
-class NavigationAddressLabel: public NavigationLabel
+class NavigationAddressLabel : public NavigationLabel
 {
 	uint64_t m_address;
 
@@ -29,7 +29,7 @@ public:
 };
 
 
-class NavigationCodeLabel: public NavigationLabel
+class NavigationCodeLabel : public NavigationLabel
 {
 	uint64_t m_address;
 
@@ -73,17 +73,17 @@ public:
 };
 
 
-class GenericHeaders: public Headers
+class GenericHeaders : public Headers
 {
 public:
 	GenericHeaders(BinaryViewRef data);
 };
 
 
-class PEHeaders: public Headers
+class PEHeaders : public Headers
 {
 	uint64_t GetValueOfStructMember(BinaryViewRef data, const std::string& structName, uint64_t structStart,
-		const std::string& fieldName);
+	    const std::string& fieldName);
 	uint64_t GetAddressAfterStruct(BinaryViewRef data, const std::string& structName, uint64_t structStart);
 	QString GetNameOfEnumerationMember(BinaryViewRef data, const std::string& enumName, uint64_t value);
 
@@ -92,7 +92,7 @@ public:
 };
 
 
-class HeaderWidget: public QWidget
+class HeaderWidget : public QWidget
 {
 public:
 	HeaderWidget(QWidget* parent, const Headers& headers);

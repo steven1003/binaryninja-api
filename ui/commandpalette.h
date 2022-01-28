@@ -20,7 +20,7 @@ class CommandPalette;
 class CommandListFilter;
 
 
-class BINARYNINJAUIAPI CommandListDelegate: public QStyledItemDelegate
+class BINARYNINJAUIAPI CommandListDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 	QFont m_font;
@@ -29,10 +29,10 @@ class BINARYNINJAUIAPI CommandListDelegate: public QStyledItemDelegate
 public:
 	CommandListDelegate(QWidget* parent);
 	virtual void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& idx) const override;
-	virtual QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+	virtual QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
-class BINARYNINJAUIAPI CommandListModel: public QAbstractItemModel
+class BINARYNINJAUIAPI CommandListModel : public QAbstractItemModel
 {
 	Q_OBJECT
 
@@ -61,7 +61,7 @@ public:
 	void addRecentItem(const QString& name);
 };
 
-class BINARYNINJAUIAPI CommandList: public QListView
+class BINARYNINJAUIAPI CommandList : public QListView
 {
 	Q_OBJECT
 
@@ -84,7 +84,7 @@ protected:
 	virtual void focusOutEvent(QFocusEvent* event) override;
 };
 
-class BINARYNINJAUIAPI CommandListFilter: public QLineEdit
+class BINARYNINJAUIAPI CommandListFilter : public QLineEdit
 {
 	Q_OBJECT
 
@@ -103,7 +103,7 @@ protected:
 	virtual void focusOutEvent(QFocusEvent* event) override;
 };
 
-class BINARYNINJAUIAPI CommandPalette: public QFrame
+class BINARYNINJAUIAPI CommandPalette : public QFrame
 {
 	Q_OBJECT
 

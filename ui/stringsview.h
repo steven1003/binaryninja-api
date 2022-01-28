@@ -9,7 +9,7 @@
 
 #define STRINGS_LIST_UPDATE_INTERVAL 250
 
-class BINARYNINJAUIAPI StringsListModel: public QAbstractItemModel, public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI StringsListModel : public QAbstractItemModel, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
 
@@ -54,7 +54,7 @@ public:
 	void setFilter(const std::string& filter);
 };
 
-class BINARYNINJAUIAPI StringItemDelegate: public QStyledItemDelegate
+class BINARYNINJAUIAPI StringItemDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 
@@ -76,7 +76,7 @@ public:
 
 class StringsContainer;
 
-class BINARYNINJAUIAPI StringsView: public QListView, public View, public FilterTarget
+class BINARYNINJAUIAPI StringsView : public QListView, public View, public FilterTarget
 {
 	Q_OBJECT
 
@@ -111,6 +111,7 @@ public:
 	virtual void selectFirstItem() override;
 	virtual void activateFirstItem() override;
 	virtual QFont getFont() override { return m_itemDelegate->getFont(); }
+
 protected:
 	virtual void keyPressEvent(QKeyEvent* event) override;
 	virtual bool event(QEvent* event) override;
@@ -120,7 +121,7 @@ private Q_SLOTS:
 	void updateTimerEvent();
 };
 
-class BINARYNINJAUIAPI StringsContainer: public QWidget, public ViewContainer
+class BINARYNINJAUIAPI StringsContainer : public QWidget, public ViewContainer
 {
 	Q_OBJECT
 
@@ -141,7 +142,7 @@ protected:
 	virtual void focusInEvent(QFocusEvent* event) override;
 };
 
-class StringsViewType: public ViewType
+class StringsViewType : public ViewType
 {
 	static StringsViewType* m_instance;
 
@@ -153,12 +154,13 @@ public:
 };
 
 
-class BINARYNINJAUIAPI StringsViewSidebarWidget: public SidebarWidget
+class BINARYNINJAUIAPI StringsViewSidebarWidget : public SidebarWidget
 {
 	Q_OBJECT
 
 	QWidget* m_header;
 	StringsContainer* m_container;
+
 public:
 	StringsViewSidebarWidget(BinaryViewRef data, ViewFrame* frame);
 	virtual QWidget* headerWidget() override { return m_header; }
@@ -166,7 +168,7 @@ public:
 };
 
 
-class BINARYNINJAUIAPI StringsViewSidebarWidgetType: public SidebarWidgetType
+class BINARYNINJAUIAPI StringsViewSidebarWidgetType : public SidebarWidgetType
 {
 public:
 	StringsViewSidebarWidgetType();

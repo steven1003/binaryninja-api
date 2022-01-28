@@ -17,14 +17,14 @@ class Menu;
 
 struct BINARYNINJAUIAPI DockProperties
 {
-	DockProperties() { };
+	DockProperties() {};
 	DockProperties(QDockWidget* dw, bool vis, Qt::DockWidgetArea dar, Qt::Orientation dor, bool dvis, bool vs) :
-		dockWidget(dw), visibleState(vis), defaultArea(dar), defaultOrientation(dor), defaultVisibility(dvis),
-		viewSensitive(vs), neverBeenVisible(true), sizeStash(0, 0), actionOnShow(nullptr) { }
-	DockProperties(const DockProperties &dp) :
-		dockWidget(dp.dockWidget), visibleState(dp.visibleState), defaultArea(dp.defaultArea),
-		defaultOrientation(dp.defaultOrientation), defaultVisibility(dp.defaultVisibility),
-		viewSensitive(dp.viewSensitive), neverBeenVisible(dp.neverBeenVisible), sizeStash(dp.sizeStash), actionOnShow(dp.actionOnShow) { }
+	    dockWidget(dw), visibleState(vis), defaultArea(dar), defaultOrientation(dor), defaultVisibility(dvis),
+	    viewSensitive(vs), neverBeenVisible(true), sizeStash(0, 0), actionOnShow(nullptr) {}
+	DockProperties(const DockProperties& dp) :
+	    dockWidget(dp.dockWidget), visibleState(dp.visibleState), defaultArea(dp.defaultArea),
+	    defaultOrientation(dp.defaultOrientation), defaultVisibility(dp.defaultVisibility),
+	    viewSensitive(dp.viewSensitive), neverBeenVisible(dp.neverBeenVisible), sizeStash(dp.sizeStash), actionOnShow(dp.actionOnShow) {}
 	DockProperties& operator=(const DockProperties& dp)
 	{
 		dockWidget = dp.dockWidget;
@@ -53,7 +53,7 @@ struct BINARYNINJAUIAPI DockProperties
 
 struct DockSizePrefs
 {
-	DockSizePrefs() { }
+	DockSizePrefs() {}
 	QList<QDockWidget*> docks;
 	QList<int> hDockSizes;
 	QList<int> vDockSizes;
@@ -77,18 +77,18 @@ public:
 	QString getName() const { return m_name; }
 	QWidget* getParentWindow() const { return m_parentWindow; }
 
-	virtual void notifyFontChanged() { }
-	virtual void notifyOffsetChanged(uint64_t /*offset*/) { }
-	virtual void notifyThemeChanged() { }
-	virtual void notifyViewChanged(ViewFrame* /*frame*/) { }
-	virtual void notifyViewLocationChanged(View* /*view*/, const ViewLocation& /*viewLocation*/) { }
-	virtual void notifyVisibilityChanged(bool /*visible*/) { }
+	virtual void notifyFontChanged() {}
+	virtual void notifyOffsetChanged(uint64_t /*offset*/) {}
+	virtual void notifyThemeChanged() {}
+	virtual void notifyViewChanged(ViewFrame* /*frame*/) {}
+	virtual void notifyViewLocationChanged(View* /*view*/, const ViewLocation& /*viewLocation*/) {}
+	virtual void notifyVisibilityChanged(bool /*visible*/) {}
 	virtual bool shouldBeVisible(ViewFrame* /*frame*/) { return true; }
 };
 Q_DECLARE_INTERFACE(DockContextHandler, "binary.ninja.dockcontexthandler/1.0");
 
 
-class BINARYNINJAUIAPI DockHandler: public QObject
+class BINARYNINJAUIAPI DockHandler : public QObject
 {
 	Q_OBJECT
 

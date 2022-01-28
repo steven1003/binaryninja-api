@@ -14,7 +14,7 @@ enum CompileMode
 	CompilePatch
 };
 
-class BINARYNINJAUIAPI CompileDialog: public QDialog
+class BINARYNINJAUIAPI CompileDialog : public QDialog
 {
 	Q_OBJECT
 

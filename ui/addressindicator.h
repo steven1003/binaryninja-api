@@ -6,7 +6,7 @@
 #include "uicontext.h"
 
 
-class BINARYNINJAUIAPI AddressIndicator: public MenuHelper
+class BINARYNINJAUIAPI AddressIndicator : public MenuHelper
 {
 	Q_OBJECT
 

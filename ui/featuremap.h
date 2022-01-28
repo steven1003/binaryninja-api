@@ -2,9 +2,9 @@
 
 #include <QtGui/QColor>
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QtWidgets/QAction>
+	#include <QtWidgets/QAction>
 #else
-#include <QtGui/QAction>
+	#include <QtGui/QAction>
 #endif
 #include <QtGui/QImage>
 #include <QtWidgets/QMenu>
@@ -27,7 +27,7 @@ class Menu;
 class View;
 class SplitPaneWidget;
 
-class BINARYNINJAUIAPI FeatureMap: public QWidget, public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI FeatureMap : public QWidget, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
 
@@ -58,7 +58,7 @@ class BINARYNINJAUIAPI FeatureMap: public QWidget, public BinaryNinja::BinaryDat
 	Menu m_menu;
 	ContextMenuManager* m_contextMenuManager;
 
-	class BackgroundRefresh: public BinaryNinja::RefCountObject
+	class BackgroundRefresh : public BinaryNinja::RefCountObject
 	{
 		std::mutex m_mutex;
 		bool m_valid;

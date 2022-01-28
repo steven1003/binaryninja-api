@@ -18,7 +18,6 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-
 import traceback
 import ctypes
 
@@ -48,6 +47,7 @@ class TypeContext:
 	def offset(self):
 		"""The offset into the given type object"""
 		return self._offset
+
 
 class DataRenderer:
 	"""
@@ -95,8 +95,10 @@ class DataRenderer:
 
 	@staticmethod
 	def is_type_of_struct_name(t, name, context):
-		return (t.type_class == enums.TypeClass.StructureTypeClass and len(context) > 0
-			and isinstance(context[-1].type, types.NamedTypeReferenceType) and context[-1].type.name == name)
+		return (
+		  t.type_class == enums.TypeClass.StructureTypeClass and len(context) > 0
+		  and isinstance(context[-1].type, types.NamedTypeReferenceType) and context[-1].type.name == name
+		)
 
 	def register_type_specific(self):
 		core.BNRegisterTypeSpecificDataRenderer(core.BNGetDataRendererContainer(), self.handle)

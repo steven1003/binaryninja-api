@@ -28,11 +28,12 @@ struct BINARYNINJAUIAPI LogListItem
 	std::string text;
 	bool selected;
 
-	LogListItem(BNLogLevel level, std::string text, bool selected = false) : level(level), text(text), selected(selected) { };
+	LogListItem(BNLogLevel level, std::string text, bool selected = false) :
+	    level(level), text(text), selected(selected) {};
 };
 
 
-class BINARYNINJAUIAPI LogListModel: public QAbstractItemModel, public BinaryNinja::LogListener
+class BINARYNINJAUIAPI LogListModel : public QAbstractItemModel, public BinaryNinja::LogListener
 {
 	Q_OBJECT
 
@@ -70,7 +71,7 @@ public Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI LogItemDelegate: public QStyledItemDelegate
+class BINARYNINJAUIAPI LogItemDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 
@@ -102,7 +103,7 @@ public Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI LogView: public GlobalAreaWidget
+class BINARYNINJAUIAPI LogView : public GlobalAreaWidget
 {
 	Q_OBJECT
 
@@ -154,7 +155,7 @@ private Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI LogStatus: public QWidget
+class BINARYNINJAUIAPI LogStatus : public QWidget
 {
 	Q_OBJECT
 

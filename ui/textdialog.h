@@ -8,7 +8,7 @@
 #include "uitypes.h"
 #include "binaryninjaapi.h"
 
-class BINARYNINJAUIAPI TextDialog: public QDialog
+class BINARYNINJAUIAPI TextDialog : public QDialog
 {
 	Q_OBJECT
 	QString m_qSettingsListName;
@@ -21,9 +21,9 @@ class BINARYNINJAUIAPI TextDialog: public QDialog
 
 public:
 	TextDialog(QWidget* parent, const QString& title, const QString& msg, const QString& qSettingsListName,
-		const std::string& initialText = "");
+	    const std::string& initialText = "");
 	TextDialog(QWidget* parent, const QString& title, const QString& msg, const QString& qSettingsListName,
-		const QString& initialText);
+	    const QString& initialText);
 	QString getItem();
 	void setInitialText(const std::string& initialText) { m_initialText = QString::fromStdString(initialText); }
 	void commitHistory();

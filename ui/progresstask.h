@@ -21,7 +21,7 @@
 /*!
 	Dialog displaying a progress bar and cancel button
  */
-class BINARYNINJAUIAPI ProgressDialog: public QDialog
+class BINARYNINJAUIAPI ProgressDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -35,7 +35,7 @@ class BINARYNINJAUIAPI ProgressDialog: public QDialog
 	std::chrono::steady_clock::time_point m_lastUpdate;
 
 public:
-	ProgressDialog(QWidget* parent, const QString& title, const QString& text, const QString& cancel=QString());
+	ProgressDialog(QWidget* parent, const QString& title, const QString& text, const QString& cancel = QString());
 
 	bool wasCancelled() const;
 
@@ -84,7 +84,7 @@ Q_SIGNALS:
 		task->wait();
 		// Task deletes itself later
  */
-class BINARYNINJAUIAPI ProgressTask: public QObject
+class BINARYNINJAUIAPI ProgressTask : public QObject
 {
 	Q_OBJECT
 
@@ -114,7 +114,7 @@ public:
 	                The function should call the progress function periodically to signal updates and check for cancellation.
 	 */
 	ProgressTask(QWidget* parent, const QString& name, const QString& text, const QString& cancel,
-		std::function<void(std::function<bool(size_t, size_t)>)> func);
+	    std::function<void(std::function<bool(size_t, size_t)>)> func);
 	virtual ~ProgressTask();
 
 	/*!
@@ -172,7 +172,7 @@ Q_SIGNALS:
 	            function can either return void or some type that works with QVariant
 	\return New function whose signature is QVariant(QVariant)
  */
-template<typename Func>
+template <typename Func>
 std::function<QVariant(QVariant)> convertToQVariantFunction(Func&& func);
 
 
@@ -242,9 +242,10 @@ std::function<QVariant(QVariant)> convertToQVariantFunction(Func&& func);
 		// Call start to start the thread
 		->start();
  */
-class BINARYNINJAUIAPI BackgroundThread: public QObject
+class BINARYNINJAUIAPI BackgroundThread : public QObject
 {
 	Q_OBJECT
+
 public:
 	typedef std::function<bool(size_t, size_t)> ProgressFunction;
 
@@ -268,7 +269,8 @@ private:
 	std::vector<std::pair<FunctionType, CatchFunction>> m_catch;
 	std::vector<std::pair<FunctionType, FinallyFunction>> m_finally;
 
-	BackgroundThread(): QObject(), m_finished(false), m_exception()
+	BackgroundThread() :
+	    QObject(), m_finished(false), m_exception()
 	{
 	}
 
@@ -277,13 +279,12 @@ private:
 		QVariant value = m_init;
 		try
 		{
-			for (auto& func: m_then)
+			for (auto& func : m_then)
 			{
 				switch (func.first)
 				{
 				case MainThread:
-					BinaryNinja::ExecuteOnMainThreadAndWait([&]()
-					{
+					BinaryNinja::ExecuteOnMainThreadAndWait([&]() {
 						value = func.second(value);
 					});
 					break;
@@ -292,15 +293,14 @@ private:
 					break;
 				}
 			}
-			for (auto& func: m_finally)
+			for (auto& func : m_finally)
 			{
 				try
 				{
 					switch (func.first)
 					{
 					case MainThread:
-						BinaryNinja::ExecuteOnMainThreadAndWait([&]()
-						{
+						BinaryNinja::ExecuteOnMainThreadAndWait([&]() {
 							func.second(true);
 						});
 						break;
@@ -325,15 +325,14 @@ private:
 		catch (...)
 		{
 			std::exception_ptr exc = std::current_exception();
-			for (auto& func: m_catch)
+			for (auto& func : m_catch)
 			{
 				try
 				{
 					switch (func.first)
 					{
 					case MainThread:
-						BinaryNinja::ExecuteOnMainThreadAndWait([&]()
-						{
+						BinaryNinja::ExecuteOnMainThreadAndWait([&]() {
 							func.second(exc);
 						});
 						break;
@@ -347,15 +346,14 @@ private:
 					exc = std::current_exception();
 				}
 			}
-			for (auto& func: m_finally)
+			for (auto& func : m_finally)
 			{
 				try
 				{
 					switch (func.first)
 					{
 					case MainThread:
-						BinaryNinja::ExecuteOnMainThreadAndWait([&]()
-						{
+						BinaryNinja::ExecuteOnMainThreadAndWait([&]() {
 							func.second(false);
 						});
 						break;
@@ -406,7 +404,7 @@ public:
 		else
 		{
 			m_init = init;
-			m_future = QtConcurrent::run([&]{
+			m_future = QtConcurrent::run([&] {
 				runThread();
 				{
 					std::unique_lock lock(m_finishLock);
@@ -463,7 +461,7 @@ public:
 	    \param func Function to run on background thread
 	    \return This BackgroundThread
 	 */
-	template<typename Func>
+	template <typename Func>
 	BackgroundThread* thenBackground(Func&& func)
 	{
 		m_then.push_back({Background, convertToQVariantFunction(std::forward<Func>(func))});
@@ -475,7 +473,7 @@ public:
 	    \param func Function to run on main thread
 	    \return This BackgroundThread
 	 */
-	template<typename Func>
+	template <typename Func>
 	BackgroundThread* thenMainThread(Func&& func)
 	{
 		m_then.push_back({MainThread, convertToQVariantFunction(std::forward<Func>(func))});
@@ -491,55 +489,55 @@ public:
 	    \param func Function to run on background thread
 	    \return This BackgroundThread
 	 */
-	template<typename Func>
+	template <typename Func>
 	BackgroundThread* thenBackgroundWithProgress(QWidget* parent, const QString& title, const QString& text, const QString& cancel, Func&& func)
 	{
 		m_then.push_back({MainThread, [=](QVariant v) {
-			QVariant result;
-			// Since the task starts immediately, we need to hold a lock to its value
-			// Just in case it manages to get to the part of the lambda where it reads the value
-			// before this thread actually assigns it.
-			// This is *probably* not a race in practice due to the variable being stored on the stack before construction.
-			std::mutex taskMutex;
-			taskMutex.lock();
-			ProgressTask* task = new ProgressTask(parent, title, text, cancel, [&](ProgressFunction progress) {
-				auto innerProgress = [=](size_t cur, size_t max) {
-					// Fix dialog disappearing if the backgrounded task thinks it's done
-					if (cur >= max)
-					{
-						cur = max - 1;
-					}
-					return progress(cur, max);
-				};
-				try
-				{
-					// See above comment about race conditions
-					taskMutex.lock();
-					ProgressTask* innerTask = task;
-					taskMutex.unlock();
+			                  QVariant result;
+			                  // Since the task starts immediately, we need to hold a lock to its value
+			                  // Just in case it manages to get to the part of the lambda where it reads the value
+			                  // before this thread actually assigns it.
+			                  // This is *probably* not a race in practice due to the variable being stored on the stack before construction.
+			                  std::mutex taskMutex;
+			                  taskMutex.lock();
+			                  ProgressTask* task = new ProgressTask(parent, title, text, cancel, [&](ProgressFunction progress) {
+				                  auto innerProgress = [=](size_t cur, size_t max) {
+					                  // Fix dialog disappearing if the backgrounded task thinks it's done
+					                  if (cur >= max)
+					                  {
+						                  cur = max - 1;
+					                  }
+					                  return progress(cur, max);
+				                  };
+				                  try
+				                  {
+					                  // See above comment about race conditions
+					                  taskMutex.lock();
+					                  ProgressTask* innerTask = task;
+					                  taskMutex.unlock();
 
-					if constexpr (std::is_void_v<std::invoke_result_t<Func, QVariant, ProgressTask*, ProgressFunction>>)
-					{
-						func(v, innerTask, innerProgress);
-					}
-					else
-					{
-						result = func(v, innerTask, innerProgress);
-					}
-					// And actually report success
-					progress(1, 1);
-				}
-				catch (...)
-				{
-					progress(1, 1);
-					std::rethrow_exception(std::current_exception());
-				};
-			});
-			taskMutex.unlock();
-			task->wait();
+					                  if constexpr (std::is_void_v<std::invoke_result_t<Func, QVariant, ProgressTask*, ProgressFunction>>)
+					                  {
+						                  func(v, innerTask, innerProgress);
+					                  }
+					                  else
+					                  {
+						                  result = func(v, innerTask, innerProgress);
+					                  }
+					                  // And actually report success
+					                  progress(1, 1);
+				                  }
+				                  catch (...)
+				                  {
+					                  progress(1, 1);
+					                  std::rethrow_exception(std::current_exception());
+				                  };
+			                  });
+			                  taskMutex.unlock();
+			                  task->wait();
 
-			return result;
-		}});
+			                  return result;
+		                  }});
 		return this;
 	}
 
@@ -604,20 +602,21 @@ Q_SIGNALS:
 
 // Implementation details of convertToQVariantFunction
 // Inspired by boost function_traits and various other similarly named patterns
-template<typename Function>
+template <typename Function>
 struct function_traits;
-template<typename Function>
-struct function_traits: public function_traits<decltype(&Function::operator())> {};
-template<typename C, typename R, typename ... Args>
-struct function_traits<R(C::*)(Args...) const>
+template <typename Function>
+struct function_traits : public function_traits<decltype(&Function::operator())>
+{};
+template <typename C, typename R, typename... Args>
+struct function_traits<R (C::*)(Args...) const>
 {
 	using result_type = R;
-	template<size_t index>
+	template <size_t index>
 	using arg_type = typename std::tuple_element_t<index, std::tuple<Args...>>;
 	static const size_t arity = sizeof...(Args);
 };
 
-template<typename Func>
+template <typename Func>
 std::function<QVariant(QVariant)> convertToQVariantFunction(Func&& func)
 {
 	return [func](QVariant v) {

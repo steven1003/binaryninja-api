@@ -9,7 +9,7 @@
 class ViewFrame;
 class SymbolList;
 
-class BINARYNINJAUIAPI SymbolsView: public SidebarWidget, public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI SymbolsView : public SidebarWidget, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
 
@@ -60,7 +60,7 @@ private Q_SLOTS:
 	void showContextMenu();
 };
 
-class BINARYNINJAUIAPI SymbolsViewSidebarWidgetType: public SidebarWidgetType
+class BINARYNINJAUIAPI SymbolsViewSidebarWidgetType : public SidebarWidgetType
 {
 public:
 	SymbolsViewSidebarWidgetType();

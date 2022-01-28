@@ -6,7 +6,7 @@
 #include "byte.h"
 
 
-class TriageView: public QScrollArea, public View
+class TriageView : public QScrollArea, public View
 {
 	BinaryViewRef m_data;
 	uint64_t m_currentOffset = 0;
@@ -34,7 +34,7 @@ private Q_SLOTS:
 };
 
 
-class TriageViewType: public ViewType
+class TriageViewType : public ViewType
 {
 public:
 	TriageViewType();

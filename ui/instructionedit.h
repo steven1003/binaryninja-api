@@ -4,7 +4,7 @@
 #include "binaryninjaapi.h"
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI InstructionEdit: public QLineEdit
+class BINARYNINJAUIAPI InstructionEdit : public QLineEdit
 {
 	Q_OBJECT
 

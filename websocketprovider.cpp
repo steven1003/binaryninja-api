@@ -51,10 +51,10 @@ void WebsocketClient::DestroyClientCallback(void* ctxt)
 
 
 bool WebsocketClient::ConnectCallback(void* ctxt, const char* host, uint64_t headerCount,
-	const char* const* headerKeys, const char* const* headerValues)
+    const char* const* headerKeys, const char* const* headerValues)
 {
 	unordered_map<string, string> headers;
-	for (uint64_t i = 0; i < headerCount; i ++)
+	for (uint64_t i = 0; i < headerCount; i++)
 	{
 		headers[headerKeys[i]] = headerValues[i];
 	}
@@ -92,7 +92,7 @@ bool WebsocketClient::ReadData(uint8_t* data, uint64_t len)
 
 
 bool WebsocketClient::Connect(const std::string& host,
-	const std::unordered_map<std::string, std::string>& headers, BNWebsocketClientOutputCallbacks* callbacks)
+    const std::unordered_map<std::string, std::string>& headers, BNWebsocketClientOutputCallbacks* callbacks)
 {
 	const char** headerKeys = new const char*[headers.size()];
 	const char** headerValues = new const char*[headers.size()];
@@ -102,13 +102,13 @@ bool WebsocketClient::Connect(const std::string& host,
 	{
 		headerKeys[i] = it->first.c_str();
 		headerValues[i] = it->second.c_str();
-		i ++;
+		i++;
 	}
 
 	bool result = BNConnectWebsocketClient(m_object, host.c_str(), headers.size(), headerKeys, headerValues, callbacks);
 
-	delete [] headerKeys;
-	delete [] headerValues;
+	delete[] headerKeys;
+	delete[] headerValues;
 
 	return result;
 }
@@ -120,7 +120,8 @@ void WebsocketClient::DestroyClient()
 }
 
 
-CoreWebsocketClient::CoreWebsocketClient(BNWebsocketClient* client): WebsocketClient(client)
+CoreWebsocketClient::CoreWebsocketClient(BNWebsocketClient* client) :
+    WebsocketClient(client)
 {
 }
 
@@ -145,7 +146,8 @@ bool CoreWebsocketClient::Disconnect()
 }
 
 
-WebsocketProvider::WebsocketProvider(const string& name): m_nameForRegister(name)
+WebsocketProvider::WebsocketProvider(const string& name) :
+    m_nameForRegister(name)
 {
 }
 
@@ -194,7 +196,8 @@ void WebsocketProvider::Register(WebsocketProvider* provider)
 }
 
 
-CoreWebsocketProvider::CoreWebsocketProvider(BNWebsocketProvider* provider): WebsocketProvider(provider)
+CoreWebsocketProvider::CoreWebsocketProvider(BNWebsocketProvider* provider) :
+    WebsocketProvider(provider)
 {
 }
 

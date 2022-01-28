@@ -2,9 +2,10 @@
 
 #include "uicontext.h"
 
-class NotificationListener: UIContextNotification
+class NotificationListener : UIContextNotification
 {
 	static NotificationListener* m_instance;
+
 public:
 	virtual void OnContextOpen(UIContext* context) override;
 	virtual void OnContextClose(UIContext* context) override;

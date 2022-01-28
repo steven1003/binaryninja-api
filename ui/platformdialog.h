@@ -5,7 +5,7 @@
 #include "binaryninjaapi.h"
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI PlatformDialog: public QDialog
+class BINARYNINJAUIAPI PlatformDialog : public QDialog
 {
 	Q_OBJECT
 

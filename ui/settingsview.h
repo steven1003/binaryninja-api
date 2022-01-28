@@ -32,7 +32,8 @@
 
 struct SettingsEntry
 {
-	SettingsEntry(int p, const QString& h, const QString& g, std::vector<void*>&& j) : parent(p), heading(h), group(g), jsonDefs(j) { }
+	SettingsEntry(int p, const QString& h, const QString& g, std::vector<void*>&& j) :
+	    parent(p), heading(h), group(g), jsonDefs(j) {}
 	int parent;
 	QString heading;
 	QString group;
@@ -41,7 +42,7 @@ struct SettingsEntry
 };
 
 
-class BINARYNINJAUIAPI SettingsTreeModel: public QAbstractItemModel
+class BINARYNINJAUIAPI SettingsTreeModel : public QAbstractItemModel
 {
 	Q_OBJECT
 
@@ -70,7 +71,7 @@ public:
 };
 
 
-class BINARYNINJAUIAPI SettingsFilterProxyModel: public QSortFilterProxyModel
+class BINARYNINJAUIAPI SettingsFilterProxyModel : public QSortFilterProxyModel
 {
 	Q_OBJECT
 
@@ -83,7 +84,12 @@ public:
 	SettingsFilterProxyModel(QObject* parent = 0);
 
 	int scopeFilter() { return m_scopeFilter; }
-	void setScopeFilter(int scope) { m_scopeFilter = scope; invalidateFilter(); m_subgroupFilterCache.clear(); }
+	void setScopeFilter(int scope)
+	{
+		m_scopeFilter = scope;
+		invalidateFilter();
+		m_subgroupFilterCache.clear();
+	}
 
 	QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
@@ -96,7 +102,7 @@ public Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI SettingsOutlineProxyModel: public QSortFilterProxyModel
+class BINARYNINJAUIAPI SettingsOutlineProxyModel : public QSortFilterProxyModel
 {
 	Q_OBJECT
 
@@ -108,7 +114,7 @@ protected:
 };
 
 
-class BINARYNINJAUIAPI SettingsEditor: public QWidget
+class BINARYNINJAUIAPI SettingsEditor : public QWidget
 {
 	Q_OBJECT
 
@@ -158,7 +164,7 @@ Q_SIGNALS:
 	void notifyNeedsRestart();
 
 private:
-	void notifySettingUpdate(); // TODO core notification callbacks
+	void notifySettingUpdate();  // TODO core notification callbacks
 
 private Q_SLOTS:
 	void toggleBoolSetting();
@@ -190,11 +196,11 @@ private:
 protected:
 	bool eventFilter(QObject* obj, QEvent* event) override;
 	void mousePressEvent(QMouseEvent* event) override;
-	void paintEvent(QPaintEvent *event) override;
+	void paintEvent(QPaintEvent* event) override;
 };
 
 
-class BINARYNINJAUIAPI SettingsDelegate: public QStyledItemDelegate
+class BINARYNINJAUIAPI SettingsDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 
@@ -253,7 +259,7 @@ private Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI SettingsTreeView: public QTreeView
+class BINARYNINJAUIAPI SettingsTreeView : public QTreeView
 {
 	Q_OBJECT
 
@@ -270,7 +276,7 @@ public Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI BinaryViewScopeLabel: public MenuHelper
+class BINARYNINJAUIAPI BinaryViewScopeLabel : public MenuHelper
 {
 	Q_OBJECT
 
@@ -299,7 +305,7 @@ protected:
 };
 
 
-class BINARYNINJAUIAPI SettingsScopeBar: public QWidget
+class BINARYNINJAUIAPI SettingsScopeBar : public QWidget
 {
 	Q_OBJECT
 
@@ -321,7 +327,7 @@ Q_SIGNALS:
 };
 
 
-class BINARYNINJAUIAPI SearchFilter: public QLineEdit
+class BINARYNINJAUIAPI SearchFilter : public QLineEdit
 {
 	Q_OBJECT
 
@@ -347,7 +353,7 @@ Q_SIGNALS:
 };
 
 
-class BINARYNINJAUIAPI SettingsView: public QWidget
+class BINARYNINJAUIAPI SettingsView : public QWidget
 {
 	Q_OBJECT
 

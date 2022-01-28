@@ -17,7 +17,7 @@ public:
 	virtual void closeFilter();
 };
 
-class BINARYNINJAUIAPI FilterEdit: public QLineEdit
+class BINARYNINJAUIAPI FilterEdit : public QLineEdit
 {
 	Q_OBJECT
 
@@ -30,7 +30,7 @@ protected:
 	virtual void keyPressEvent(QKeyEvent* event) override;
 };
 
-class BINARYNINJAUIAPI FilteredView: public QWidget
+class BINARYNINJAUIAPI FilteredView : public QWidget
 {
 	Q_OBJECT
 
@@ -40,7 +40,7 @@ class BINARYNINJAUIAPI FilteredView: public QWidget
 
 public:
 	FilteredView(QWidget* parent, QWidget* filtered, FilterTarget* target,
-		FilterEdit* edit = nullptr);
+	    FilterEdit* edit = nullptr);
 	void setFilterPlaceholderText(const QString& text);
 	void updateFonts();
 	void clearFilter();

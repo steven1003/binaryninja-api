@@ -4,7 +4,7 @@
 #include "binaryninjaapi.h"
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI TransformParameterDialog: public QDialog
+class BINARYNINJAUIAPI TransformParameterDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -13,6 +13,6 @@ class BINARYNINJAUIAPI TransformParameterDialog: public QDialog
 
 public:
 	TransformParameterDialog(QWidget* parent, TransformRef xform,
-	                         const std::vector<BinaryNinja::TransformParameter>& params);
+	    const std::vector<BinaryNinja::TransformParameter>& params);
 	std::map<std::string, BinaryNinja::DataBuffer> getParameterData();
 };

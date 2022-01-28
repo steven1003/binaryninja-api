@@ -26,7 +26,7 @@ public:
 
 class TriageView;
 
-class EntropyWidget: public QWidget
+class EntropyWidget : public QWidget
 {
 	TriageView* m_view;
 	BinaryViewRef m_data, m_rawData;

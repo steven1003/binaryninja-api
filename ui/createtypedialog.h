@@ -6,7 +6,7 @@
 #include "dialogtextedit.h"
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI CreateTypeDialog: public QDialog
+class BINARYNINJAUIAPI CreateTypeDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -18,13 +18,12 @@ class BINARYNINJAUIAPI CreateTypeDialog: public QDialog
 
 public:
 	CreateTypeDialog(QWidget* parent, BinaryViewRef data, const QString& title,
-		const QString& definition, const std::set<BinaryNinja::QualifiedName>& typesAllowRedefinition = {});
-	std::map<BinaryNinja::QualifiedName, TypeRef>  getResults() { return m_results; }
+	    const QString& definition, const std::set<BinaryNinja::QualifiedName>& typesAllowRedefinition = {});
+	std::map<BinaryNinja::QualifiedName, TypeRef> getResults() { return m_results; }
 
 private Q_SLOTS:
 	void createType();
 
 protected:
 	virtual void showEvent(QShowEvent* e) override;
-
 };

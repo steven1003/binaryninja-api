@@ -15,7 +15,7 @@
 #include <tuple>
 #include <vector>
 
-class BINARYNINJAUIAPI OptionsDialog: public QDialog
+class BINARYNINJAUIAPI OptionsDialog : public QDialog
 {
 	Q_OBJECT
 

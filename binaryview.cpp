@@ -233,7 +233,6 @@ void BinaryDataNotification::TypeFieldReferenceChangedCallback(void* ctxt, BNBin
 }
 
 
-
 BinaryDataNotification::BinaryDataNotification()
 {
 	m_callbacks.context = this;
@@ -265,7 +264,7 @@ BinaryDataNotification::BinaryDataNotification()
 
 
 Symbol::Symbol(BNSymbolType type, const string& shortName, const string& fullName, const string& rawName, uint64_t addr,
-	BNSymbolBinding binding, const NameSpace& nameSpace, uint64_t ordinal)
+    BNSymbolBinding binding, const NameSpace& nameSpace, uint64_t ordinal)
 {
 	BNNameSpace ns = nameSpace.GetAPIObject();
 	m_object = BNCreateSymbol(type, shortName.c_str(), fullName.c_str(), rawName.c_str(), addr, binding, &ns, ordinal);
@@ -274,12 +273,11 @@ Symbol::Symbol(BNSymbolType type, const string& shortName, const string& fullNam
 
 
 Symbol::Symbol(BNSymbolType type, const std::string& name, uint64_t addr, BNSymbolBinding binding,
-	const NameSpace& nameSpace, uint64_t ordinal)
+    const NameSpace& nameSpace, uint64_t ordinal)
 {
 	BNNameSpace ns = nameSpace.GetAPIObject();
 	m_object = BNCreateSymbol(type, name.c_str(), name.c_str(), name.c_str(), addr, binding, &ns, ordinal);
 	NameSpace::FreeAPIObject(&ns);
-
 }
 
 
@@ -361,8 +359,8 @@ Ref<Symbol> Symbol::ImportedFunctionFromImportAddressSymbol(Symbol* sym, uint64_
 }
 
 
-AnalysisCompletionEvent::AnalysisCompletionEvent(BinaryView* view, const std::function<void()>& callback):
-	m_callback(callback)
+AnalysisCompletionEvent::AnalysisCompletionEvent(BinaryView* view, const std::function<void()>& callback) :
+    m_callback(callback)
 {
 	m_object = BNAddAnalysisCompletionEvent(view->GetObject(), this, CompletionCallback);
 }
@@ -374,14 +372,16 @@ void AnalysisCompletionEvent::CompletionCallback(void* ctxt)
 
 	unique_lock<recursive_mutex> lock(event->m_mutex);
 	event->m_callback();
-	event->m_callback = []() {};
+	event->m_callback = []() {
+	};
 }
 
 
 void AnalysisCompletionEvent::Cancel()
 {
 	unique_lock<recursive_mutex> lock(m_mutex);
-	m_callback = []() {};
+	m_callback = []() {
+	};
 	// This allows the API side to free the BinaryNinja::AnalysisCompletionEvent object
 	BNCancelAnalysisCompletionEvent(m_object);
 }
@@ -568,14 +568,14 @@ bool TagReference::operator==(const TagReference& other) const
 		return false;
 	switch (refType)
 	{
-		case AddressTagReference:
-			return func == other.func && arch == other.arch && addr == other.addr;
-		case FunctionTagReference:
-			return func == other.func;
-		case DataTagReference:
-			return addr == other.addr;
-		default:
-			return false;
+	case AddressTagReference:
+		return func == other.func && arch == other.arch && addr == other.addr;
+	case FunctionTagReference:
+		return func == other.func;
+	case DataTagReference:
+		return addr == other.addr;
+	default:
+		return false;
 	}
 }
 
@@ -605,7 +605,7 @@ BNTagReference* TagReference::CreateTagReferenceList(const std::vector<TagRefere
 
 	BNTagReference* refs = new BNTagReference[*count];
 
-	for (size_t i = 0; i < *count; i ++)
+	for (size_t i = 0; i < *count; i++)
 	{
 		refs[i] = tags[i];
 	}
@@ -618,7 +618,7 @@ std::vector<TagReference> TagReference::ConvertTagReferenceList(BNTagReference* 
 {
 	std::vector<TagReference> result;
 	result.reserve(count);
-	for (size_t i = 0; i < count; i ++)
+	for (size_t i = 0; i < count; i++)
 	{
 		result.emplace_back(tags[i]);
 	}
@@ -854,7 +854,7 @@ BinaryView::BinaryView(const std::string& typeName, FileMetadata* file, BinaryVi
 	m_file = file;
 	AddRefForRegistration();
 	m_object = BNCreateCustomBinaryView(typeName.c_str(), m_file->GetObject(),
-		parentView ? parentView->GetObject() : nullptr, &view);
+	    parentView ? parentView->GetObject() : nullptr, &view);
 }
 
 
@@ -1156,7 +1156,7 @@ bool BinaryView::CreateDatabase(const string& path, Ref<SaveSettings> settings)
 
 
 bool BinaryView::CreateDatabase(const string& path,
-	const function<bool(size_t progress, size_t total)>& progressCallback, Ref<SaveSettings> settings)
+    const function<bool(size_t progress, size_t total)>& progressCallback, Ref<SaveSettings> settings)
 {
 	auto parent = GetParentView();
 	if (parent)
@@ -1614,7 +1614,7 @@ map<uint64_t, DataVariable> BinaryView::GetDataVariables()
 	for (size_t i = 0; i < count; i++)
 	{
 		result.emplace(piecewise_construct, forward_as_tuple(vars[i].address),
-			forward_as_tuple(vars[i].address, Confidence<Ref<Type>>(new Type(BNNewTypeReference(vars[i].type)), vars[i].typeConfidence), vars[i].autoDiscovered));
+		    forward_as_tuple(vars[i].address, Confidence<Ref<Type>>(new Type(BNNewTypeReference(vars[i].type)), vars[i].typeConfidence), vars[i].autoDiscovered));
 	}
 
 	BNFreeDataVariables(vars, count);
@@ -1664,7 +1664,7 @@ AnalysisInfo BinaryView::GetAnalysisInfo()
 	result.activeInfo.reserve(info->count);
 	for (size_t i = 0; i < info->count; i++)
 		result.activeInfo.emplace_back(new Function(BNNewFunctionReference(info->activeInfo[i].func)),
-			info->activeInfo[i].analysisTime, info->activeInfo[i].submitCount, info->activeInfo[i].updateCount);
+		    info->activeInfo[i].analysisTime, info->activeInfo[i].submitCount, info->activeInfo[i].updateCount);
 	BNFreeAnalysisInfo(info);
 	return result;
 }
@@ -1829,7 +1829,7 @@ vector<ReferenceSource> BinaryView::GetCodeReferences(uint64_t addr, uint64_t le
 vector<uint64_t> BinaryView::GetCodeReferencesFrom(ReferenceSource src)
 {
 	size_t count;
-	BNReferenceSource _src{ src.func->m_object, src.arch->m_object, src.addr };
+	BNReferenceSource _src {src.func->m_object, src.arch->m_object, src.addr};
 	uint64_t* refs = BNGetCodeReferencesFrom(m_object, &_src, &count);
 	vector<uint64_t> result(refs, &refs[count]);
 	BNFreeAddressList(refs);
@@ -1840,7 +1840,7 @@ vector<uint64_t> BinaryView::GetCodeReferencesFrom(ReferenceSource src)
 vector<uint64_t> BinaryView::GetCodeReferencesFrom(ReferenceSource src, uint64_t len)
 {
 	size_t count;
-	BNReferenceSource _src{ src.func->m_object, src.arch->m_object, src.addr };
+	BNReferenceSource _src {src.func->m_object, src.arch->m_object, src.addr};
 	uint64_t* refs = BNGetCodeReferencesFromInRange(m_object, &_src, len, &count);
 	vector<uint64_t> result(refs, &refs[count]);
 	BNFreeAddressList(refs);
@@ -2027,7 +2027,7 @@ vector<TypeReferenceSource> BinaryView::GetTypeReferencesForTypeField(const Qual
 vector<TypeReferenceSource> BinaryView::GetCodeReferencesForTypeFrom(ReferenceSource src)
 {
 	size_t count;
-	BNReferenceSource _src{ src.func->m_object, src.arch->m_object, src.addr };
+	BNReferenceSource _src {src.func->m_object, src.arch->m_object, src.addr};
 	BNTypeReferenceSource* refs = BNGetCodeReferencesForTypeFrom(m_object, &_src, &count);
 
 	vector<TypeReferenceSource> result;
@@ -2049,7 +2049,7 @@ vector<TypeReferenceSource> BinaryView::GetCodeReferencesForTypeFrom(ReferenceSo
 vector<TypeReferenceSource> BinaryView::GetCodeReferencesForTypeFrom(ReferenceSource src, uint64_t len)
 {
 	size_t count;
-	BNReferenceSource _src{ src.func->m_object, src.arch->m_object, src.addr };
+	BNReferenceSource _src {src.func->m_object, src.arch->m_object, src.addr};
 	BNTypeReferenceSource* refs = BNGetCodeReferencesForTypeFromInRange(m_object, &_src, len, &count);
 
 	vector<TypeReferenceSource> result;
@@ -2070,7 +2070,7 @@ vector<TypeReferenceSource> BinaryView::GetCodeReferencesForTypeFrom(ReferenceSo
 vector<TypeReferenceSource> BinaryView::GetCodeReferencesForTypeFieldFrom(ReferenceSource src)
 {
 	size_t count;
-	BNReferenceSource _src{ src.func->m_object, src.arch->m_object, src.addr };
+	BNReferenceSource _src {src.func->m_object, src.arch->m_object, src.addr};
 	BNTypeReferenceSource* refs = BNGetCodeReferencesForTypeFieldsFrom(m_object, &_src, &count);
 
 	vector<TypeReferenceSource> result;
@@ -2092,7 +2092,7 @@ vector<TypeReferenceSource> BinaryView::GetCodeReferencesForTypeFieldFrom(Refere
 vector<TypeReferenceSource> BinaryView::GetCodeReferencesForTypeFieldFrom(ReferenceSource src, uint64_t len)
 {
 	size_t count;
-	BNReferenceSource _src{ src.func->m_object, src.arch->m_object, src.addr };
+	BNReferenceSource _src {src.func->m_object, src.arch->m_object, src.addr};
 	BNTypeReferenceSource* refs = BNGetCodeReferencesForTypeFieldsFromInRange(m_object, &_src, len, &count);
 
 	vector<TypeReferenceSource> result;
@@ -2126,12 +2126,12 @@ vector<uint64_t> BinaryView::GetAllFieldsReferenced(const QualifiedName& type)
 
 
 std::map<uint64_t, std::vector<size_t>> BinaryView::GetAllSizesReferenced(
-	const QualifiedName& type)
+    const QualifiedName& type)
 {
 	size_t count;
 	BNQualifiedName nameObj = type.GetAPIObject();
 	BNTypeFieldReferenceSizeInfo* fields = BNGetAllSizesReferenced(m_object,
-		&nameObj, &count);
+	    &nameObj, &count);
 
 	std::map<uint64_t, std::vector<size_t>> result;
 	for (size_t i = 0; i < count; i++)
@@ -2149,12 +2149,12 @@ std::map<uint64_t, std::vector<size_t>> BinaryView::GetAllSizesReferenced(
 
 
 std::map<uint64_t, std::vector<Confidence<Ref<Type>>>>
-	BinaryView::GetAllTypesReferenced(const QualifiedName& type)
+    BinaryView::GetAllTypesReferenced(const QualifiedName& type)
 {
 	size_t count;
 	BNQualifiedName nameObj = type.GetAPIObject();
 	BNTypeFieldReferenceTypeInfo* fields = BNGetAllTypesReferenced(m_object,
-		&nameObj, &count);
+	    &nameObj, &count);
 
 	std::map<uint64_t, std::vector<Confidence<Ref<Type>>>> result;
 	for (size_t i = 0; i < count; i++)
@@ -2174,7 +2174,7 @@ std::map<uint64_t, std::vector<Confidence<Ref<Type>>>>
 
 
 std::vector<size_t> BinaryView::GetSizesReferenced(const QualifiedName& type,
-	uint64_t offset)
+    uint64_t offset)
 {
 	size_t count;
 	BNQualifiedName nameObj = type.GetAPIObject();
@@ -2191,12 +2191,12 @@ std::vector<size_t> BinaryView::GetSizesReferenced(const QualifiedName& type,
 
 
 std::vector<Confidence<Ref<Type>>> BinaryView::GetTypesReferenced(
-	const QualifiedName& type, uint64_t offset)
+    const QualifiedName& type, uint64_t offset)
 {
 	size_t count;
 	BNQualifiedName nameObj = type.GetAPIObject();
 	BNTypeWithConfidence* types = BNGetTypesReferenced(m_object, &nameObj, offset,
-		&count);
+	    &count);
 
 	std::vector<Confidence<Ref<Type>>> result;
 	result.reserve(count);
@@ -2215,7 +2215,7 @@ std::vector<Confidence<Ref<Type>>> BinaryView::GetTypesReferenced(
 vector<uint64_t> BinaryView::GetCallees(ReferenceSource callSite)
 {
 	size_t count;
-	BNReferenceSource src { callSite.func->m_object, callSite.arch->m_object, callSite.addr };
+	BNReferenceSource src {callSite.func->m_object, callSite.arch->m_object, callSite.addr};
 	uint64_t* refs = BNGetCallees(m_object, &src, &count);
 	vector<uint64_t> result(refs, &refs[count]);
 	BNFreeAddressList(refs);
@@ -2478,7 +2478,7 @@ std::vector<Ref<TagType>> BinaryView::GetTagTypes()
 
 	std::vector<Ref<TagType>> result;
 	result.reserve(count);
-	for (size_t i = 0; i < count; i ++)
+	for (size_t i = 0; i < count; i++)
 	{
 		result.push_back(new TagType(BNNewTagTypeReference(tagTypes[i])));
 	}
@@ -2564,7 +2564,7 @@ std::map<Ref<TagType>, size_t> BinaryView::GetAllTagReferenceTypeCounts()
 	BNGetAllTagReferenceTypeCounts(m_object, &types, &counts, &count);
 
 	std::map<Ref<TagType>, size_t> result;
-	for (size_t i = 0; i < count; i ++)
+	for (size_t i = 0; i < count; i++)
 	{
 		result[new TagType(BNNewTagTypeReference(types[i]))] = counts[i];
 	}
@@ -2780,7 +2780,6 @@ Ref<Tag> BinaryView::CreateUserDataTag(uint64_t addr, Ref<TagType> tagType, cons
 bool BinaryView::CanAssemble(Architecture* arch)
 {
 	return BNCanAssemble(m_object, arch->GetObject());
-
 }
 
 bool BinaryView::IsNeverBranchPatchAvailable(Architecture* arch, uint64_t addr)
@@ -2968,7 +2967,7 @@ bool BinaryView::ParsePossibleValueSet(const string& value, BNRegisterValueType 
 
 
 bool BinaryView::ParseTypeString(const string& text, QualifiedNameAndType& result, string& errors,
-	const std::set<QualifiedName>& typesAllowRedefinition)
+    const std::set<QualifiedName>& typesAllowRedefinition)
 {
 	BNQualifiedNameAndType nt;
 	char* errorStr;
@@ -2977,10 +2976,10 @@ bool BinaryView::ParseTypeString(const string& text, QualifiedNameAndType& resul
 	typesList.count = typesAllowRedefinition.size();
 	typesList.names = new BNQualifiedName[typesList.count];
 	size_t i = 0;
-	for(auto& type : typesAllowRedefinition)
+	for (auto& type : typesAllowRedefinition)
 	{
 		typesList.names[i] = type.GetAPIObject();
-		i ++;
+		i++;
 	}
 
 	if (!BNParseTypeString(m_object, text.c_str(), &nt, &errorStr, &typesList))
@@ -3001,8 +3000,8 @@ bool BinaryView::ParseTypeString(const string& text, QualifiedNameAndType& resul
 
 
 bool BinaryView::ParseTypeString(const string& source, map<QualifiedName, Ref<Type>>& types,
-	map<QualifiedName, Ref<Type>>& variables, map<QualifiedName, Ref<Type>>& functions, string& errors,
-	const std::set<QualifiedName>& typesAllowRedefinition)
+    map<QualifiedName, Ref<Type>>& variables, map<QualifiedName, Ref<Type>>& functions, string& errors,
+    const std::set<QualifiedName>& typesAllowRedefinition)
 {
 	BNTypeParserResult result;
 	char* errorStr = nullptr;
@@ -3015,10 +3014,10 @@ bool BinaryView::ParseTypeString(const string& source, map<QualifiedName, Ref<Ty
 	typesList.count = typesAllowRedefinition.size();
 	typesList.names = new BNQualifiedName[typesList.count];
 	size_t i = 0;
-	for(auto& type : typesAllowRedefinition)
+	for (auto& type : typesAllowRedefinition)
 	{
 		typesList.names[i] = type.GetAPIObject();
-		i ++;
+		i++;
 	}
 
 	bool ok = BNParseTypesString(m_object, source.c_str(), &result, &errorStr, &typesList);
@@ -3184,19 +3183,19 @@ void BinaryView::RegisterPlatformTypes(Platform* platform)
 
 
 bool BinaryView::FindNextData(uint64_t start, const DataBuffer& data, uint64_t& result,
-	BNFindFlag flags)
+    BNFindFlag flags)
 {
 	return BNFindNextData(m_object, start, data.GetBufferObject(), &result, flags);
 }
 
 bool BinaryView::FindNextText(uint64_t start, const std::string& data, uint64_t& result,
-	Ref<DisassemblySettings> settings, BNFindFlag flags, BNFunctionGraphType graph)
+    Ref<DisassemblySettings> settings, BNFindFlag flags, BNFunctionGraphType graph)
 {
 	return BNFindNextText(m_object, start, data.c_str(), &result, settings->GetObject(), flags, graph);
 }
 
 bool BinaryView::FindNextConstant(uint64_t start, uint64_t constant, uint64_t& result,
-	Ref<DisassemblySettings> settings, BNFunctionGraphType graph)
+    Ref<DisassemblySettings> settings, BNFunctionGraphType graph)
 {
 	return BNFindNextConstant(m_object, start, constant, &result, settings->GetObject(), graph);
 }
@@ -3235,7 +3234,7 @@ struct MatchCallbackContextForText
 
 
 static bool MatchCallbackForText(void* ctxt, uint64_t addr, const char* buffer,
-	BNLinearDisassemblyLine* line)
+    BNLinearDisassemblyLine* line)
 {
 	MatchCallbackContextForText* cb = (MatchCallbackContextForText*)ctxt;
 
@@ -3264,7 +3263,7 @@ static bool MatchCallbackForConstant(void* ctxt, uint64_t addr, BNLinearDisassem
 
 
 bool BinaryView::FindNextData(uint64_t start, uint64_t end, const DataBuffer& data, uint64_t& addr, BNFindFlag flags,
-	const std::function<bool(size_t current, size_t total)>& progress)
+    const std::function<bool(size_t current, size_t total)>& progress)
 {
 	FindProgressCallbackContext fp;
 	fp.func = progress;
@@ -3273,67 +3272,67 @@ bool BinaryView::FindNextData(uint64_t start, uint64_t end, const DataBuffer& da
 
 
 bool BinaryView::FindNextText(uint64_t start, uint64_t end, const std::string& data,
-	uint64_t& addr, Ref<DisassemblySettings> settings, BNFindFlag flags, BNFunctionGraphType graph,
-	const std::function<bool(size_t current, size_t total)>& progress)
+    uint64_t& addr, Ref<DisassemblySettings> settings, BNFindFlag flags, BNFunctionGraphType graph,
+    const std::function<bool(size_t current, size_t total)>& progress)
 {
 	FindProgressCallbackContext fp;
 	fp.func = progress;
 	return BNFindNextTextWithProgress(m_object, start, end, data.c_str(), &addr,
-		settings->GetObject(), flags, graph, &fp, FindProgressCallback);
+	    settings->GetObject(), flags, graph, &fp, FindProgressCallback);
 }
 
 
 bool BinaryView::FindNextConstant(uint64_t start, uint64_t end, uint64_t constant, uint64_t& addr,
-	Ref<DisassemblySettings> settings, BNFunctionGraphType graph,
-	const std::function<bool(size_t current, size_t total)>& progress)
+    Ref<DisassemblySettings> settings, BNFunctionGraphType graph,
+    const std::function<bool(size_t current, size_t total)>& progress)
 {
 	FindProgressCallbackContext fp;
 	fp.func = progress;
 	return BNFindNextConstantWithProgress(m_object, start, end, constant, &addr,
-		settings->GetObject(), graph, &fp, FindProgressCallback);
+	    settings->GetObject(), graph, &fp, FindProgressCallback);
 }
 
 
 bool BinaryView::FindAllData(uint64_t start, uint64_t end, const DataBuffer& data,
-	BNFindFlag flags, const std::function<bool(size_t current, size_t total)>& progress,
-	const std::function<bool(uint64_t addr, const DataBuffer& match)>& matchCallback)
+    BNFindFlag flags, const std::function<bool(size_t current, size_t total)>& progress,
+    const std::function<bool(uint64_t addr, const DataBuffer& match)>& matchCallback)
 {
 	FindProgressCallbackContext fp;
 	fp.func = progress;
 	MatchCallbackContextForDataBuffer mc;
 	mc.func = matchCallback;
 	return BNFindAllDataWithProgress(m_object, start, end, data.GetBufferObject(),
-		flags, &fp, FindProgressCallback, &mc, MatchCallbackForDataBuffer);
+	    flags, &fp, FindProgressCallback, &mc, MatchCallbackForDataBuffer);
 }
 
 
 bool BinaryView::FindAllText(uint64_t start, uint64_t end, const std::string& data,
-	Ref<DisassemblySettings> settings, BNFindFlag flags, BNFunctionGraphType graph,
-	const std::function<bool(size_t current, size_t total)>& progress,
-	const std::function<bool(uint64_t addr, const std::string& match,
-		const LinearDisassemblyLine& line)>& matchCallback)
+    Ref<DisassemblySettings> settings, BNFindFlag flags, BNFunctionGraphType graph,
+    const std::function<bool(size_t current, size_t total)>& progress,
+    const std::function<bool(uint64_t addr, const std::string& match,
+        const LinearDisassemblyLine& line)>& matchCallback)
 {
 	FindProgressCallbackContext fp;
 	fp.func = progress;
 	MatchCallbackContextForText mc;
 	mc.func = matchCallback;
 	return BNFindAllTextWithProgress(m_object, start, end, data.c_str(), settings->GetObject(),
-		flags, graph, &fp, FindProgressCallback, &mc, MatchCallbackForText);
+	    flags, graph, &fp, FindProgressCallback, &mc, MatchCallbackForText);
 }
 
 
 bool BinaryView::FindAllConstant(uint64_t start, uint64_t end, uint64_t constant,
-	Ref<DisassemblySettings> settings, BNFunctionGraphType graph,
-	const std::function<bool(size_t current, size_t total)>& progress,
-	const std::function<bool(uint64_t addr, const LinearDisassemblyLine& line)>&
-		matchCallback)
+    Ref<DisassemblySettings> settings, BNFunctionGraphType graph,
+    const std::function<bool(size_t current, size_t total)>& progress,
+    const std::function<bool(uint64_t addr, const LinearDisassemblyLine& line)>&
+        matchCallback)
 {
 	FindProgressCallbackContext fp;
 	fp.func = progress;
 	MatchCallbackContextForConstant mc;
 	mc.func = matchCallback;
 	return BNFindAllConstantWithProgress(m_object, start, end, constant, settings->GetObject(),
-		graph, &fp, FindProgressCallback, &mc, MatchCallbackForConstant);
+	    graph, &fp, FindProgressCallback, &mc, MatchCallbackForConstant);
 }
 
 
@@ -3392,7 +3391,7 @@ bool BinaryView::GetAddressInput(uint64_t& result, const string& prompt, const s
 
 
 void BinaryView::AddAutoSegment(uint64_t start, uint64_t length, uint64_t dataOffset, uint64_t dataLength,
-	uint32_t flags)
+    uint32_t flags)
 {
 	BNAddAutoSegment(m_object, start, length, dataOffset, dataLength, flags);
 }
@@ -3405,7 +3404,7 @@ void BinaryView::RemoveAutoSegment(uint64_t start, uint64_t length)
 
 
 void BinaryView::AddUserSegment(uint64_t start, uint64_t length, uint64_t dataOffset, uint64_t dataLength,
-	uint32_t flags)
+    uint32_t flags)
 {
 	BNAddUserSegment(m_object, start, length, dataOffset, dataLength, flags);
 }
@@ -3449,11 +3448,11 @@ bool BinaryView::GetAddressForDataOffset(uint64_t offset, uint64_t& addr)
 
 
 void BinaryView::AddAutoSection(const string& name, uint64_t start, uint64_t length, BNSectionSemantics semantics,
-	const string& type, uint64_t align, uint64_t entrySize, const string& linkedSection,
-	const string& infoSection, uint64_t infoData)
+    const string& type, uint64_t align, uint64_t entrySize, const string& linkedSection,
+    const string& infoSection, uint64_t infoData)
 {
 	BNAddAutoSection(m_object, name.c_str(), start, length, semantics, type.c_str(), align, entrySize,
-		linkedSection.c_str(), infoSection.c_str(), infoData);
+	    linkedSection.c_str(), infoSection.c_str(), infoData);
 }
 
 
@@ -3464,11 +3463,11 @@ void BinaryView::RemoveAutoSection(const string& name)
 
 
 void BinaryView::AddUserSection(const string& name, uint64_t start, uint64_t length, BNSectionSemantics semantics,
-	const string& type, uint64_t align, uint64_t entrySize, const string& linkedSection,
-	const string& infoSection, uint64_t infoData)
+    const string& type, uint64_t align, uint64_t entrySize, const string& linkedSection,
+    const string& infoSection, uint64_t infoData)
 {
 	BNAddUserSection(m_object, name.c_str(), start, length, semantics, type.c_str(), align, entrySize,
-		linkedSection.c_str(), infoSection.c_str(), infoData);
+	    linkedSection.c_str(), infoSection.c_str(), infoData);
 }
 
 
@@ -3484,7 +3483,7 @@ vector<Ref<Section>> BinaryView::GetSections()
 	BNSection** sections = BNGetSections(m_object, &count);
 
 	vector<Ref<Section>> result;
-    result.reserve(count);
+	result.reserve(count);
 	for (size_t i = 0; i < count; i++)
 		result.push_back(new Section(BNNewSectionReference(sections[i])));
 
@@ -3499,7 +3498,7 @@ vector<Ref<Section>> BinaryView::GetSectionsAt(uint64_t addr)
 	BNSection** sections = BNGetSectionsAt(m_object, addr, &count);
 
 	vector<Ref<Section>> result;
-    result.reserve(count);
+	result.reserve(count);
 	for (size_t i = 0; i < count; i++)
 	{
 		result.push_back(new Section(BNNewSectionReference(sections[i])));
@@ -3719,7 +3718,7 @@ NameSpace BinaryView::GetExternalNameSpace()
 }
 
 
-bool BinaryView::ParseExpression(Ref<BinaryView> view, const string& expression, uint64_t &offset, uint64_t here, string& errorString)
+bool BinaryView::ParseExpression(Ref<BinaryView> view, const string& expression, uint64_t& offset, uint64_t here, string& errorString)
 {
 	char* err = nullptr;
 	if (!BNParseExpression(view ? view->GetObject() : nullptr, expression.c_str(), &offset, here, &err))
@@ -3736,21 +3735,21 @@ bool BinaryView::ParseExpression(Ref<BinaryView> view, const string& expression,
 
 
 Ref<Structure> BinaryView::CreateStructureFromOffsetAccess(const QualifiedName& type,
-	bool* newMemberAdded) const
+    bool* newMemberAdded) const
 {
 	BNQualifiedName typeObj = type.GetAPIObject();
 	BNStructure* result = BNCreateStructureFromOffsetAccess(m_object, &typeObj,
-		newMemberAdded);
+	    newMemberAdded);
 	return new Structure(result);
 }
 
 
 Confidence<Ref<Type>> BinaryView::CreateStructureMemberFromAccess(
-	const QualifiedName& name, uint64_t offset) const
+    const QualifiedName& name, uint64_t offset) const
 {
 	BNQualifiedName typeObj = name.GetAPIObject();
 	BNTypeWithConfidence type = BNCreateStructureMemberFromAccess(m_object, &typeObj,
-		offset);
+	    offset);
 
 	if (type.type)
 		return Confidence<Ref<Type>>(new Type(type.type), type.confidence);
@@ -3797,30 +3796,31 @@ Ref<Symbol> Relocation::GetSymbol() const
 }
 
 
-BinaryData::BinaryData(FileMetadata* file): BinaryView(BNCreateBinaryDataView(file->GetObject()))
+BinaryData::BinaryData(FileMetadata* file) :
+    BinaryView(BNCreateBinaryDataView(file->GetObject()))
 {
 }
 
 
-BinaryData::BinaryData(FileMetadata* file, const DataBuffer& data):
-	BinaryView(BNCreateBinaryDataViewFromBuffer(file->GetObject(), data.GetBufferObject()))
+BinaryData::BinaryData(FileMetadata* file, const DataBuffer& data) :
+    BinaryView(BNCreateBinaryDataViewFromBuffer(file->GetObject(), data.GetBufferObject()))
 {
 }
 
 
-BinaryData::BinaryData(FileMetadata* file, const void* data, size_t len):
-	BinaryView(BNCreateBinaryDataViewFromData(file->GetObject(), data, len))
+BinaryData::BinaryData(FileMetadata* file, const void* data, size_t len) :
+    BinaryView(BNCreateBinaryDataViewFromData(file->GetObject(), data, len))
 {
 }
 
 
-BinaryData::BinaryData(FileMetadata* file, const string& path):
-	BinaryView(BNCreateBinaryDataViewFromFilename(file->GetObject(), path.c_str()))
+BinaryData::BinaryData(FileMetadata* file, const string& path) :
+    BinaryView(BNCreateBinaryDataViewFromFilename(file->GetObject(), path.c_str()))
 {
 }
 
 
-BinaryData::BinaryData(FileMetadata* file, FileAccessor* accessor):
-	BinaryView(BNCreateBinaryDataViewFromFile(file->GetObject(), accessor->GetCallbacks()))
+BinaryData::BinaryData(FileMetadata* file, FileAccessor* accessor) :
+    BinaryView(BNCreateBinaryDataViewFromFile(file->GetObject(), accessor->GetCallbacks()))
 {
 }

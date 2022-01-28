@@ -22,20 +22,22 @@ public:
 
 
 	UIComment(UICommentType type,
-		FunctionRef func,
-		uint64_t address,
-		QString content):
-		type(type), func(func),
-		address(address), content(content)
+	    FunctionRef func,
+	    uint64_t address,
+	    QString content) :
+	    type(type),
+	    func(func),
+	    address(address), content(content)
 	{}
 
 
 	UIComment(UICommentType type,
-		BinaryViewRef data,
-		uint64_t address,
-		QString content):
-		type(type), data(data),
-		address(address), content(content)
+	    BinaryViewRef data,
+	    uint64_t address,
+	    QString content) :
+	    type(type),
+	    data(data),
+	    address(address), content(content)
 	{}
 
 

@@ -7,14 +7,14 @@
 #include <QtWidgets/QComboBox>
 #include <QtCore/QTimer>
 #ifndef BINARYNINJAUI_BINDINGS
-#include <QtCore/QThread>
+	#include <QtCore/QThread>
 #endif
 #include "binaryninjaapi.h"
 #include "uitypes.h"
 #include "getsymbolslistthread.h"
 
 
-class BINARYNINJAUIAPI AddressDialogWithPreview: public QDialog
+class BINARYNINJAUIAPI AddressDialogWithPreview : public QDialog
 {
 	Q_OBJECT
 
@@ -50,12 +50,12 @@ private Q_SLOTS:
 
 public:
 	AddressDialogWithPreview(QWidget* parent, BinaryViewRef view, uint64_t here,
-		const QString& title = "Go to Address", const QString& prompt = "Enter Expression", bool defaultToCurrent = false);
+	    const QString& title = "Go to Address", const QString& prompt = "Enter Expression", bool defaultToCurrent = false);
 	~AddressDialogWithPreview() { delete m_updateThread; }
 	uint64_t getOffset() const { return m_addr; }
 };
 
-class BINARYNINJAUIAPI FileOffsetDialogWithPreview: public QDialog
+class BINARYNINJAUIAPI FileOffsetDialogWithPreview : public QDialog
 {
 	Q_OBJECT
 
@@ -86,18 +86,18 @@ private Q_SLOTS:
 
 public:
 	FileOffsetDialogWithPreview(QWidget* parent, BinaryViewRef view, uint64_t here,
-		const QString& title = "Go to File Offset", const QString& prompt = "Enter Expression", bool defaultToCurrent = false);
+	    const QString& title = "Go to File Offset", const QString& prompt = "Enter Expression", bool defaultToCurrent = false);
 	~FileOffsetDialogWithPreview() {}
 	uint64_t getOffset() const { return m_fileOffset; }
 };
 
-class BINARYNINJAUIAPI AddUserXrefDialog: public QDialog
+class BINARYNINJAUIAPI AddUserXrefDialog : public QDialog
 {
 	Q_OBJECT
 
 	QComboBox* m_combo;
 	QStringListModel* m_model;
-	QLabel* m_previewText, m_sizePrompt;
+	QLabel *m_previewText, m_sizePrompt;
 	QLineEdit* m_sizeInput;
 	BinaryViewRef m_view;
 	uint64_t m_addr;
@@ -127,9 +127,9 @@ private Q_SLOTS:
 
 public:
 	AddUserXrefDialog(QWidget* parent, BinaryViewRef view, uint64_t here = 0,
-		size_t size = 0, const QString& title = "Add User Type Field Cross Reference",
-		const QString& sizeTitle = "Size of Reference (optional)",
-		const QString& prompt = "Enter Expression", bool defaultToCurrent = false);
+	    size_t size = 0, const QString& title = "Add User Type Field Cross Reference",
+	    const QString& sizeTitle = "Size of Reference (optional)",
+	    const QString& prompt = "Enter Expression", bool defaultToCurrent = false);
 	~AddUserXrefDialog() { delete m_updateThread; }
 	uint64_t getOffset() const { return m_addr; }
 	size_t getSize() const { return m_size; }

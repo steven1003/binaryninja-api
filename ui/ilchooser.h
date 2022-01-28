@@ -3,7 +3,7 @@
 #include "pane.h"
 #include "menus.h"
 
-class BINARYNINJAUIAPI ILChooserWidget: public MenuHelper
+class BINARYNINJAUIAPI ILChooserWidget : public MenuHelper
 {
 	Q_OBJECT
 
@@ -21,7 +21,7 @@ protected:
 	virtual void showMenu() override;
 };
 
-class BINARYNINJAUIAPI ViewPaneHeaderILChooserWidget: public ViewPaneHeaderSubtypeWidget
+class BINARYNINJAUIAPI ViewPaneHeaderILChooserWidget : public ViewPaneHeaderSubtypeWidget
 {
 	Q_OBJECT
 

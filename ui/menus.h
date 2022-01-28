@@ -12,7 +12,7 @@
 #include "action.h"
 #include "viewframe.h"
 
-class BINARYNINJAUIAPI ContextMenuManager: public QObject
+class BINARYNINJAUIAPI ContextMenuManager : public QObject
 {
 	Q_OBJECT
 
@@ -21,7 +21,8 @@ class BINARYNINJAUIAPI ContextMenuManager: public QObject
 	MenuInstance* m_instance;
 
 public:
-	ContextMenuManager(): m_parent(nullptr), m_menu(nullptr), m_instance(nullptr) { }
+	ContextMenuManager() :
+	    m_parent(nullptr), m_menu(nullptr), m_instance(nullptr) {}
 	ContextMenuManager(QWidget* parent);
 	~ContextMenuManager();
 	QMenu* create();
@@ -37,7 +38,7 @@ Q_SIGNALS:
 };
 
 
-class BINARYNINJAUIAPI MenuHelper: public QLabel
+class BINARYNINJAUIAPI MenuHelper : public QLabel
 {
 	Q_OBJECT
 
@@ -56,7 +57,7 @@ protected:
 	bool m_pressed;
 
 public:
-	MenuHelper() { }
+	MenuHelper() {}
 	explicit MenuHelper(QWidget* parent);
 
 	void setBackgroundColorRole(QPalette::ColorRole role);

@@ -79,7 +79,7 @@ public:
 
 	HighlightTokenState getTokenForDisassemblyLinePosition(int64_t col, const std::vector<BinaryNinja::InstructionTextToken>& tokens);
 	HighlightTokenState getTokenForDisassemblyTokenIndex(size_t tokenIndex,
-		const std::vector<BinaryNinja::InstructionTextToken>& tokens);
+	    const std::vector<BinaryNinja::InstructionTextToken>& tokens);
 	HighlightTokenState getHighlightTokenForTextToken(const BinaryNinja::InstructionTextToken& token);
 
 	void drawText(QPainter& p, int x, int y, QColor color, const QString& text);
@@ -89,13 +89,13 @@ public:
 	void drawInstructionHighlight(QPainter& p, const QRect& rect);
 
 	void drawLinearDisassemblyLineBackground(QPainter& p, BNLinearDisassemblyLineType type, const QRect& rect,
-		int gutterWidth);
+	    int gutterWidth);
 	void drawDisassemblyLine(QPainter& p, int left, int top, const std::vector<BinaryNinja::InstructionTextToken>& tokens,
-		HighlightTokenState& highlight, bool highlightOnly=false);
+	    HighlightTokenState& highlight, bool highlightOnly = false);
 
 	void drawHexEditorLine(QPainter& p, int left, int top, const HexEditorHighlightState& highlight,
-		BinaryViewRef view, uint64_t lineStartAddr, size_t cols, size_t firstCol, size_t count,
-		bool cursorVisible, bool cursorAscii, size_t cursorPos, bool byteCursor);
+	    BinaryViewRef view, uint64_t lineStartAddr, size_t cols, size_t firstCol, size_t count,
+	    bool cursorVisible, bool cursorAscii, size_t cursorPos, bool byteCursor);
 	QFont getFont() { return m_fontParams.getFont(); }
 	QFont getEmojiFont() { return m_fontParams.getEmojiFont(); }
 	void setFont(const QFont& font);

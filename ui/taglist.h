@@ -13,7 +13,7 @@
 #include "tagtypelist.h"
 
 
-class BINARYNINJAUIAPI TagListModel: public QAbstractItemModel
+class BINARYNINJAUIAPI TagListModel : public QAbstractItemModel
 {
 	Q_OBJECT
 
@@ -66,7 +66,7 @@ public:
 };
 
 
-class BINARYNINJAUIAPI TagItemDelegate: public QStyledItemDelegate
+class BINARYNINJAUIAPI TagItemDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 
@@ -87,8 +87,7 @@ public:
 };
 
 
-class BINARYNINJAUIAPI TagList: public QTreeView,
-	public BinaryNinja::BinaryDataNotification, public FilterTarget
+class BINARYNINJAUIAPI TagList : public QTreeView, public BinaryNinja::BinaryDataNotification, public FilterTarget
 {
 	Q_OBJECT
 
@@ -126,7 +125,7 @@ protected:
 	virtual void mouseMoveEvent(QMouseEvent* e) override;
 	virtual void mousePressEvent(QMouseEvent* e) override;
 	virtual void wheelEvent(QWheelEvent* e) override;
-	virtual void resizeEvent(QResizeEvent *event) override;
+	virtual void resizeEvent(QResizeEvent* event) override;
 	void goToReference(const QModelIndex& idx);
 
 	void setFilter(const std::string& filter) override;
@@ -137,8 +136,8 @@ protected:
 	virtual void OnTagRemoved(BinaryNinja::BinaryView*, const BinaryNinja::TagReference&) override;
 	virtual void OnTagTypeUpdated(BinaryNinja::BinaryView*, TagTypeRef) override;
 
-	virtual void showEvent(QShowEvent *event) override;
-	virtual void hideEvent(QHideEvent *event) override;
+	virtual void showEvent(QShowEvent* event) override;
+	virtual void hideEvent(QHideEvent* event) override;
 
 private Q_SLOTS:
 	void hoverTimerEvent();
@@ -178,7 +177,7 @@ public:
 };
 
 
-class BINARYNINJAUIAPI TagListWidget: public SidebarWidget
+class BINARYNINJAUIAPI TagListWidget : public SidebarWidget
 {
 	Q_OBJECT
 
@@ -217,7 +216,7 @@ public:
 };
 
 
-class BINARYNINJAUIAPI TagListDialog: public QDialog
+class BINARYNINJAUIAPI TagListDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -245,7 +244,7 @@ private Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI TagListSidebarWidgetType: public SidebarWidgetType
+class BINARYNINJAUIAPI TagListSidebarWidgetType : public SidebarWidgetType
 {
 public:
 	TagListSidebarWidgetType();

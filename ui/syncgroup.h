@@ -26,7 +26,7 @@ public:
 	static void syncToTarget(View* srcView, ViewFrame* targetFrame, const ViewLocation& location);
 };
 
-class BINARYNINJAUIAPI SyncGroupWidget: public ClickableIcon
+class BINARYNINJAUIAPI SyncGroupWidget : public ClickableIcon
 {
 	Q_OBJECT
 

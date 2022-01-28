@@ -7,7 +7,7 @@
 #include "uicontext.h"
 #include "uicomment.h"
 
-class BINARYNINJAUIAPI CommentDialog: public QDialog
+class BINARYNINJAUIAPI CommentDialog : public QDialog
 {
 	Q_OBJECT
 

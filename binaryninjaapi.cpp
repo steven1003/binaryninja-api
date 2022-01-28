@@ -173,7 +173,7 @@ string BinaryNinja::GetPathRelativeToUserDirectory(const string& rel)
 
 
 bool BinaryNinja::ExecuteWorkerProcess(const string& path, const vector<string>& args, const DataBuffer& input,
-                                       string& output, string& errors, bool stdoutIsText, bool stderrIsText)
+    string& output, string& errors, bool stdoutIsText, bool stderrIsText)
 {
 	const char** argArray = new const char*[args.size() + 1];
 	for (size_t i = 0; i < args.size(); i++)
@@ -183,7 +183,7 @@ bool BinaryNinja::ExecuteWorkerProcess(const string& path, const vector<string>&
 	char* outputStr;
 	char* errorStr;
 	bool result = BNExecuteWorkerProcess(path.c_str(), argArray, input.GetBufferObject(), &outputStr, &errorStr,
-                                         stdoutIsText, stderrIsText);
+	    stdoutIsText, stderrIsText);
 
 	output = outputStr;
 	errors = errorStr;
@@ -302,8 +302,8 @@ void BinaryNinja::WorkerEnqueue(RefCountObject* owner, const function<void()>& a
 	context.func = action;
 
 	WorkerEnqueue([=]() {
-			context.func();
-		});
+		context.func();
+	});
 }
 
 
@@ -326,8 +326,8 @@ void BinaryNinja::WorkerPriorityEnqueue(RefCountObject* owner, const function<vo
 	context.func = action;
 
 	WorkerPriorityEnqueue([=]() {
-			context.func();
-		});
+		context.func();
+	});
 }
 
 
@@ -350,8 +350,8 @@ void BinaryNinja::WorkerInteractiveEnqueue(RefCountObject* owner, const function
 	context.func = action;
 
 	WorkerInteractiveEnqueue([=]() {
-			context.func();
-		});
+		context.func();
+	});
 }
 
 
@@ -390,22 +390,26 @@ map<string, uint64_t> BinaryNinja::GetMemoryUsageInfo()
 
 
 std::function<bool(size_t, size_t)>
-BinaryNinja::SplitProgress(std::function<bool(size_t, size_t)> originalFn, size_t subpart, size_t subpartCount)
+    BinaryNinja::SplitProgress(std::function<bool(size_t, size_t)> originalFn, size_t subpart, size_t subpartCount)
 {
 	return SplitProgress(originalFn, subpart, std::vector<double>(subpartCount, 1.0 / (double)subpartCount));
 }
 
 
 std::function<bool(size_t, size_t)>
-BinaryNinja::SplitProgress(std::function<bool(size_t, size_t)> originalFn, size_t subpart, std::vector<double> subpartWeights)
+    BinaryNinja::SplitProgress(std::function<bool(size_t, size_t)> originalFn, size_t subpart, std::vector<double> subpartWeights)
 {
 	if (!originalFn)
-		return [](size_t, size_t){ return true; };
+		return [](size_t, size_t) {
+			return true;
+		};
 
 	// Normalize weights
 	double weightSum = std::accumulate(subpartWeights.begin(), subpartWeights.end(), 0.0);
 	if (weightSum < 0.0001f)
-		return [](size_t, size_t){ return true; };
+		return [](size_t, size_t) {
+			return true;
+		};
 	// Keep a running count of weights for the start
 	std::vector<double> subpartStarts;
 	double start = 0.0;

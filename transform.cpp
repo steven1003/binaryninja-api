@@ -30,9 +30,9 @@ Transform::Transform(BNTransform* xform)
 }
 
 
-Transform::Transform(BNTransformType type, const string& name, const string& longName, const string& group):
-	m_typeForRegister(type), m_nameForRegister(name), m_longNameForRegister(longName),
-	m_groupForRegister(group)
+Transform::Transform(BNTransformType type, const string& name, const string& longName, const string& group) :
+    m_typeForRegister(type), m_nameForRegister(name), m_longNameForRegister(longName),
+    m_groupForRegister(group)
 {
 	m_object = nullptr;
 }
@@ -137,8 +137,8 @@ void Transform::Register(Transform* xform)
 	callbacks.encode = EncodeCallback;
 	xform->AddRefForRegistration();
 	xform->m_object = BNRegisterTransformType(xform->m_typeForRegister, xform->m_nameForRegister.c_str(),
-	                                          xform->m_longNameForRegister.c_str(), xform->m_groupForRegister.c_str(),
-	                                          &callbacks);
+	    xform->m_longNameForRegister.c_str(), xform->m_groupForRegister.c_str(),
+	    &callbacks);
 }
 
 
@@ -219,7 +219,8 @@ bool Transform::Encode(const DataBuffer&, DataBuffer&, const map<string, DataBuf
 }
 
 
-CoreTransform::CoreTransform(BNTransform* xform): Transform(xform)
+CoreTransform::CoreTransform(BNTransform* xform) :
+    Transform(xform)
 {
 }
 

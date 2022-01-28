@@ -9,7 +9,7 @@
 #include "menus.h"
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI TokenizedTextViewHistoryEntry: public HistoryEntry
+class BINARYNINJAUIAPI TokenizedTextViewHistoryEntry : public HistoryEntry
 {
 	size_t m_topLine, m_cursorLine;
 	HighlightTokenState m_highlight;
@@ -27,7 +27,7 @@ public:
 	virtual bool deserialize(const Json::Value& value) override;
 };
 
-class BINARYNINJAUIAPI TokenizedTextView: public QAbstractScrollArea, public View, public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI TokenizedTextView : public QAbstractScrollArea, public View, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
 
@@ -60,7 +60,7 @@ class BINARYNINJAUIAPI TokenizedTextView: public QAbstractScrollArea, public Vie
 
 	void bindActions();
 	void getHexDumpLineBytes(const BinaryNinja::LinearDisassemblyLine& line, size_t& skippedBytes, size_t& totalBytes,
-		size_t& totalCols);
+	    size_t& totalCols);
 
 	void setSectionSemantics(const std::string& name, BNSectionSemantics semantics);
 
@@ -117,7 +117,7 @@ private Q_SLOTS:
 
 public:
 	explicit TokenizedTextView(QWidget* parent, BinaryViewRef data,
-		const std::vector<BinaryNinja::LinearDisassemblyLine>& lines = std::vector<BinaryNinja::LinearDisassemblyLine>());
+	    const std::vector<BinaryNinja::LinearDisassemblyLine>& lines = std::vector<BinaryNinja::LinearDisassemblyLine>());
 	virtual ~TokenizedTextView();
 
 	virtual BinaryViewRef getData() override { return m_data; }

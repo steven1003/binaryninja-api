@@ -11,10 +11,10 @@
 
 #define HEX_EDITOR_UPDATE_CHECK_INTERVAL 200
 
-class BINARYNINJAUIAPI HexEditor : public QAbstractScrollArea, public View, public PreviewScrollHandler,
-	public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI HexEditor : public QAbstractScrollArea, public View, public PreviewScrollHandler, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
+
 public:
 	explicit HexEditor(BinaryViewRef data, ViewFrame* view, uint64_t startAddr = 0);
 	virtual ~HexEditor();
@@ -56,7 +56,7 @@ public:
 	static void registerActions();
 
 private:
-	class HexEditorHighlightWidget: public MenuHelper
+	class HexEditorHighlightWidget : public MenuHelper
 	{
 	public:
 		HexEditorHighlightWidget(HexEditor* parent);
@@ -68,7 +68,7 @@ private:
 		HexEditor* m_editor;
 	};
 
-	class HexEditorOptionsIconWidget: public QWidget
+	class HexEditorOptionsIconWidget : public QWidget
 	{
 	public:
 		HexEditorOptionsIconWidget(HexEditor* parent);
@@ -81,7 +81,7 @@ private:
 		void showMenu();
 	};
 
-	class HexEditorStatusBarWidget: public StatusBarWidget
+	class HexEditorStatusBarWidget : public StatusBarWidget
 	{
 	public:
 		HexEditorStatusBarWidget(HexEditor* parent);
@@ -215,7 +215,7 @@ private Q_SLOTS:
 	void updateTimerEvent();
 };
 
-class HexEditorViewType: public ViewType
+class HexEditorViewType : public ViewType
 {
 	static HexEditorViewType* m_instance;
 

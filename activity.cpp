@@ -5,7 +5,8 @@ using namespace BinaryNinja;
 using namespace std;
 
 
-Activity::Activity(const string& name, const std::function<void(Ref<AnalysisContext> analysisContext)>& action): m_action(action)
+Activity::Activity(const string& name, const std::function<void(Ref<AnalysisContext> analysisContext)>& action) :
+    m_action(action)
 {
 	//LogError("API-Side Activity Constructed!");
 	m_object = BNCreateActivity(name.c_str(), this, Run);

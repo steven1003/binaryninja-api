@@ -26,7 +26,7 @@ public:
 	const std::set<DockableTabWidget*>& containers() const { return m_containers; }
 };
 
-class BINARYNINJAUIAPI TabDragIndicator: public QWidget
+class BINARYNINJAUIAPI TabDragIndicator : public QWidget
 {
 	Q_OBJECT
 
@@ -73,39 +73,39 @@ class BINARYNINJAUIAPI DockableTabStyle
 public:
 	virtual ~DockableTabStyle() {}
 	virtual QSize sizeForTab(const QWidget* widget, const DockableTabInfo& info, int idx,
-		int count, int active) const;
+	    int count, int active) const;
 	virtual QRect closeButtonRect(const QWidget* widget, const DockableTabInfo& info, int idx,
-		int count, int active) const;
+	    int count, int active) const;
 	virtual QRect closeIconRect(const QWidget* widget, const DockableTabInfo& info, int idx,
-		int count, int active) const;
+	    int count, int active) const;
 	virtual void paintTab(const QWidget* widget, QStylePainter& p, const DockableTabInfo& info, int idx,
-		int count, int active, DockableTabInteractionState state, const QRect& rect) const;
+	    int count, int active, DockableTabInteractionState state, const QRect& rect) const;
 	virtual void paintBase(const QWidget* widget, QStylePainter& p, const QRect& rect,
-		const QRect& activeRect) const;
+	    const QRect& activeRect) const;
 	virtual DockableTabStyle* duplicate();
 };
 
-class BINARYNINJAUIAPI DefaultDockableTabStyle: public DockableTabStyle
+class BINARYNINJAUIAPI DefaultDockableTabStyle : public DockableTabStyle
 {
 	QStyleOptionTab styleForTab(const QWidget* widget, const DockableTabInfo& info, int idx,
-		int count, int active) const;
+	    int count, int active) const;
 	int closeButtonSize(const QWidget* widget) const;
 
 public:
 	virtual QSize sizeForTab(const QWidget* widget, const DockableTabInfo& info, int idx,
-		int count, int active) const override;
+	    int count, int active) const override;
 	virtual QRect closeButtonRect(const QWidget* widget, const DockableTabInfo& info, int idx,
-		int count, int active) const override;
+	    int count, int active) const override;
 	virtual QRect closeIconRect(const QWidget* widget, const DockableTabInfo& info, int idx,
-		int count, int active) const override;
+	    int count, int active) const override;
 	virtual void paintTab(const QWidget* widget, QStylePainter& p, const DockableTabInfo& info, int idx,
-		int count, int active, DockableTabInteractionState state, const QRect& rect) const override;
+	    int count, int active, DockableTabInteractionState state, const QRect& rect) const override;
 	virtual void paintBase(const QWidget* widget, QStylePainter& p, const QRect& rect,
-		const QRect& activeRect) const override;
+	    const QRect& activeRect) const override;
 	virtual DockableTabStyle* duplicate() override;
 };
 
-class BINARYNINJAUIAPI DockableTabBar: public QAbstractScrollArea
+class BINARYNINJAUIAPI DockableTabBar : public QAbstractScrollArea
 {
 	Q_OBJECT
 
@@ -193,7 +193,7 @@ protected:
 	virtual void wheelEvent(QWheelEvent* event) override;
 };
 
-class BINARYNINJAUIAPI DockableTabBarWithCornerWidget: public QWidget
+class BINARYNINJAUIAPI DockableTabBarWithCornerWidget : public QWidget
 {
 	DockableTabBar* m_bar;
 	QHBoxLayout* m_barLayout;
@@ -212,7 +212,7 @@ public:
 	QWidget* cornerWidget() const { return m_cornerWidget; }
 };
 
-class BINARYNINJAUIAPI DockableTabWidget: public QWidget
+class BINARYNINJAUIAPI DockableTabWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -222,7 +222,7 @@ class BINARYNINJAUIAPI DockableTabWidget: public QWidget
 	QStackedWidget* m_widgets;
 
 	void addReparentedTab(DockableTabWidget* source, int idx, QWidget* widget,
-		const QString& title, const QString& toolTip, bool canClose);
+	    const QString& title, const QString& toolTip, bool canClose);
 
 public:
 	DockableTabWidget(DockableTabCollection* collection, DockableTabBar* bar = nullptr);
@@ -279,7 +279,7 @@ private Q_SLOTS:
 	void reparentTab(int oldIdx, DockableTabWidget* target, int newIdx);
 };
 
-class BINARYNINJAUIAPI SplitTabWidget: public QWidget
+class BINARYNINJAUIAPI SplitTabWidget : public QWidget
 {
 	Q_OBJECT
 
@@ -299,7 +299,7 @@ class BINARYNINJAUIAPI SplitTabWidget: public QWidget
 	Json::Value savedLayoutObject() const;
 	void restoreLayoutObject(const Json::Value& layout);
 	void restoreLayoutObjectWithTabs(const Json::Value& layout,
-		std::map<QString, std::pair<DockableTabWidget*, QWidget*>>& tabWidgets);
+	    std::map<QString, std::pair<DockableTabWidget*, QWidget*>>& tabWidgets);
 	DockableTabWidget* findFirstTabWidget();
 	void collapseEmptyTabs();
 

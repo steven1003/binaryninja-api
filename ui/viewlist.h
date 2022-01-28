@@ -6,7 +6,7 @@
 #include "menus.h"
 #include "action.h"
 
-class BINARYNINJAUIAPI ViewList: public MenuHelper
+class BINARYNINJAUIAPI ViewList : public MenuHelper
 {
 	Q_OBJECT
 

@@ -240,7 +240,8 @@ void ScriptingInstance::Stop()
 }
 
 
-CoreScriptingInstance::CoreScriptingInstance(BNScriptingInstance* instance): ScriptingInstance(instance)
+CoreScriptingInstance::CoreScriptingInstance(BNScriptingInstance* instance) :
+    ScriptingInstance(instance)
 {
 }
 
@@ -302,7 +303,8 @@ void CoreScriptingInstance::Stop()
 }
 
 
-ScriptingProvider::ScriptingProvider(const string& name, const string& apiName): m_nameForRegister(name), m_apiNameForRegister(apiName)
+ScriptingProvider::ScriptingProvider(const string& name, const string& apiName) :
+    m_nameForRegister(name), m_apiNameForRegister(apiName)
 {
 }
 
@@ -394,7 +396,8 @@ void ScriptingProvider::Register(ScriptingProvider* provider)
 }
 
 
-CoreScriptingProvider::CoreScriptingProvider(BNScriptingProvider* provider): ScriptingProvider(provider)
+CoreScriptingProvider::CoreScriptingProvider(BNScriptingProvider* provider) :
+    ScriptingProvider(provider)
 {
 }
 

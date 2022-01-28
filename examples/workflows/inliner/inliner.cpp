@@ -18,7 +18,7 @@ using namespace BinaryNinja;
 using namespace std;
 
 #if defined(_MSC_VER)
-#define snprintf _snprintf
+	#define snprintf _snprintf
 #endif
 
 
@@ -145,21 +145,22 @@ extern "C"
 		// 	}, inlinerIsValid);
 
 		PluginCommand::RegisterForFunction(
-			"Optimizer\\Inline Function at Current Call Site",
-			"Inline function call at current call site.",
-			[](BinaryView* view, Function* func) {
-				// TODO func->Inform("inlinedCallSites")
-				// TODO resolve multiple embedded inlines
-				std::lock_guard<std::mutex> lock(g_mutex);
-				g_callSiteInlines[view->GetObject()][func->GetStart()].insert(view->GetCurrentOffset());
-				func->Reanalyze();
-			}, inlinerIsValid);
+		    "Optimizer\\Inline Function at Current Call Site",
+		    "Inline function call at current call site.",
+		    [](BinaryView* view, Function* func) {
+			    // TODO func->Inform("inlinedCallSites")
+			    // TODO resolve multiple embedded inlines
+			    std::lock_guard<std::mutex> lock(g_mutex);
+			    g_callSiteInlines[view->GetObject()][func->GetStart()].insert(view->GetCurrentOffset());
+			    func->Reanalyze();
+		    },
+		    inlinerIsValid);
 
 		Ref<Workflow> inlinerWorkflow = Workflow::Instance()->Clone("InlinerWorkflow");
 		inlinerWorkflow->RegisterActivity(new Activity("extension.functionInliner", &FunctionInliner));
 		inlinerWorkflow->Insert("core.function.translateTailCalls", "extension.functionInliner");
 		Workflow::RegisterWorkflow(inlinerWorkflow,
-			R"#({
+		    R"#({
 			"title" : "Function Inliner (Example)",
 			"description" : "This analysis stands in as an example to demonstrate Binary Ninja's extensible analysis APIs. ***Note** this feature is under active development and subject to change without notice.",
 			"capabilities" : []

@@ -11,7 +11,7 @@ public:
 	virtual void sendWheelEvent(QWheelEvent* event) = 0;
 };
 
-class BINARYNINJAUIAPI PreviewWidget: public QFrame
+class BINARYNINJAUIAPI PreviewWidget : public QFrame
 {
 	Q_OBJECT
 

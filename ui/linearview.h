@@ -14,9 +14,9 @@
 #include <assembledialog.h>
 
 #define LINEAR_VIEW_UPDATE_CHECK_INTERVAL 200
-#define MAX_STRING_TYPE_LENGTH 1048576
+#define MAX_STRING_TYPE_LENGTH            1048576
 
-struct BINARYNINJAUIAPI LinearViewLine: public BinaryNinja::LinearDisassemblyLine
+struct BINARYNINJAUIAPI LinearViewLine : public BinaryNinja::LinearDisassemblyLine
 {
 	BinaryNinja::Ref<BinaryNinja::LinearViewCursor> cursor;
 	size_t cursorSize;
@@ -52,7 +52,7 @@ struct BINARYNINJAUIAPI LinearViewCursorPosition
 	LinearViewCursorPosition AsLine() const;
 };
 
-class BINARYNINJAUIAPI LinearViewHistoryEntry: public HistoryEntry
+class BINARYNINJAUIAPI LinearViewHistoryEntry : public HistoryEntry
 {
 	std::vector<BinaryNinja::LinearViewObjectIdentifier> m_topPath;
 	size_t m_topLineIndex;
@@ -92,11 +92,11 @@ public:
 	virtual bool deserialize(const Json::Value& value) override;
 };
 
-class BINARYNINJAUIAPI LinearView: public QAbstractScrollArea, public View, public BinaryNinja::BinaryDataNotification
+class BINARYNINJAUIAPI LinearView : public QAbstractScrollArea, public View, public BinaryNinja::BinaryDataNotification
 {
 	Q_OBJECT
 
-	class LinearViewOptionsWidget: public MenuHelper
+	class LinearViewOptionsWidget : public MenuHelper
 	{
 	public:
 		LinearViewOptionsWidget(LinearView* parent);
@@ -108,7 +108,7 @@ class BINARYNINJAUIAPI LinearView: public QAbstractScrollArea, public View, publ
 		LinearView* m_view;
 	};
 
-	class LinearViewOptionsIconWidget: public QWidget
+	class LinearViewOptionsIconWidget : public QWidget
 	{
 	public:
 		LinearViewOptionsIconWidget(LinearView* parent);
@@ -121,7 +121,7 @@ class BINARYNINJAUIAPI LinearView: public QAbstractScrollArea, public View, publ
 		void showMenu();
 	};
 
-	class LinearViewStatusBarWidget: public StatusBarWidget
+	class LinearViewStatusBarWidget : public StatusBarWidget
 	{
 	public:
 		LinearViewStatusBarWidget(LinearView* parent);
@@ -197,7 +197,7 @@ class BINARYNINJAUIAPI LinearView: public QAbstractScrollArea, public View, publ
 	void refreshAtCurrentLocation(bool cursorFixup = false);
 	bool navigateToAddress(uint64_t addr, bool center, bool updateHighlight, bool navByRef = false);
 	bool navigateToLine(FunctionRef func, uint64_t offset, size_t instrIndex, bool center,
-		bool updateHighlight, bool navByRef = false);
+	    bool updateHighlight, bool navByRef = false);
 	bool navigateToGotoLabel(uint64_t label);
 	void viewData();
 
@@ -207,7 +207,7 @@ class BINARYNINJAUIAPI LinearView: public QAbstractScrollArea, public View, publ
 	static void addOptionsMenuActions(Menu& menu);
 
 	void getHexDumpLineBytes(const BinaryNinja::LinearDisassemblyLine& line, size_t& skippedBytes, size_t& totalBytes,
-		size_t& totalCols);
+	    size_t& totalCols);
 
 	void paintHexDumpLine(QPainter& p, const LinearViewLine& line, int xoffset, int y, uint32_t addrLen, int tagOffset);
 	void paintAnalysisWarningLine(QPainter& p, const LinearViewLine& line, int xoffset, int y);
@@ -222,7 +222,7 @@ class BINARYNINJAUIAPI LinearView: public QAbstractScrollArea, public View, publ
 	TypeRef getInnerType(TypeRef type, uint64_t offset, uint64_t size, std::set<TypeRef>& seen);
 	StructureRef defineInnerType(TypeRef type, TypeRef baseType, uint64_t offset, uint64_t size, std::set<TypeRef>& seen);
 	StructureRef defineInnerPointer(TypeRef type, ArchitectureRef arch, uint64_t baseAddress,
-		uint64_t offset, uint64_t size, std::set<TypeRef>& seen);
+	    uint64_t offset, uint64_t size, std::set<TypeRef>& seen);
 	StructureRef defineInnerStruct(TypeRef type, uint64_t offset, uint64_t size, std::set<TypeRef>& seen);
 	StructureRef defineInnerArray(TypeRef type, uint64_t offset, uint64_t size, std::set<TypeRef>& seen);
 	StructureRef defineInnerName(TypeRef type, uint64_t offset, uint64_t size, std::set<TypeRef>& seen);
@@ -236,8 +236,8 @@ class BINARYNINJAUIAPI LinearView: public QAbstractScrollArea, public View, publ
 	bool updateCursor(LinearViewCursorPosition& cursorToUpdate, BinaryNinja::LinearViewCursor* matched, bool fullMatch);
 	bool updateCursor(LinearViewCursorPosition& cursorToUpdate, BinaryNinja::LinearViewCursor* newCursor);
 	bool updateCursor(LinearViewCursorPosition& cursorToUpdate,
-		const std::vector<BinaryNinja::LinearViewObjectIdentifier>& path,
-		BinaryNinja::LinearViewCursor* newCursor);
+	    const std::vector<BinaryNinja::LinearViewObjectIdentifier>& path,
+	    BinaryNinja::LinearViewCursor* newCursor);
 	uint64_t getOrderingIndexForLine(const LinearViewLine& line);
 
 	void updateAnalysisRequestorsForCache();
@@ -248,7 +248,7 @@ class BINARYNINJAUIAPI LinearView: public QAbstractScrollArea, public View, publ
 	BNAnalysisWarningActionType getAnalysisWarningActionAtPos(const LinearViewLine& line, int x);
 
 	void getCurrentOffsetByTypeInternal(TypeRef resType, uint64_t baseAddr, uint64_t& begin, uint64_t& end,
-		bool singleLine, std::set<TypeRef>& seen);
+	    bool singleLine, std::set<TypeRef>& seen);
 
 	BNDeadStoreElimination getCurrentVariableDeadStoreElimination();
 
@@ -444,7 +444,7 @@ protected:
 	void navigateToHighlightedToken();
 };
 
-class LinearViewType: public ViewType
+class LinearViewType : public ViewType
 {
 	static LinearViewType* m_instance;
 

@@ -5,7 +5,7 @@
 #include "binaryninjaapi.h"
 #include "uicontext.h"
 
-class BINARYNINJAUIAPI CreateStructDialog: public QDialog
+class BINARYNINJAUIAPI CreateStructDialog : public QDialog
 {
 	Q_OBJECT
 
@@ -27,5 +27,4 @@ private Q_SLOTS:
 
 protected:
 	virtual void showEvent(QShowEvent* e) override;
-
 };

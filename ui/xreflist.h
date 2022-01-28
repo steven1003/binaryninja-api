@@ -31,8 +31,8 @@ class XrefItem
 public:
 	enum XrefDirection
 	{
-		Forward, // current address is addressing another address
-		Backward // current address is being referenced by another address
+		Forward,  // current address is addressing another address
+		Backward  // current address is being referenced by another address
 	};
 
 	enum XrefType
@@ -92,10 +92,11 @@ public:
 };
 
 
-class XrefHeader: public XrefItem
+class XrefHeader : public XrefItem
 {
 protected:
 	QString m_name;
+
 public:
 	XrefHeader();
 	XrefHeader(const QString& name, XrefItem::XrefType type, XrefHeader* parent, FunctionRef func);
@@ -114,6 +115,7 @@ public:
 class XrefFunctionHeader : public XrefHeader
 {
 	std::deque<XrefItem*> m_refs;
+
 public:
 	XrefFunctionHeader();
 	XrefFunctionHeader(FunctionRef func, XrefHeader* parent, XrefItem* child);
@@ -129,6 +131,7 @@ public:
 class XrefTypeHeader : public XrefHeader
 {
 	std::deque<XrefItem*> m_refs;
+
 public:
 	XrefTypeHeader();
 	XrefTypeHeader(BinaryNinja::QualifiedName name, XrefHeader* parent, XrefItem* child);
@@ -143,6 +146,7 @@ public:
 class XrefVariableHeader : public XrefHeader
 {
 	std::deque<XrefItem*> m_refs;
+
 public:
 	XrefVariableHeader();
 	XrefVariableHeader(XrefHeader* parent, XrefItem* child);
@@ -154,10 +158,11 @@ public:
 };
 
 
-class XrefCodeReferences: public XrefHeader
+class XrefCodeReferences : public XrefHeader
 {
 	std::map<FunctionRef, XrefFunctionHeader*> m_refs;
 	std::deque<XrefFunctionHeader*> m_refList;
+
 public:
 	XrefCodeReferences(XrefHeader* parent);
 	virtual ~XrefCodeReferences();
@@ -169,9 +174,10 @@ public:
 };
 
 
-class XrefDataReferences: public XrefHeader
+class XrefDataReferences : public XrefHeader
 {
 	std::deque<XrefItem*> m_refs;
+
 public:
 	XrefDataReferences(XrefHeader* parent);
 	virtual ~XrefDataReferences();
@@ -182,10 +188,11 @@ public:
 };
 
 
-class XrefTypeReferences: public XrefHeader
+class XrefTypeReferences : public XrefHeader
 {
 	std::map<BinaryNinja::QualifiedName, XrefTypeHeader*> m_refs;
 	std::deque<XrefTypeHeader*> m_refList;
+
 public:
 	XrefTypeReferences(XrefHeader* parent);
 	virtual ~XrefTypeReferences();
@@ -197,10 +204,11 @@ public:
 };
 
 
-class XrefVariableReferences: public XrefHeader
+class XrefVariableReferences : public XrefHeader
 {
 	std::map<BinaryNinja::Variable, XrefVariableHeader*> m_refs;
 	std::deque<XrefVariableHeader*> m_refList;
+
 public:
 	XrefVariableReferences(XrefHeader* parent);
 	virtual ~XrefVariableReferences();
@@ -212,9 +220,10 @@ public:
 };
 
 
-class XrefRoot: public XrefHeader
+class XrefRoot : public XrefHeader
 {
 	std::map<XrefItem::XrefType, XrefHeader*> m_refs;
+
 public:
 	XrefRoot();
 	XrefRoot(XrefRoot&& root);
@@ -288,9 +297,21 @@ public:
 	virtual QModelIndex index(int row, int col, const QModelIndex& parent = QModelIndex()) const override;
 	virtual QVariant data(const QModelIndex& i, int role) const override;
 	Qt::ItemFlags flags(const QModelIndex& index) const override;
-	virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override { (void)parent; return (int)m_refs.size(); };
-	virtual QModelIndex parent(const QModelIndex& i) const override { (void)i; return QModelIndex(); }
-	virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override { (void) parent; return 4;};
+	virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override
+	{
+		(void)parent;
+		return (int)m_refs.size();
+	};
+	virtual QModelIndex parent(const QModelIndex& i) const override
+	{
+		(void)i;
+		return QModelIndex();
+	}
+	virtual int columnCount(const QModelIndex& parent = QModelIndex()) const override
+	{
+		(void)parent;
+		return 4;
+	};
 	virtual QVariant headerData(int column, Qt::Orientation orientation, int role) const override;
 	virtual bool hasChildren(const QModelIndex&) const override { return false; }
 	bool setModelData(std::vector<XrefItem>& refs, QItemSelectionModel* selectionModel, bool& selectionUpdated);
@@ -302,7 +323,7 @@ public:
 };
 
 
-class BINARYNINJAUIAPI CrossReferenceItemDelegate: public QStyledItemDelegate
+class BINARYNINJAUIAPI CrossReferenceItemDelegate : public QStyledItemDelegate
 {
 	Q_OBJECT
 
@@ -365,6 +386,7 @@ protected:
 	CrossReferenceWidget* m_parent;
 	BinaryViewRef m_data;
 	UIActionHandler m_actionHandler;
+
 public:
 	CrossReferenceContainer(CrossReferenceWidget* parent, ViewFrame* view, BinaryViewRef data);
 	virtual ~CrossReferenceContainer() {}
@@ -382,7 +404,7 @@ public:
 };
 
 
-class BINARYNINJAUIAPI CrossReferenceTree: public QTreeView, public CrossReferenceContainer
+class BINARYNINJAUIAPI CrossReferenceTree : public QTreeView, public CrossReferenceContainer
 {
 	Q_OBJECT
 
@@ -391,7 +413,7 @@ class BINARYNINJAUIAPI CrossReferenceTree: public QTreeView, public CrossReferen
 	CrossReferenceItemDelegate* m_itemDelegate;
 
 protected:
-	void drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const override;
+	void drawBranches(QPainter* painter, const QRect& rect, const QModelIndex& index) const override;
 	virtual bool getReference(const QModelIndex& idx, XrefItem** refPtr) const override;
 
 public:
@@ -420,7 +442,7 @@ Q_SIGNALS:
 };
 
 
-class BINARYNINJAUIAPI CrossReferenceTable: public QTableView, public CrossReferenceContainer
+class BINARYNINJAUIAPI CrossReferenceTable : public QTableView, public CrossReferenceContainer
 {
 	Q_OBJECT
 
@@ -458,7 +480,7 @@ Q_SIGNALS:
 
 class ExpandableGroup;
 class QCheckboxCombo;
-class BINARYNINJAUIAPI CrossReferenceWidget: public SidebarWidget, public UIContextNotification
+class BINARYNINJAUIAPI CrossReferenceWidget : public SidebarWidget, public UIContextNotification
 {
 	Q_OBJECT
 
@@ -523,7 +545,7 @@ public:
 	virtual void focus() override;
 
 	virtual void OnNewSelectionForXref(UIContext* context, ViewFrame* frame, View* view,
-		const SelectionInfoForXref& selection) override;
+	    const SelectionInfoForXref& selection) override;
 
 	virtual QWidget* headerWidget() override { return m_header; }
 
@@ -540,7 +562,7 @@ public Q_SLOTS:
 };
 
 
-class BINARYNINJAUIAPI CrossReferenceSidebarWidgetType: public SidebarWidgetType
+class BINARYNINJAUIAPI CrossReferenceSidebarWidgetType : public SidebarWidgetType
 {
 public:
 	CrossReferenceSidebarWidgetType();
@@ -560,11 +582,11 @@ class BINARYNINJAUIAPI QCheckboxCombo : public QComboBox
 	Q_OBJECT
 
 public:
-	explicit QCheckboxCombo(QWidget *parent = nullptr);
+	explicit QCheckboxCombo(QWidget* parent = nullptr);
 	bool eventFilter(QObject* watched, QEvent* event);
 	void hidePopup();
 	void showPopup();
-	void addItem(const QString &text, bool checked = true);
+	void addItem(const QString& text, bool checked = true);
 
 Q_SIGNALS:
 	void selectionChanged(const QString& text);

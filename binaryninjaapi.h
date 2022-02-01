@@ -436,7 +436,7 @@ namespace BinaryNinja {
 
 	class LogListener
 	{
-		static void LogMessageCallback(void* ctxt, BNLogLevel level, const char* msg);
+		static void LogMessageCallback(void* ctxt, BNLogLevel level, const char* msg, const char* logger_name = "", size_t tid = 0);
 		static void CloseLogCallback(void* ctxt);
 		static BNLogLevel GetLogLevelCallback(void* ctxt);
 
@@ -447,7 +447,7 @@ namespace BinaryNinja {
 		static void UnregisterLogListener(LogListener* listener);
 		static void UpdateLogListeners();
 
-		virtual void LogMessage(BNLogLevel level, const std::string& msg) = 0;
+		virtual void LogMessage(BNLogLevel level, const std::string& msg, const std::string& logger_name = "", size_t tid = 0) = 0;
 		virtual void CloseLog() {}
 		virtual BNLogLevel GetLogLevel() { return WarningLog; }
 	};

@@ -27,10 +27,10 @@ using namespace BinaryNinja;
 using namespace std;
 
 
-void LogListener::LogMessageCallback(void* ctxt, BNLogLevel level, const char* msg)
+void LogListener::LogMessageCallback(void* ctxt, BNLogLevel level, const char* msg, const char* logger_name, size_t tid)
 {
 	LogListener* listener = (LogListener*)ctxt;
-	listener->LogMessage(level, msg);
+	listener->LogMessage(level, msg, logger_name, tid);
 }
 
 
@@ -75,7 +75,7 @@ void LogListener::UpdateLogListeners()
 }
 
 
-static void PerformLog(BNLogLevel level, const char* fmt, va_list args)
+static void PerformLog(BNLogLevel level, const string& logger_name, size_t tid, const char* fmt, va_list args)
 {
 #if defined(_MSC_VER)
 	int len = _vscprintf(fmt, args);
@@ -85,13 +85,13 @@ static void PerformLog(BNLogLevel level, const char* fmt, va_list args)
 	if (!msg)
 		return;
 	if (vsnprintf(msg, len + 1, fmt, args) >= 0)
-		BNLog(level, "%s", msg);
+		BNLog(level, logger_name.c_str(), tid, "%s", msg);
 	free(msg);
 #else
 	char* msg;
 	if (vasprintf(&msg, fmt, args) < 0)
 		return;
-	BNLog(level, "%s", msg);
+	BNLog(level, logger_name.c_str(), tid, "%s", msg);
 	free(msg);
 #endif
 }
@@ -101,7 +101,7 @@ void BinaryNinja::Log(BNLogLevel level, const char* fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	PerformLog(level, fmt, args);
+	PerformLog(level, "", 0, fmt, args);
 	va_end(args);
 }
 
@@ -110,7 +110,7 @@ void BinaryNinja::LogDebug(const char* fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	PerformLog(DebugLog, fmt, args);
+	PerformLog(DebugLog, "", 0, fmt, args);
 	va_end(args);
 }
 
@@ -119,7 +119,7 @@ void BinaryNinja::LogInfo(const char* fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	PerformLog(InfoLog, fmt, args);
+	PerformLog(InfoLog, "", 0, fmt, args);
 	va_end(args);
 }
 
@@ -128,7 +128,7 @@ void BinaryNinja::LogWarn(const char* fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	PerformLog(WarningLog, fmt, args);
+	PerformLog(WarningLog, "", 0, fmt, args);
 	va_end(args);
 }
 
@@ -137,7 +137,7 @@ void BinaryNinja::LogError(const char* fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	PerformLog(ErrorLog, fmt, args);
+	PerformLog(ErrorLog, "", 0, fmt, args);
 	va_end(args);
 }
 
@@ -146,7 +146,7 @@ void BinaryNinja::LogAlert(const char* fmt, ...)
 {
 	va_list args;
 	va_start(args, fmt);
-	PerformLog(AlertLog, fmt, args);
+	PerformLog(AlertLog, "", 0, fmt, args);
 	va_end(args);
 }
 

@@ -27,9 +27,11 @@ struct BINARYNINJAUIAPI LogListItem
 	BNLogLevel level;
 	std::string text;
 	bool selected;
+	std::string logger;
+	size_t threadId{0};
 
-	LogListItem(BNLogLevel level, std::string text, bool selected = false) :
-	    level(level), text(text), selected(selected) {};
+	LogListItem(BNLogLevel level, std::string text, bool selected = false, const std::string& logger_name = "", size_t tid = 0) :
+	    level(level), text(text), selected(selected), logger(logger_name), threadId(tid) {};
 };
 
 
@@ -55,7 +57,7 @@ class BINARYNINJAUIAPI LogListModel : public QAbstractItemModel, public BinaryNi
 	std::vector<LogListItem> getSelectedItems();
 	bool hasSelectedItems();
 
-	virtual void LogMessage(BNLogLevel level, const std::string& msg) override;
+	virtual void LogMessage(BNLogLevel level, const std::string& msg, const std::string& logger_name = "", size_t tid = 0) override;
 	virtual BNLogLevel GetLogLevel() override;
 
 	virtual QModelIndex index(int row, int col, const QModelIndex& parent) const override;

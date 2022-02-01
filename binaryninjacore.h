@@ -28,14 +28,14 @@
 // Current ABI version for linking to the core. This is incremented any time
 // there are changes to the API that affect linking, including new functions,
 // new types, or modifications to existing functions or types.
-#define BN_CURRENT_CORE_ABI_VERSION 16
+#define BN_CURRENT_CORE_ABI_VERSION 17
 
 // Minimum ABI version that is supported for loading of plugins. Plugins that
 // are linked to an ABI version less than this will not be able to load and
 // will require rebuilding. The minimum version is increased when there are
 // incompatible changes that break binary compatibility, such as changes to
 // existing types or functions.
-#define BN_MINIMUM_CORE_ABI_VERSION 13
+#define BN_MINIMUM_CORE_ABI_VERSION 14
 
 #ifdef __GNUC__
 	#ifdef BINARYNINJACORE_LIBRARY
@@ -1285,7 +1285,7 @@ extern "C"
 	struct BNLogListener
 	{
 		void* context;
-		void (*log)(void* ctxt, BNLogLevel level, const char* msg);
+		void (*log)(void* ctxt, BNLogLevel level, const char* msg, const char* logger_name, size_t tid);
 		void (*close)(void* ctxt);
 		BNLogLevel (*getLogLevel)(void* ctxt);
 	};
@@ -2764,10 +2764,10 @@ extern "C"
 
 	// Logging
 #ifdef __GNUC__
-	__attribute__((format(printf, 2, 3)))
+	__attribute__((format(printf, 4, 5)))
 #endif
 	BINARYNINJACOREAPI void
-	    BNLog(BNLogLevel level, const char* fmt, ...);
+	    BNLog(BNLogLevel level, const char* logger_name, size_t tid, const char* fmt, ...);
 
 #ifdef __GNUC__
 	__attribute__((format(printf, 1, 2)))

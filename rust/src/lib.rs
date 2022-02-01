@@ -123,7 +123,7 @@ pub mod logger {
 
             if let Ok(msg) = CString::new(format!("{}", record.args())) {
                 unsafe {
-                    BNLog(level, msg.as_ptr());
+                    BNLog(level, std::ptr::null(), 0, msg.as_ptr());
                 }
             };
         }
@@ -139,7 +139,7 @@ pub mod logger {
     }
 
     pub trait LogListener: 'static + Sync {
-        fn log(&self, level: Level, msg: &BnStr);
+        fn log(&self, level: Level, msg: &BnStr, logger_name: &BnStr, tid: usize);
         fn level(&self) -> Level;
         fn close(&self) {}
     }
@@ -187,13 +187,13 @@ pub mod logger {
         LogGuard { ctxt: raw }
     }
 
-    extern "C" fn cb_log<L>(ctxt: *mut c_void, level: Level, msg: *const c_char)
+    extern "C" fn cb_log<L>(ctxt: *mut c_void, level: Level, msg: *const c_char, logger_name: *const c_char, tid: usize)
     where
         L: LogListener,
     {
         ffi_wrap!("LogListener::log", unsafe {
             let listener = &*(ctxt as *const L);
-            listener.log(level, BnStr::from_raw(msg));
+            listener.log(level, BnStr::from_raw(msg), BnStr::from_raw(logger_name), tid);
         })
     }
 

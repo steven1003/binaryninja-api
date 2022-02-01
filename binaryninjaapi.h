@@ -38,8 +38,11 @@
 #include <type_traits>
 #include <variant>
 #include <optional>
+#include <memory>
 #include "binaryninjacore.h"
 #include "json/json.h"
+#include "spdlog/spdlog.h"
+#include "spdlog/sinks/base_sink.h"
 
 #ifdef _MSC_VER
 	#define NOEXCEPT
@@ -537,6 +540,31 @@ namespace BinaryNinja {
 	void LogToStderr(BNLogLevel minimumLevel);
 	bool LogToFile(BNLogLevel minimumLevel, const std::string& path, bool append = false);
 	void CloseLogs();
+
+	template<typename Mutex>
+	class BNLogSinkBase : public spdlog::sinks::base_sink <Mutex>
+	{
+		static BNLogLevel GetBNLogLevel(const spdlog::level::level_enum level)
+		{
+			if (level == 0)
+				return BNLogLevel((int)level);
+			return BNLogLevel((int)level - 1);
+		}
+
+	protected:
+		void sink_it_(const spdlog::details::log_msg& msg) override
+		{
+			spdlog::memory_buf_t formatted;
+			spdlog::sinks::base_sink<Mutex>::formatter_->format(msg, formatted);
+			BNLog(GetBNLogLevel(msg.level), fmt::to_string(msg.logger_name).c_str(), msg.thread_id, "%s", fmt::to_string(formatted).c_str());
+		}
+
+		void flush_() override
+		{}
+	};
+
+	std::shared_ptr<spdlog::logger> CreateLogger(const std::string& loggerName);
+
 
 	std::string EscapeString(const std::string& s);
 	std::string UnescapeString(const std::string& s);

@@ -21,6 +21,7 @@
 # Binary Ninja components
 from . import _binaryninjacore as core
 from .enums import LogLevel
+import threading
 
 _output_to_log = False
 
@@ -35,7 +36,7 @@ def is_output_redirected_to_log():
 	return _output_to_log
 
 
-def log(level, text):
+def log(level, text, logger:str=""):
 	"""
 	``log`` writes messages to the log console for the given log level.
 
@@ -53,10 +54,10 @@ def log(level, text):
 	:param str text: message to print
 	:rtype: None
 	"""
-	core.BNLogString(level, text)
+	core.BNLogString(level, text, logger, threading.current_thread().ident)
 
 
-def log_debug(text):
+def log_debug(text, logger:str=""):
 	"""
 	``log_debug`` Logs debugging information messages to the console.
 
@@ -68,10 +69,10 @@ def log_debug(text):
 		>>> log_debug("Hotdogs!")
 		Hotdogs!
 	"""
-	core.BNLogString(LogLevel.DebugLog, text)
+	core.BNLogString(LogLevel.DebugLog, text, logger, threading.current_thread().ident)
 
 
-def log_info(text):
+def log_info(text, logger:str=""):
 	"""
 	``log_info`` Logs general information messages to the console.
 
@@ -83,10 +84,10 @@ def log_info(text):
 		Saucisson!
 		>>>
 	"""
-	core.BNLogString(LogLevel.InfoLog, text)
+	core.BNLogString(LogLevel.InfoLog, text, logger, threading.current_thread().ident)
 
 
-def log_warn(text):
+def log_warn(text, logger:str=""):
 	"""
 	``log_warn`` Logs message to console, if run through the GUI it logs with **Warning** icon.
 
@@ -99,10 +100,10 @@ def log_warn(text):
 		Chilidogs!
 		>>>
 	"""
-	core.BNLogString(LogLevel.WarningLog, text)
+	core.BNLogString(LogLevel.WarningLog, text, logger, threading.current_thread().ident)
 
 
-def log_error(text):
+def log_error(text, logger:str=""):
 	"""
 	``log_error`` Logs message to console, if run through the GUI it logs with **Error** icon, focusing the error console.
 
@@ -115,10 +116,10 @@ def log_error(text):
 		Spanferkel!
 		>>>
 	"""
-	core.BNLogString(LogLevel.ErrorLog, text)
+	core.BNLogString(LogLevel.ErrorLog, text, logger, threading.current_thread().ident)
 
 
-def log_alert(text):
+def log_alert(text, logger:str=""):
 	"""
 	``log_alert`` Logs message console and to a pop up window if run through the GUI.
 
@@ -131,7 +132,7 @@ def log_alert(text):
 		Kielbasa!
 		>>>
 	"""
-	core.BNLogString(LogLevel.AlertLog, text)
+	core.BNLogString(LogLevel.AlertLog, text, logger, threading.current_thread().ident)
 
 
 def log_to_stdout(min_level=LogLevel.InfoLog):

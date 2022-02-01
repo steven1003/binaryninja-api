@@ -51,6 +51,7 @@ endif()
 add_library(binaryninjaapi STATIC ${BN_API_SOURCES})
 
 target_include_directories(binaryninjaapi
+    PUBLIC ${PROJECT_SOURCE_DIR}/spdlog/include
     PUBLIC ${PROJECT_SOURCE_DIR})
 
 # We only need to find the core and UI when we also build the examples

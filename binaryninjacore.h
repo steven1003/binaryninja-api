@@ -2799,7 +2799,7 @@ extern "C"
 	BINARYNINJACOREAPI void
 	    BNLogAlert(const char* fmt, ...);
 
-	BINARYNINJACOREAPI void BNLogString(BNLogLevel level, const char* str);
+	BINARYNINJACOREAPI void BNLogString(BNLogLevel level, const char* logger_name, size_t tid, const char* str);
 
 	BINARYNINJACOREAPI void BNRegisterLogListener(BNLogListener* listener);
 	BINARYNINJACOREAPI void BNUnregisterLogListener(BNLogListener* listener);

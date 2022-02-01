@@ -173,3 +173,9 @@ void BinaryNinja::CloseLogs()
 {
 	BNCloseLogs();
 }
+
+shared_ptr<spdlog::logger> BinaryNinja::CreateLogger(const string& loggerName)
+{
+	auto sink = make_shared<BNLogSinkBase<spdlog::details::null_mutex>>();
+	return make_shared<spdlog::logger>(loggerName, sink);
+}
